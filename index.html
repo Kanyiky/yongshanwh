@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>庸善文化 · 探五术之理，寻万法之源</title>
+  <style>
+    /* ========== 设计系统 ========== */
+    :root {
+      --bg: #F6F0E5;
+      --card: #FBF7EF;
+      --sub-bg: #EFE5D5;
+      --text: #49372A;
+      --text-secondary: #8B755E;
+      --text-aux: #B09A7D;
+      --accent: #B85B32;
+      --accent-dark: #92501F;
+      --gold: #B28A45;
+      --border: #E5D3B9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* 轻微宣纸纹理 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ========== 整体布局 ========== */
+    .app {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== 左侧导航 ========== */
+    .sidebar {
+      width: 220px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 40px 24px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .brand-name {
+      font-family: "LiSu", "STLiti", "华文隶书", "KaiTi", serif;
+      font-size: 32px;
+      font-weight: normal;
+      color: var(--text);
+      letter-spacing: 6px;
+      line-height: 1.2;
+    }
+
+    .brand-line {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 16px auto 0;
+      opacity: 0.8;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: var(--sub-bg);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--sub-bg);
+      color: var(--accent);
+      border-color: var(--border);
+      font-weight: 500;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      opacity: 0.85;
+    }
+
+    /* ========== 主内容区 ========== */
+    .main {
+      margin-left: 220px;
+      flex: 1;
+      padding: 48px 56px 80px;
+      max-width: 1400px;
+    }
+
+    /* ========== 首页内容 ========== */
+    .home-hero {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+      min-height: 480px;
+      margin-bottom: 80px;
+    }
+
+    .hero-text {
+      max-width: 520px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero-line {
+      width: 64px;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 24px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+      line-height: 1.9;
+    }
+
+    /* ========== 动态太极装置 ========== */
+    .visual-device {
+      width: 420px;
+      height: 420px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .device-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(178, 138, 69, 0.06) 0%, transparent 70%);
+    }
+
+    .bagua-ring {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      animation: rotate-slow 120s linear infinite;
+    }
+
+    .wuxing-ring {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      animation: rotate-reverse 90s linear infinite;
+    }
+
+    .taiji {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 3px var(--border);
+      animation: rotate-taiji 60s linear infinite;
+      z-index: 10;
+    }
+
+    .taiji-half {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      top: 0;
+    }
+
+    .taiji-yang {
+      left: 0;
+      background: #F6F0E5;
+    }
+
+    .taiji-yin {
+      right: 0;
+      background: #49372A;
+    }
+
+    .taiji-dot {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      top: 25%;
+    }
+
+    .taiji-dot-yang {
+      left: 25%;
+      background: #49372A;
+    }
+
+    .taiji-dot-yin {
+      right: 25%;
+      background: #F6F0E5;
+    }
+
+    /* 五行圆点 */
+    .wuxing-item {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(73, 55, 42, 0.06);
+    }
+
+    .wuxing-item:hover {
+      transform: scale(1.12);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 4px 12px rgba(184, 91, 50, 0.15);
+    }
+
+    /* 八卦位置文字 */
+    .bagua-text {
+      position: absolute;
+      font-size: 14px;
+      color: var(--text-aux);
+      letter-spacing: 2px;
+    }
+
+    @keyframes rotate-taiji {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes rotate-reverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* ========== 三大板块卡片 ========== */
+    .section-title {
+      font-size: 22px;
+      letter-spacing: 3px;
+      margin-bottom: 32px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 32px 28px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(73, 55, 42, 0.08);
+      border-color: #D4C0A0;
+    }
+
+    .card-title {
+      font-size: 20px;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .card-icon {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 36px;
+      height: 36px;
+      opacity: 0.15;
+    }
+
+    /* ========== 底部理念 ========== */
+    .footer-idea {
+      margin-top: 100px;
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-idea p {
+      font-size: 16px;
+      letter-spacing: 4px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 1100px) {
+      .home-hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .visual-device {
+        margin: 0 auto;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 24px 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .main {
+        margin-left: 0;
+        padding: 32px 20px 60px;
+      }
+      .brand-name {
+        font-size: 28px;
+      }
+      .nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+      }
+      .nav-item {
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+      .hero-title {
+        font-size: 28px;
+        letter-spacing: 2px;
+      }
+      .visual-device {
+        width: 300px;
+        height: 300px;
+      }
+      .bagua-ring { width: 280px; height: 280px; }
+      .wuxing-ring { width: 200px; height: 200px; }
+      .taiji { width: 110px; height: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- 左侧导航 -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">庸善文化</div>
+        <div class="brand-line"></div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" data-page="home">
+          <span>首页</span>
+        </a>
+        <a class="nav-item" data-page="diancang">
+          <span>五术典藏</span>
+        </a>
+        <a class="nav-item" data-page="yili">
+          <span>易理明辨</span>
+        </a>
+        <a class="nav-item" data-page="xuanji">
+          <span>五术玄机</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main">
+      <!-- 首页 -->
+      <section id="page-home">
+        <div class="home-hero">
+          <div class="hero-text">
+            <h1 class="hero-title">探五术之理<br>寻万法之源</h1>
+            <div class="hero-line"></div>
+            <p class="hero-subtitle">
+              溯古籍之源，明阴阳之理，<br>
+              研传统之术，承东方之智慧。
+            </p>
+          </div>
+
+          <!-- 动态视觉装置 -->
+          <div class="visual-device">
+            <div class="device-bg"></div>
+
+            <!-- 八卦环 -->
+            <div class="bagua-ring">
+              <div class="bagua-text" style="top: 8px; left: 50%; transform: translateX(-50%);">乾</div>
+              <div class="bagua-text" style="top: 18%; right: 12%;">兑</div>
+              <div class="bagua-text" style="top: 50%; right: 6px; transform: translateY(-50%);">离</div>
+              <div class="bagua-text" style="bottom: 18%; right: 12%;">震</div>
+              <div class="bagua-text" style="bottom: 8px; left: 50%; transform: translateX(-50%);">巽</div>
+              <div class="bagua-text" style="bottom: 18%; left: 12%;">坎</div>
+              <div class="bagua-text" style="top: 50%; left: 6px; transform: translateY(-50%);">艮</div>
+              <div class="bagua-text" style="top: 18%; left: 12%;">坤</div>
+            </div>
+
+            <!-- 五行环 -->
+            <div class="wuxing-ring">
+              <div class="wuxing-item" style="top: 0; left: 50%; transform: translateX(-50%);" title="木">木</div>
+              <div class="wuxing-item" style="top: 25%; right: 8%;" title="火">火</div>
+              <div class="wuxing-item" style="bottom: 18%; right: 18%;" title="土">土</div>
+              <div class="wuxing-item" style="bottom: 18%; left: 18%;" title="金">金</div>
+              <div class="wuxing-item" style="top: 25%; left: 8%;" title="水">水</div>
+            </div>
+
+            <!-- 太极 -->
+            <div class="taiji">
+              <div class="taiji-half taiji-yang"></div>
+              <div class="taiji-half taiji-yin"></div>
+              <div class="taiji-dot taiji-dot-yang"></div>
+              <div class="taiji-dot taiji-dot-yin"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 三大板块 -->
+        <div class="section-title">核心板块</div>
+        <div class="cards">
+          <div class="card" data-page="diancang">
+            <div class="card-title">五术典藏</div>
+            <div class="card-sub">汇古籍典藏，集百家之学</div>
+            <div class="card-desc">收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。</div>
+          </div>
+          <div class="card" data-page="yili">
+            <div class="card-title">易理明辨</div>
+            <div class="card-sub">研经典之义，明传统之理</div>
+            <div class="card-desc">通过六十四卦、五行关系、天干地支和典籍进阶，系统学习传统文化知识。</div>
+          </div>
+          <div class="card" data-page="xuanji">
+            <div class="card-title">五术玄机</div>
+            <div class="card-sub">探术数之理，览传统之妙</div>
+            <div class="card-desc">提供八字排盘、紫微斗数、六爻趋避、六壬明辨等传统术数学习与体验工具。</div>
+          </div>
+        </div>
+
+        <!-- 底部理念 -->
+        <div class="footer-idea">
+          <p>五术通玄明事理 · 万法归一起财门</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // 简单导航高亮（后续会完善页面切换）
+    document.querySelectorAll('.nav-item, .card').forEach(el => {
+      el.addEventListener('click', function() {
+        const page = this.dataset.page;
+        if (!page) return;
+
+        // 更新导航选中状态
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        const navItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+        if (navItem) navItem.classList.add('active');
+
+        // 目前先提示，后续实现真实切换
+        if (page !== 'home') {
+          alert('「' + this.querySelector('.card-title')?.textContent || page + '」板块将在下一阶段开发完成');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
