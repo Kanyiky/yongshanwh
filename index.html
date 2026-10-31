@@ -182,9 +182,7 @@
     .card:hover .card-title { color: var(--text); text-decoration: underline; text-underline-offset: 10px; text-decoration-thickness: 1px; }
     .card-sub::after { display: none; }
     .placeholder-box { border-color: var(--border); background: transparent; }
-    .compass line.ln, .compass circle[stroke-dasharray] { display: none; }
-    .compass .gd, .compass .ln { stroke: var(--text); opacity: .35; stroke-width: 1; }
-    .compass text { fill-opacity: .7; }
+    .compass text { text-rendering: geometricPrecision; }
     .gz {
       display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 34px;
       font-size: 22px; font-weight: 400; letter-spacing: 12px; text-indent: 12px;
@@ -309,64 +307,77 @@
       const rot = (a, inner) => `<g transform="rotate(${a})">${inner}</g>`;
       const yao = (y, on, w, sw) => on
         ? `<line class="yao" x1="${-w/2}" x2="${w/2}" y1="${y}" y2="${y}" stroke-width="${sw}"/>`
-        : `<line class="yao" x1="${-w/2}" x2="${-w*0.1}" y1="${y}" y2="${y}" stroke-width="${sw}"/>` +
-          `<line class="yao" x1="${w*0.1}" x2="${w/2}" y1="${y}" y2="${y}" stroke-width="${sw}"/>`;
+        : `<line class="yao" x1="${-w/2}" x2="${-w*0.12}" y1="${y}" y2="${y}" stroke-width="${sw}"/>` +
+          `<line class="yao" x1="${w*0.12}" x2="${w/2}" y1="${y}" y2="${y}" stroke-width="${sw}"/>`;
 
-      // 文字环：序号即 frame() 里 th[] 的下标；文字一律横向，不随圈旋转
+      // 由内向外：越靠外越淡，形成层次
       const RINGS = [
-        { n: 8,  step: 45,    r: 96,  fs: 14,   txt: i => BAGUA[i][1] },
-        { n: 64, step: 5.625, r: 238, fs: 11.5, txt: i => NAMES[i] },
-        { n: 12, step: 30,    r: 130, fs: 22,   txt: i => SHICHEN[i] },
-        { n: 24, step: 15,    r: 278, fs: 15,   txt: cn },
-        { n: 60, step: 6,     r: 324, fs: 13,   txt: JZ },
-        { n: 60, step: 6,     r: 370, fs: 13,   txt: JZ }
+        { n: 8,  step: 45,    r: 98,  fs: 15,   op: .9,  txt: i => BAGUA[i][1] },
+        { n: 64, step: 5.625, r: 240, fs: 11.5, op: .55, txt: i => NAMES[i] },
+        { n: 12, step: 30,    r: 132, fs: 23,   op: .9,  txt: i => SHICHEN[i] },
+        { n: 24, step: 15,    r: 280, fs: 15,   op: .72, txt: cn },
+        { n: 60, step: 6,     r: 326, fs: 13.5, op: .56, txt: JZ },
+        { n: 60, step: 6,     r: 368, fs: 13,   op: .42, txt: JZ }
       ];
 
-      // 图形：八卦卦象、六十四卦爻线（随圈旋转）
       let bgG = '', hxG = '';
       BAGUA.forEach(([k], i) => {
-        let g = ''; T[k].forEach((v, j) => { g += yao(-(60 + j * 9), v, 24, 3.6); });
+        let g = ''; T[k].forEach((v, j) => { g += yao(-(58 + j * 8), v, 22, 3); });
         bgG += rot(i * 45, g);
       });
       for (let i = 0; i < 64; i++) {
-        let g = ''; T[PAIRS[i][1]].concat(T[PAIRS[i][0]]).forEach((v, k) => { g += yao(-(160 + k * 8), v, 11, 3); });
+        let g = ''; T[PAIRS[i][1]].concat(T[PAIRS[i][0]]).forEach((v, k) => { g += yao(-(166 + k * 7.6), v, 10, 2.4); });
         hxG += rot(i * 5.625, g);
       }
-      let s = `<g id="cp-bg">${bgG}</g><g id="cp-hx">${hxG}</g>`;
 
-      // 文字
-      const meta = [];
+      // 外缘刻度（静止，像表圈）：每 6° 一格，每 30° 一长格
+      let ticks = '';
+      for (let i = 0; i < 60; i++) {
+        const long = i % 5 === 0;
+        ticks += rot(i * 6, `<line y1="-397" y2="${long ? -388 : -392}" stroke-width="${long ? .9 : .6}"/>`);
+      }
+
+      let s = `<defs><radialGradient id="wash"><stop offset="0" style="stop-color:var(--text);stop-opacity:.07"/>` +
+        `<stop offset=".75" style="stop-color:var(--text);stop-opacity:.025"/>` +
+        `<stop offset="1" style="stop-color:var(--text);stop-opacity:0"/></radialGradient></defs>` +
+        `<circle r="398" style="fill:url(#wash);stroke:none"/>` +
+        `<g stroke="var(--text)" opacity=".5">${ticks}</g>`;
+
+      // 每一圈：一个旋转组，文字在组内逆向旋转保持横向（只改 transform，不触发文字重排）
       RINGS.forEach((R, k) => {
+        let g = '';
+        if (k === 0) g += `<g opacity=".9">${bgG}</g>`;
+        if (k === 1) g += `<g opacity=".7">${hxG}</g>`;
         for (let i = 0; i < R.n; i++) {
-          s += `<text font-size="${R.fs}" fill="var(--text)">${R.txt(i)}</text>`;
-          meta.push({ k, r: R.r, base: i * R.step });
+          const b = +(i * R.step).toFixed(4);
+          g += `<g transform="rotate(${b}) translate(0,${-R.r})"><text font-size="${R.fs}" fill="var(--text)" fill-opacity="${R.op}" ` +
+            `style="transform:rotate(calc(var(--nt) - ${b}deg))">${R.txt(i)}</text></g>`;
         }
+        s += `<g id="ring${k}">${g}</g>`;
       });
 
-      // 中心：太极
-      s += `<g><circle r="38" fill="var(--bg)" stroke="var(--text)" stroke-width="1.5"/>` +
-        `<path d="M0,-38 A38,38 0 0 1 0,38 A19,19 0 0 1 0,0 A19,19 0 0 0 0,-38Z" fill="var(--text)"/>` +
-        `<circle cy="-19" r="5" fill="var(--text)"/><circle cy="19" r="5" fill="var(--bg)"/>` +
+      // 中心：太极（颜色用 style，避免被样式表的 fill:none 覆盖）
+      s += `<g><circle r="34" style="fill:var(--bg);stroke:var(--text);stroke-width:.9"/>` +
+        `<path d="M0,-34 A34,34 0 0 1 0,34 A17,17 0 0 1 0,0 A17,17 0 0 0 0,-34Z" style="fill:var(--text);stroke:none"/>` +
+        `<circle cy="-17" r="4.2" style="fill:var(--text);stroke:none"/><circle cy="17" r="4.2" style="fill:var(--bg);stroke:none"/>` +
         `<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="40s" repeatCount="indefinite"/></g>`;
 
-      // 右侧（三点钟方向）极细指针：圆心 → 秒圈文字内侧底部，首尾渐隐
-      s += `<defs><linearGradient id="ptr-g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="363" y2="0">` +
+      // 右侧（三点钟方向）极细指针：圆心 → 秒圈文字内侧，首尾渐隐
+      s += `<defs><linearGradient id="ptr-g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="355" y2="0">` +
         `<stop offset="0" style="stop-color:var(--text);stop-opacity:0"/>` +
-        `<stop offset=".14" style="stop-color:var(--text);stop-opacity:.9"/>` +
+        `<stop offset=".12" style="stop-color:var(--text);stop-opacity:.9"/>` +
         `<stop offset=".8" style="stop-color:var(--text);stop-opacity:.9"/>` +
         `<stop offset="1" style="stop-color:var(--text);stop-opacity:0"/></linearGradient>` +
-        `<linearGradient id="ptr-b" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="363" y2="0">` +
+        `<linearGradient id="ptr-b" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="355" y2="0">` +
         `<stop offset="0" style="stop-color:var(--text);stop-opacity:0"/>` +
-        `<stop offset=".3" style="stop-color:var(--text);stop-opacity:.1"/>` +
+        `<stop offset=".3" style="stop-color:var(--text);stop-opacity:.09"/>` +
         `<stop offset="1" style="stop-color:var(--text);stop-opacity:0"/></linearGradient></defs>` +
-        `<line x1="0" x2="363" y1="0" y2="0" stroke="url(#ptr-b)" stroke-width="7"/>` +
-        `<line x1="0" x2="363" y1="0" y2="0" stroke="url(#ptr-g)" stroke-width=".8"/>`;
+        `<line x1="0" x2="355" y1="0" y2="0" stroke="url(#ptr-b)" stroke-width="7"/>` +
+        `<line x1="0" x2="355" y1="0" y2="0" stroke="url(#ptr-g)" stroke-width=".8"/>`;
 
       const svg = document.getElementById('compass');
       svg.innerHTML = s;
-      const texts = svg.querySelectorAll('text');
-      meta.forEach((m, n) => m.el = texts[n]);
-      const gBg = document.getElementById('cp-bg'), gHx = document.getElementById('cp-hx');
+      const rings = RINGS.map((_, k) => document.getElementById('ring' + k));
 
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let hover = false;
@@ -374,7 +385,7 @@
       svg.addEventListener('mouseleave', () => { hover = false; if (!reduce) svg.unpauseAnimations(); });
       if (reduce) svg.pauseAnimations();
 
-      // 逐帧：八卦/六十四卦匀速慢转；时辰、小时、分、秒按真实时间连续平滑转动（同向，逆时针）
+      // 逐帧：八卦/六十四卦匀速慢转；时辰、小时、分、秒按真实时间连续转动（同向，逆时针）
       let a1 = 0, a2 = 0, prev = performance.now();
       function frame(now) {
         const dt = Math.max(0, (now - prev) / 1000); prev = now;
@@ -384,13 +395,9 @@
         const min = n.getMinutes() + sec / 60;
         const hour = n.getHours() + min / 60;
         const th = [a1, a2, 90 - (hour / 2) * 30, 90 - (hour - 0.5) * 15, 90 - (min - 0.5) * 6, 90 - (sec - 0.5) * 6];
-        gBg.setAttribute('transform', `rotate(${a1})`);
-        gHx.setAttribute('transform', `rotate(${a2})`);
-        const rad = Math.PI / 180;
-        for (const m of meta) {
-          const f = (m.base + th[m.k]) * rad;
-          m.el.setAttribute('x', (m.r * Math.sin(f)).toFixed(2));
-          m.el.setAttribute('y', (-m.r * Math.cos(f)).toFixed(2));
+        for (let k = 0; k < 6; k++) {
+          rings[k].setAttribute('transform', `rotate(${th[k]})`);
+          rings[k].style.setProperty('--nt', `${-th[k]}deg`);
         }
         if (!reduce) requestAnimationFrame(frame);
       }
