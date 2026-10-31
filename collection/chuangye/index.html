@@ -1,1 +1,67 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>创业副业_传统技艺与轻创业教程_五术典藏_庸善文化</title>
+  <meta name="description" content="收录适合个人操作的传统技艺、手工、养殖等轻创业项目教程。" />
+  <link rel="canonical" href="https://yongshanwh.com/collection/chuangye/" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">庸善文化</div>
+        <div class="brand-line"></div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item active" href="/collection/">五术典藏</a>
+        <a class="nav-item" href="/yili/">易理明辨</a>
+        <a class="nav-item" href="/xuanji/">五术玄机</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <div class="page-header">
+        <h1>创业副业</h1>
+        <p class="subtitle">传统技艺 · 手工 · 养殖 · 轻创业</p>
+        <p class="intro">本分类收录适合个人操作的传统技艺、手工制作、特色养殖等轻创业项目教程，帮助有兴趣的人低成本开启副业。</p>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="在「创业副业」中搜索..." />
+      </div>
+      <div id="resourceCount" style="margin-bottom:24px; color:var(--text-secondary); font-size:14px;"></div>
+      <div class="resource-list" id="resourceList"></div>
+      <div style="margin-top:48px;"><a href="/collection/" class="btn">← 返回五术典藏</a></div>
+    </main>
+  </div>
+  <script src="/js/data.js"></script>
+  <script>
+    const currentCategory = "chuangye";
+    function renderList(list) {
+      const container = document.getElementById('resourceList');
+      document.getElementById('resourceCount').textContent = `共 ${list.length} 个资源`;
+      if (list.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-aux); padding:40px 0;">暂无匹配的资源</p>';
+        return;
+      }
+      container.innerHTML = list.map(item => `
+        <div class="resource-card">
+          <h3>${item.title}</h3>
+          <div class="meta">${item.categoryName}</div>
+          <div class="desc">${item.desc}</div>
+          <div class="actions"><a href="${item.link}" target="_blank" rel="noopener" class="btn btn-primary">获取资源</a></div>
+        </div>
+      `).join('');
+    }
+    const categoryResources = resources.filter(r => r.category === currentCategory);
+    renderList(categoryResources);
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const keyword = e.target.value.trim().toLowerCase();
+      if (!keyword) { renderList(categoryResources); return; }
+      renderList(categoryResources.filter(r => r.title.toLowerCase().includes(keyword) || r.desc.toLowerCase().includes(keyword)));
+    });
+  </script>
+</body>
+</html>
