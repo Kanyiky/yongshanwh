@@ -4,31 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- SEO 核心标签 -->
   <title>五术典藏_古籍典籍与传统文化资源库_庸善文化</title>
   <meta name="description" content="庸善文化五术典藏，收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。汇古籍典藏，集百家之学。" />
-  <meta name="keywords" content="五术典藏,古籍,中医,命理,相术,奇门遁甲,传统文化,庸善文化" />
   <link rel="canonical" href="https://yongshanwh.com/collection/" />
   
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <div class="app">
-    <!-- 左侧导航 -->
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-name">庸善文化</div>
         <div class="brand-line"></div>
       </div>
       <nav class="nav">
-        <a class="nav-item" href="/">首页</a>
-        <a class="nav-item active" href="/collection/">五术典藏</a>
-        <a class="nav-item" href="/yili/">易理明辨</a>
-        <a class="nav-item" href="/xuanji/">五术玄机</a>
+        <a class="nav-item" href="../">首页</a>
+        <a class="nav-item active" href="./">五术典藏</a>
+        <a class="nav-item" href="../yili/">易理明辨</a>
+        <a class="nav-item" href="../xuanji/">五术玄机</a>
       </nav>
     </aside>
 
-    <!-- 主内容 -->
     <main class="main">
       <div class="page-header">
         <h1>五术典藏</h1>
@@ -39,37 +35,28 @@
         </p>
       </div>
 
-      <!-- 搜索框 -->
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="搜索资源名称或简介关键词..." />
       </div>
 
-      <!-- 九大分类 -->
       <div class="section-title" style="font-size:20px; letter-spacing:3px; margin-bottom:24px;">资源分类</div>
-      <div class="category-grid" id="categoryGrid">
-        <!-- 由 JS 动态生成 -->
-      </div>
+      <div class="category-grid" id="categoryGrid"></div>
 
-      <!-- 精选资源 -->
       <div class="section-title" style="font-size:20px; letter-spacing:3px; margin:48px 0 24px;">精选资源</div>
-      <div class="resource-list" id="featuredList">
-        <!-- 由 JS 动态生成 -->
-      </div>
+      <div class="resource-list" id="featuredList"></div>
     </main>
   </div>
 
-  <script src="/js/data.js"></script>
+  <script src="../js/data.js"></script>
   <script>
-    // 统计每个分类的资源数量
     function getCategoryCount(key) {
       return resources.filter(r => r.category === key).length;
     }
 
-    // 渲染分类卡片
     function renderCategories() {
       const grid = document.getElementById('categoryGrid');
       grid.innerHTML = categories.map(cat => `
-        <a href="/collection/${cat.key}/" class="category-card">
+        <a href="${cat.key}/" class="category-card">
           <h2>${cat.name}</h2>
           <div class="count">${getCategoryCount(cat.key)} 个资源</div>
           <p>${cat.desc}</p>
@@ -77,7 +64,6 @@
       `).join('');
     }
 
-    // 渲染精选资源（取前6条）
     function renderFeatured(list = resources.slice(0, 6)) {
       const container = document.getElementById('featuredList');
       if (list.length === 0) {
@@ -96,7 +82,6 @@
       `).join('');
     }
 
-    // 搜索功能
     document.getElementById('searchInput').addEventListener('input', function(e) {
       const keyword = e.target.value.trim().toLowerCase();
       if (!keyword) {
@@ -111,7 +96,6 @@
       renderFeatured(filtered);
     });
 
-    // 初始化
     renderCategories();
     renderFeatured();
   </script>
