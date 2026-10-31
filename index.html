@@ -5,414 +5,230 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>庸善文化 · 探五术之理，寻万法之源</title>
   <style>
-    :root {
-      --bg: #F6F0E5;
-      --card: #FBF7EF;
-      --sub-bg: #EFE5D5;
-      --text: #49372A;
-      --text-secondary: #8B755E;
-      --text-aux: #B09A7D;
-      --accent: #B85B32;
-      --accent-dark: #92501F;
-      --gold: #B28A45;
-      --border: #E5D3B9;
+    @font-face {
+      font-family: "Lishu"; font-display: swap;
+      src: url("fonts/lishu.woff2") format("woff2"), url("fonts/lishu.ttf") format("truetype");
     }
-
+    :root {
+      --bg: #F6F0E5; --card: #F6F0E5; --sub-bg: #F6F0E5;
+      --text: #49372A; --text-secondary: #49372A; --text-aux: #49372A;
+      --accent: #49372A; --accent-dark: #49372A; --gold: #49372A; --border: rgba(73,55,42,.22);
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    html { font-size: 17px; }
     body {
       font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
+      background-color: var(--bg); color: var(--text);
+      line-height: 1.75; overflow-x: hidden;
     }
-
     body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
+      content: ""; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
-
-    .app {
-      display: flex;
-      min-height: 100vh;
-      position: relative;
-      z-index: 1;
-    }
+    .app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
 
     /* 左侧导航 */
     .sidebar {
-      width: 220px;
-      background: var(--card);
-      border-right: 1px solid var(--border);
-      padding: 40px 24px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      z-index: 100;
+      width: 240px; background: var(--card); border-right: 1px solid var(--border);
+      padding: 48px 22px; position: fixed; top: 0; left: 0; height: 100vh;
+      display: flex; flex-direction: column; z-index: 100;
     }
-
-    .brand { text-align: center; margin-bottom: 48px; }
-
+    .brand { text-align: center; margin-bottom: 52px; }
     .brand-name {
       font-family: "LiSu", "STLiti", "华文隶书", "KaiTi", serif;
-      font-size: 32px;
-      color: var(--text);
-      letter-spacing: 6px;
-      line-height: 1.2;
+      font-size: 36px; color: var(--text); letter-spacing: 6px; line-height: 1.2;
     }
-
-    .brand-line {
-      width: 48px;
-      height: 1px;
-      background: var(--gold);
-      margin: 16px auto 0;
-      opacity: 0.8;
-    }
-
-    .nav { display: flex; flex-direction: column; gap: 8px; }
-
+    .brand-line { width: 56px; height: 1px; background: var(--gold); margin: 18px auto 0; opacity: .8; }
+    .nav { display: flex; flex-direction: column; gap: 10px; }
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-radius: 6px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 15px;
-      transition: all 0.25s ease;
-      cursor: pointer;
-      border: 1px solid transparent;
+      position: relative; display: flex; align-items: center; justify-content: center;
+      padding: 15px 18px; border-radius: 8px; color: var(--text-secondary);
+      text-decoration: none; font-size: 18px; letter-spacing: 6px; text-indent: 6px;
+      transition: all .25s ease; cursor: pointer; border: 1px solid transparent;
     }
-
-    .nav-item:hover {
-      background: var(--sub-bg);
-      color: var(--text);
+    .nav-item::before {
+      content: ""; position: absolute; left: 12px; top: 50%; width: 5px; height: 5px;
+      border-radius: 50%; background: var(--gold); opacity: 0; transform: translateY(-50%);
+      transition: opacity .25s;
     }
-
+    .nav-item:hover { background: var(--sub-bg); color: var(--text); }
+    .nav-item:hover::before { opacity: .5; }
     .nav-item.active {
-      background: var(--sub-bg);
-      color: var(--accent);
-      border-color: var(--border);
-      font-weight: 500;
+      background: var(--sub-bg); color: var(--accent); border-color: var(--border); font-weight: 600;
     }
+    .nav-item.active::before { opacity: 1; background: var(--accent); }
 
     /* 主内容 */
-    .main {
-      margin-left: 220px;
-      flex: 1;
-      padding: 48px 56px 80px;
-      max-width: 1400px;
-    }
+    .main { margin-left: 240px; flex: 1; padding: 40px 40px 80px; max-width: 1440px; }
+    .page { display: none; animation: fadeIn .4s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    .page {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 首页样式 */
+    /* 首页 */
     .home-hero {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 60px;
-      align-items: center;
-      min-height: 480px;
-      margin-bottom: 80px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      align-items: center; min-height: 700px; margin-bottom: 72px;
     }
-
+    .hero-text { padding-left: 8px; padding-bottom: 12vh; position: relative; z-index: 2; }
     .hero-title {
-      font-size: 42px;
-      font-weight: 500;
-      letter-spacing: 4px;
-      line-height: 1.35;
-      margin-bottom: 20px;
+      /* 如引入了隶书网页字体（@font-face），把它的名称加到下面最前面 */
+      font-family: "Lishu", "LiSu", "隶书", "STLiti", "华文隶书", "Libian SC", serif;
+      font-size: clamp(42px, 4.4vw, 68px); font-weight: 400; letter-spacing: 6px;
+      line-height: 1.3; margin-bottom: 30px; color: var(--text);
+      -webkit-text-stroke: 0.8px var(--text);
     }
-
-    .hero-line {
-      width: 64px;
-      height: 1.5px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      margin-bottom: 24px;
+    .hero-title.fake-li {
+      font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "SimSun", "STSong", serif;
+      font-weight: 900; -webkit-text-stroke: 1.8px var(--text);
     }
-
+    .hero-title.fake-li span { transform: scaleX(1.2); transform-origin: left center; }
+    .hero-title span { display: block; white-space: nowrap; }
+    .hero-title span + span { padding-left: 1em; }
+    .hero-title span + span::first-letter { color: var(--accent); }
+    .hero-line { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
+    .hero-line::before { content: ""; width: 10px; height: 10px; background: var(--accent); transform: rotate(45deg); }
+    .hero-line::after { content: ""; width: 96px; height: 1.5px; background: linear-gradient(90deg, var(--gold), transparent); }
     .hero-subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-      letter-spacing: 1px;
-      line-height: 1.9;
+      font-family: "STKaiti", "Kaiti SC", "KaiTi", "楷体", "DFKai-SB", "Noto Serif SC", serif;
+      font-size: 22px; color: var(--text-secondary); letter-spacing: 5px; line-height: 2.2;
     }
+    .hero-subtitle span { display: block; }
+    .hero-subtitle span + span { padding-left: 1.2em; }
 
-    .visual-device {
-      width: 420px;
-      height: 420px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    /* 镂空罗盘 */
+    .visual-wrap { width: 100%; max-width: 700px; justify-self: center; margin-top: 12px; transform: translateX(4%); }
+    .visual-device { width: 100%; aspect-ratio: 1; position: relative; }
     .device-bg {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle at center, rgba(178, 138, 69, 0.06) 0%, transparent 70%);
+      position: absolute; inset: 4%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(178,138,69,.10) 0%, transparent 70%);
     }
+    .compass { position: relative; width: 100%; height: 100%; display: block; overflow: visible; }
+    .compass line, .compass circle, .compass path { fill: none; }
+    .compass .ln { stroke: var(--border); stroke-width: 1; }
+    .compass .gd { stroke: var(--gold); stroke-width: 1.2; }
+    .compass .yao { stroke: var(--text); stroke-linecap: butt; }
+    .compass text { text-anchor: middle; dominant-baseline: central; font-family: inherit; }
 
-    .bagua-ring {
-      position: absolute;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      animation: rotate-slow 120s linear infinite;
-    }
-
-    .wuxing-ring {
-      position: absolute;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      animation: rotate-reverse 90s linear infinite;
-    }
-
-    .taiji {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 0 3px var(--border);
-      animation: rotate-taiji 60s linear infinite;
-      z-index: 10;
-    }
-
-    .taiji-half { position: absolute; width: 50%; height: 100%; top: 0; }
-    .taiji-yang { left: 0; background: #F6F0E5; }
-    .taiji-yin { right: 0; background: #49372A; }
-    .taiji-dot { position: absolute; width: 50%; height: 50%; border-radius: 50%; top: 25%; }
-    .taiji-dot-yang { left: 25%; background: #49372A; }
-    .taiji-dot-yin { right: 25%; background: #F6F0E5; }
-
-    .wuxing-item {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      color: var(--text);
-      background: var(--card);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(73, 55, 42, 0.06);
-    }
-
-    .wuxing-item:hover {
-      transform: scale(1.12);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .bagua-text {
-      position: absolute;
-      font-size: 14px;
-      color: var(--text-aux);
-      letter-spacing: 2px;
-    }
-
-    @keyframes rotate-taiji { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes rotate-reverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-    .section-title {
-      font-size: 22px;
-      letter-spacing: 3px;
-      margin-bottom: 32px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .section-title::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--border), transparent);
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
-
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--gold); }
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 32px 28px;
-      transition: all 0.3s ease;
-      cursor: pointer;
+      position: relative; padding: 40px 36px 36px; cursor: pointer;
+      border-left: 1px solid var(--border); transition: background .35s ease;
     }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(73, 55, 42, 0.08);
-      border-color: #D4C0A0;
+    .card:first-child { border-left: none; padding-left: 8px; }
+    .card:hover { background: linear-gradient(180deg, rgba(178,138,69,.07), transparent 70%); }
+    .card-title {
+      font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
+      font-size: 28px; font-weight: 900; letter-spacing: 8px; margin-bottom: 14px;
+      transition: color .3s ease;
     }
-
-    .card-title { font-size: 20px; letter-spacing: 3px; margin-bottom: 8px; }
-    .card-sub { font-size: 13px; color: var(--gold); letter-spacing: 1px; margin-bottom: 16px; }
-    .card-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
-
-    .footer-idea {
-      margin-top: 100px;
-      text-align: center;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
+    .card:hover .card-title { color: var(--accent); }
+    .card-sub { font-size: 15px; color: var(--gold); letter-spacing: 2px; margin-bottom: 18px; }
+    .card-sub::after {
+      content: ""; display: block; width: 28px; height: 1px; background: var(--gold);
+      margin-top: 18px; transition: width .35s ease;
     }
+    .card:hover .card-sub::after { width: 64px; }
+    .card-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.95; }
+    .footer-idea { margin-top: 100px; text-align: center; padding-top: 40px; border-top: 1px solid var(--border); }
+    .footer-idea p { font-size: 18px; letter-spacing: 5px; color: var(--text-secondary); }
 
-    .footer-idea p {
-      font-size: 16px;
-      letter-spacing: 4px;
-      color: var(--text-secondary);
-    }
-
-    /* 其他页面通用标题 */
-    .page-header {
-      margin-bottom: 48px;
-    }
-
-    .page-header h1 {
-      font-size: 32px;
-      letter-spacing: 4px;
-      margin-bottom: 12px;
-    }
-
-    .page-header p {
-      font-size: 16px;
-      color: var(--text-secondary);
-      letter-spacing: 1px;
-    }
-
+    .page-header { margin-bottom: 48px; }
+    .page-header h1 { font-size: 36px; letter-spacing: 5px; margin-bottom: 12px; }
+    .page-header p { font-size: 18px; color: var(--text-secondary); letter-spacing: 1.5px; }
     .placeholder-box {
-      background: var(--card);
-      border: 1px dashed var(--border);
-      border-radius: 10px;
-      padding: 60px 40px;
-      text-align: center;
-      color: var(--text-aux);
-      font-size: 15px;
+      background: var(--card); border: 1px dashed var(--border); border-radius: 10px;
+      padding: 60px 40px; text-align: center; color: var(--text-aux); font-size: 17px; line-height: 2;
     }
 
-    /* 响应式 */
+    @media (max-width: 1280px) {
+      .home-hero { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 1100px) {
-      .home-hero { grid-template-columns: 1fr; gap: 40px; }
-      .visual-device { margin: 0 auto; }
+      .home-hero { grid-template-columns: 1fr; gap: 24px; }
+      .visual-wrap { width: min(100%, 640px); transform: none; }
+      .hero-text { padding-bottom: 0; }
       .cards { grid-template-columns: 1fr; }
+      .card, .card:first-child { border-left: none; padding: 32px 4px; border-top: 1px solid var(--border); }
+      .card:first-child { border-top: none; }
     }
-
     @media (max-width: 768px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 24px 20px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
+      .sidebar { width: 100%; height: auto; position: relative; padding: 24px 16px; border-right: none; border-bottom: 1px solid var(--border); }
       .main { margin-left: 0; padding: 32px 20px 60px; }
-      .brand-name { font-size: 28px; }
-      .nav { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 6px; }
-      .nav-item { padding: 8px 14px; font-size: 14px; }
-      .hero-title { font-size: 28px; letter-spacing: 2px; }
-      .visual-device { width: 300px; height: 300px; }
-      .bagua-ring { width: 280px; height: 280px; }
-      .wuxing-ring { width: 200px; height: 200px; }
-      .taiji { width: 110px; height: 110px; }
+      .brand { margin-bottom: 22px; }
+      .brand-name { font-size: 30px; }
+      .nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+      .nav-item { padding: 11px 4px; font-size: 15px; letter-spacing: 2px; text-indent: 2px; }
+      .nav-item::before { display: none; }
+      .hero-title { font-size: 46px; letter-spacing: 4px; }
+      .hero-subtitle { font-size: 19px; letter-spacing: 3px; }
     }
+    @media (max-width: 420px) { .nav { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ===== 极简：单一墨色，去装饰 ===== */
+    body::before, .device-bg { display: none; }
+    .sidebar { background: transparent; }
+    .nav-item { opacity: .55; background: transparent !important; border-color: transparent !important; }
+    .nav-item:hover { opacity: 1; }
+    .nav-item::before { display: none; }
+    .nav-item.active { opacity: 1; font-weight: 700; box-shadow: inset 2px 0 0 var(--text); border-radius: 0; }
+    .brand-line { opacity: .5; }
+    .hero-line::before { display: none; }
+    .hero-line::after { width: 64px; height: 1px; background: var(--text); opacity: .5; }
+    .hero-title span + span::first-letter { color: inherit; }
+    .hero-subtitle, .card-desc, .card-sub, .page-header p, .footer-idea p, .placeholder-box { opacity: .72; }
+    .cards { border-top: 1px solid var(--text); }
+    .card:hover { background: none; }
+    .card:hover .card-title { color: var(--text); text-decoration: underline; text-underline-offset: 10px; text-decoration-thickness: 1px; }
+    .card-sub::after { display: none; }
+    .placeholder-box { border-color: var(--border); background: transparent; }
+    .compass line.ln, .compass circle[stroke-dasharray] { display: none; }
+    .compass .gd, .compass .ln { stroke: var(--text); opacity: .35; stroke-width: 1; }
+    .compass text { fill-opacity: .7; }
+    .gz {
+      display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 34px;
+      font-size: 22px; font-weight: 400; letter-spacing: 12px; text-indent: 12px;
+      font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif; opacity: .85;
+    }
+    .gz i { display: block; width: 1px; height: 14px; background: var(--text); opacity: .35; }
+    @media (max-width: 768px) { .gz { font-size: 18px; gap: 16px; letter-spacing: 6px; text-indent: 6px; } }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- 左侧导航 -->
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-name">庸善文化</div>
         <div class="brand-line"></div>
       </div>
       <nav class="nav">
-        <a class="nav-item active" data-page="home">首页</a>
-        <a class="nav-item" data-page="diancang">五术典藏</a>
-        <a class="nav-item" data-page="yili">易理明辨</a>
-        <a class="nav-item" data-page="xuanji">五术玄机</a>
+        <a class="nav-item active" data-page="home" title="首页">首页</a>
+        <a class="nav-item" data-page="diancang" title="五术典藏">五术典藏</a>
+        <a class="nav-item" data-page="yili" title="易理明辨">易理明辨</a>
+        <a class="nav-item" data-page="xuanji" title="五术玄机">五术玄机</a>
       </nav>
     </aside>
 
-    <!-- 主内容 -->
     <main class="main">
-      <!-- 首页 -->
       <section id="page-home" class="page active">
         <div class="home-hero">
           <div class="hero-text">
-            <h1 class="hero-title">探五术之理<br>寻万法之源</h1>
+            <h1 class="hero-title"><span>探五术之理</span><span>寻万法之源</span></h1>
             <div class="hero-line"></div>
             <p class="hero-subtitle">
-              溯古籍之源，明阴阳之理，<br>
-              研传统之术，承东方之智慧。
+              <span>溯古籍之源，明阴阳之理，</span>
+              <span>研传统之术，承东方之智慧。</span>
             </p>
           </div>
-
-          <div class="visual-device">
-            <div class="device-bg"></div>
-            <div class="bagua-ring">
-              <div class="bagua-text" style="top: 8px; left: 50%; transform: translateX(-50%);">乾</div>
-              <div class="bagua-text" style="top: 18%; right: 12%;">兑</div>
-              <div class="bagua-text" style="top: 50%; right: 6px; transform: translateY(-50%);">离</div>
-              <div class="bagua-text" style="bottom: 18%; right: 12%;">震</div>
-              <div class="bagua-text" style="bottom: 8px; left: 50%; transform: translateX(-50%);">巽</div>
-              <div class="bagua-text" style="bottom: 18%; left: 12%;">坎</div>
-              <div class="bagua-text" style="top: 50%; left: 6px; transform: translateY(-50%);">艮</div>
-              <div class="bagua-text" style="top: 18%; left: 12%;">坤</div>
-            </div>
-            <div class="wuxing-ring">
-              <div class="wuxing-item" style="top: 0; left: 50%; transform: translateX(-50%);">木</div>
-              <div class="wuxing-item" style="top: 25%; right: 8%;">火</div>
-              <div class="wuxing-item" style="bottom: 18%; right: 18%;">土</div>
-              <div class="wuxing-item" style="bottom: 18%; left: 18%;">金</div>
-              <div class="wuxing-item" style="top: 25%; left: 8%;">水</div>
-            </div>
-            <div class="taiji">
-              <div class="taiji-half taiji-yang"></div>
-              <div class="taiji-half taiji-yin"></div>
-              <div class="taiji-dot taiji-dot-yang"></div>
-              <div class="taiji-dot taiji-dot-yin"></div>
+          <div class="visual-wrap">
+            <div class="gz" id="gz"></div>
+            <div class="visual-device">
+              <div class="device-bg"></div>
+              <svg id="compass" class="compass" viewBox="-400 -400 800 800" aria-label="镂空罗盘"></svg>
             </div>
           </div>
         </div>
 
-        <div class="section-title">核心板块</div>
         <div class="cards">
           <div class="card" data-page="diancang">
             <div class="card-title">五术典藏</div>
@@ -436,7 +252,6 @@
         </div>
       </section>
 
-      <!-- 五术典藏 -->
       <section id="page-diancang" class="page">
         <div class="page-header">
           <h1>五术典藏</h1>
@@ -449,7 +264,6 @@
         </div>
       </section>
 
-      <!-- 易理明辨 -->
       <section id="page-yili" class="page">
         <div class="page-header">
           <h1>易理明辨</h1>
@@ -461,7 +275,6 @@
         </div>
       </section>
 
-      <!-- 五术玄机 -->
       <section id="page-xuanji" class="page">
         <div class="page-header">
           <h1>五术玄机</h1>
@@ -476,36 +289,163 @@
   </div>
 
   <script>
-    // 页面切换功能
+    /* ========== 镂空罗盘（太极 → 八卦 → 十二时辰 → 六十四卦 → 小时 → 分钟 → 秒） ========== */
+    (function () {
+      const T = { Q:[1,1,1], D:[1,1,0], L:[1,0,1], Z:[1,0,0], X:[0,1,1], N:[0,1,0], G:[0,0,1], K:[0,0,0] };
+      const BAGUA = [['Q','乾'],['D','兑'],['L','离'],['Z','震'],['X','巽'],['N','坎'],['G','艮'],['K','坤']];
+      const SHICHEN = '子丑寅卯辰巳午未申酉戌亥'.split('');
+      const PAIRS = ('QQ KK NZ GN NQ QN KN NK XQ QD KQ QK QL LQ KG ZK DZ GX KD XK LZ GL GK KZ ' +
+        'QZ GQ GZ DX NN LL DG ZX QG ZQ LK KL XL LD NG ZN GD XZ DQ QX DK KX DN NX DL LX ' +
+        'ZZ GG XG ZD ZL LG XX DD XN ND XD ZG NL LN').split(' ');
+      const NAMES = ('乾 坤 屯 蒙 需 讼 师 比 小畜 履 泰 否 同人 大有 谦 豫 随 蛊 临 观 噬嗑 贲 剥 复 ' +
+        '无妄 大畜 颐 大过 坎 离 咸 恒 遁 大壮 晋 明夷 家人 睽 蹇 解 损 益 夬 姤 萃 升 困 井 ' +
+        '革 鼎 震 艮 渐 归妹 丰 旅 巽 兑 涣 节 中孚 小过 既济 未济').split(' ');
+      const GAN = '甲乙丙丁戊己庚辛壬癸', ZHI = '子丑寅卯辰巳午未申酉戌亥';
+      const JZ = i => GAN[i % 10] + ZHI[i % 12];
+      const cn = n => { const d = '零一二三四五六七八九';
+        if (n < 10) return d[n];
+        const t = Math.floor(n / 10), u = n % 10;
+        return (t === 1 ? '十' : d[t] + '十') + (u ? d[u] : ''); };
+      const rot = (a, inner) => `<g transform="rotate(${a})">${inner}</g>`;
+      const yao = (y, on, w, sw) => on
+        ? `<line class="yao" x1="${-w/2}" x2="${w/2}" y1="${y}" y2="${y}" stroke-width="${sw}"/>`
+        : `<line class="yao" x1="${-w/2}" x2="${-w*0.1}" y1="${y}" y2="${y}" stroke-width="${sw}"/>` +
+          `<line class="yao" x1="${w*0.1}" x2="${w/2}" y1="${y}" y2="${y}" stroke-width="${sw}"/>`;
+
+      // 文字环：序号即 frame() 里 th[] 的下标；文字一律横向，不随圈旋转
+      const RINGS = [
+        { n: 8,  step: 45,    r: 96,  fs: 14,   txt: i => BAGUA[i][1] },
+        { n: 64, step: 5.625, r: 238, fs: 11.5, txt: i => NAMES[i] },
+        { n: 12, step: 30,    r: 130, fs: 22,   txt: i => SHICHEN[i] },
+        { n: 24, step: 15,    r: 278, fs: 15,   txt: cn },
+        { n: 60, step: 6,     r: 324, fs: 13,   txt: JZ },
+        { n: 60, step: 6,     r: 370, fs: 13,   txt: JZ }
+      ];
+
+      // 图形：八卦卦象、六十四卦爻线（随圈旋转）
+      let bgG = '', hxG = '';
+      BAGUA.forEach(([k], i) => {
+        let g = ''; T[k].forEach((v, j) => { g += yao(-(60 + j * 9), v, 24, 3.6); });
+        bgG += rot(i * 45, g);
+      });
+      for (let i = 0; i < 64; i++) {
+        let g = ''; T[PAIRS[i][1]].concat(T[PAIRS[i][0]]).forEach((v, k) => { g += yao(-(160 + k * 8), v, 11, 3); });
+        hxG += rot(i * 5.625, g);
+      }
+      let s = `<g id="cp-bg">${bgG}</g><g id="cp-hx">${hxG}</g>`;
+
+      // 文字
+      const meta = [];
+      RINGS.forEach((R, k) => {
+        for (let i = 0; i < R.n; i++) {
+          s += `<text font-size="${R.fs}" fill="var(--text)">${R.txt(i)}</text>`;
+          meta.push({ k, r: R.r, base: i * R.step });
+        }
+      });
+
+      // 中心：太极
+      s += `<g><circle r="38" fill="var(--bg)" stroke="var(--text)" stroke-width="1.5"/>` +
+        `<path d="M0,-38 A38,38 0 0 1 0,38 A19,19 0 0 1 0,0 A19,19 0 0 0 0,-38Z" fill="var(--text)"/>` +
+        `<circle cy="-19" r="5" fill="var(--text)"/><circle cy="19" r="5" fill="var(--bg)"/>` +
+        `<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="40s" repeatCount="indefinite"/></g>`;
+
+      // 右侧（三点钟方向）极细指针：圆心 → 秒圈文字内侧底部，首尾渐隐
+      s += `<defs><linearGradient id="ptr-g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="363" y2="0">` +
+        `<stop offset="0" style="stop-color:var(--text);stop-opacity:0"/>` +
+        `<stop offset=".14" style="stop-color:var(--text);stop-opacity:.9"/>` +
+        `<stop offset=".8" style="stop-color:var(--text);stop-opacity:.9"/>` +
+        `<stop offset="1" style="stop-color:var(--text);stop-opacity:0"/></linearGradient>` +
+        `<linearGradient id="ptr-b" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="363" y2="0">` +
+        `<stop offset="0" style="stop-color:var(--text);stop-opacity:0"/>` +
+        `<stop offset=".3" style="stop-color:var(--text);stop-opacity:.1"/>` +
+        `<stop offset="1" style="stop-color:var(--text);stop-opacity:0"/></linearGradient></defs>` +
+        `<line x1="0" x2="363" y1="0" y2="0" stroke="url(#ptr-b)" stroke-width="7"/>` +
+        `<line x1="0" x2="363" y1="0" y2="0" stroke="url(#ptr-g)" stroke-width=".8"/>`;
+
+      const svg = document.getElementById('compass');
+      svg.innerHTML = s;
+      const texts = svg.querySelectorAll('text');
+      meta.forEach((m, n) => m.el = texts[n]);
+      const gBg = document.getElementById('cp-bg'), gHx = document.getElementById('cp-hx');
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let hover = false;
+      svg.addEventListener('mouseenter', () => { hover = true; svg.pauseAnimations(); });
+      svg.addEventListener('mouseleave', () => { hover = false; if (!reduce) svg.unpauseAnimations(); });
+      if (reduce) svg.pauseAnimations();
+
+      // 逐帧：八卦/六十四卦匀速慢转；时辰、小时、分、秒按真实时间连续平滑转动（同向，逆时针）
+      let a1 = 0, a2 = 0, prev = performance.now();
+      function frame(now) {
+        const dt = Math.max(0, (now - prev) / 1000); prev = now;
+        if (!hover && !reduce) { a1 = (a1 + dt * 360 / 90) % 360; a2 = (a2 + dt * 360 / 200) % 360; }
+        const n = new Date();
+        const sec = n.getSeconds() + n.getMilliseconds() / 1000;
+        const min = n.getMinutes() + sec / 60;
+        const hour = n.getHours() + min / 60;
+        const th = [a1, a2, 90 - (hour / 2) * 30, 90 - (hour - 0.5) * 15, 90 - (min - 0.5) * 6, 90 - (sec - 0.5) * 6];
+        gBg.setAttribute('transform', `rotate(${a1})`);
+        gHx.setAttribute('transform', `rotate(${a2})`);
+        const rad = Math.PI / 180;
+        for (const m of meta) {
+          const f = (m.base + th[m.k]) * rad;
+          m.el.setAttribute('x', (m.r * Math.sin(f)).toFixed(2));
+          m.el.setAttribute('y', (-m.r * Math.cos(f)).toFixed(2));
+        }
+        if (!reduce) requestAnimationFrame(frame);
+      }
+      frame(performance.now());
+      if (reduce) setInterval(() => frame(performance.now()), 1000);
+
+      // 年月日干支（月柱以各“节”的大致日期分界，可能与实际相差约一天）
+      function pillars(dt) {
+        const yr = dt.getFullYear(), mo = dt.getMonth() + 1, d = dt.getDate(), key = mo * 100 + d;
+        const B = [204, 306, 405, 506, 606, 707, 808, 908, 1008, 1107, 1207];
+        let Y = yr, m = 0;
+        if (key >= 204) B.forEach((b, i) => { if (key >= b) m = i; });
+        else { Y = yr - 1; m = key >= 106 ? 11 : 10; }
+        const ys = ((Y - 4) % 10 + 10) % 10, yb = ((Y - 4) % 12 + 12) % 12;
+        const ms = ((ys % 5) * 2 + 2 + m) % 10, mb = (2 + m) % 12;
+        const days = Math.round((Date.UTC(yr, mo - 1, d) - Date.UTC(2000, 0, 1)) / 864e5);
+        const di = ((54 + days) % 60 + 60) % 60; // 2000-01-01 为戊午日
+        return [GAN[ys] + ZHI[yb], GAN[ms] + ZHI[mb], GAN[di % 10] + ZHI[di % 12]];
+      }
+      const gz = document.getElementById('gz');
+      function updateGz() {
+        const [y, m, d] = pillars(new Date());
+        const t = `<span>${y}</span><i></i><span>${m}</span><i></i><span>${d}</span>`;
+        if (gz.innerHTML !== t) gz.innerHTML = t;
+      }
+      updateGz(); setInterval(updateGz, 1000);
+    })();
+
+    /* 大标题：设备没有隶书字体时，用加粗宋体横向拉宽模拟隶书的扁方字形 */
+    (function () {
+      const names = ['Lishu', 'LiSu', '隶书', 'STLiti', '华文隶书', 'Libian SC'];
+      const c = document.createElement('canvas').getContext('2d');
+      const ink = f => { c.clearRect(0, 0, 300, 150); c.font = '80px ' + f; c.fillText('探五', 0, 90);
+        const d = c.getImageData(0, 0, 300, 150).data; let t = 0; for (let i = 3; i < d.length; i += 4) t += d[i]; return t; };
+      const base = ink('serif');
+      const fake = () => { if (!names.some(n => ink('"' + n + '", serif') !== base)) document.querySelector('.hero-title').classList.add('fake-li'); };
+      // 先尝试加载 fonts/lishu.* ；加载不到再判断系统字体
+      document.fonts.load('40px Lishu', '探五').then(f => { if (!f.length) fake(); }).catch(fake);
+    })();
+
+    /* ========== 页面切换 ========== */
     function switchPage(pageId) {
-      // 隐藏所有页面
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      // 显示目标页面
       const target = document.getElementById('page-' + pageId);
       if (target) target.classList.add('active');
-
-      // 更新导航选中状态
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
       if (navItem) navItem.classList.add('active');
-
-      // 滚动到顶部
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    // 导航点击
     document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        switchPage(this.dataset.page);
-      });
+      item.addEventListener('click', function (e) { e.preventDefault(); switchPage(this.dataset.page); });
     });
-
-    // 首页卡片点击
     document.querySelectorAll('.card[data-page]').forEach(card => {
-      card.addEventListener('click', function() {
-        switchPage(this.dataset.page);
-      });
+      card.addEventListener('click', function () { switchPage(this.dataset.page); });
     });
   </script>
 </body>
