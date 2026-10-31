@@ -28,7 +28,6 @@
     }
     .app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
 
-    /* 左侧导航 */
     .sidebar {
       width: 240px; background: var(--card); border-right: 1px solid var(--border);
       padding: 48px 22px; position: fixed; top: 0; left: 0; height: 100vh;
@@ -59,13 +58,8 @@
     }
     .nav-item.active::before { opacity: 1; background: var(--accent); }
 
-    /* 主内容 */
     .main { margin-left: 240px; flex: 1; padding: 40px 40px 80px; max-width: 1440px; }
-    .page { display: none; animation: fadeIn .4s ease; }
-    .page.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* 首页 */
     .home-hero {
       display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
       align-items: center; min-height: 700px; margin-bottom: 72px;
@@ -95,7 +89,6 @@
     .hero-subtitle span { display: block; }
     .hero-subtitle span + span { padding-left: 1.2em; }
 
-    /* 镂空罗盘 */
     .visual-wrap { width: 100%; max-width: 700px; justify-self: center; margin-top: 12px; transform: translateX(4%); }
     .visual-device { width: 100%; aspect-ratio: 1; position: relative; }
     .device-bg {
@@ -133,14 +126,6 @@
     .footer-idea { margin-top: 100px; text-align: center; padding-top: 40px; border-top: 1px solid var(--border); }
     .footer-idea p { font-size: 18px; letter-spacing: 5px; color: var(--text-secondary); }
 
-    .page-header { margin-bottom: 48px; }
-    .page-header h1 { font-size: 36px; letter-spacing: 5px; margin-bottom: 12px; }
-    .page-header p { font-size: 18px; color: var(--text-secondary); letter-spacing: 1.5px; }
-    .placeholder-box {
-      background: var(--card); border: 1px dashed var(--border); border-radius: 10px;
-      padding: 60px 40px; text-align: center; color: var(--text-aux); font-size: 17px; line-height: 2;
-    }
-
     @media (max-width: 1280px) {
       .home-hero { grid-template-columns: 1fr 1fr; }
     }
@@ -165,7 +150,6 @@
     }
     @media (max-width: 420px) { .nav { grid-template-columns: repeat(2, 1fr); } }
 
-    /* ===== 极简：单一墨色，去装饰 ===== */
     body::before, .device-bg { display: none; }
     .sidebar { background: transparent; }
     .nav-item { opacity: .55; background: transparent !important; border-color: transparent !important; }
@@ -176,12 +160,11 @@
     .hero-line::before { display: none; }
     .hero-line::after { width: 64px; height: 1px; background: var(--text); opacity: .5; }
     .hero-title span + span::first-letter { color: inherit; }
-    .hero-subtitle, .card-desc, .card-sub, .page-header p, .footer-idea p, .placeholder-box { opacity: .72; }
+    .hero-subtitle, .card-desc, .card-sub, .footer-idea p { opacity: .72; }
     .cards { border-top: 1px solid var(--text); }
     .card:hover { background: none; }
     .card:hover .card-title { color: var(--text); text-decoration: underline; text-underline-offset: 10px; text-decoration-thickness: 1px; }
     .card-sub::after { display: none; }
-    .placeholder-box { border-color: var(--border); background: transparent; }
     .compass text { text-rendering: geometricPrecision; }
     .gz {
       display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 34px;
@@ -200,15 +183,15 @@
         <div class="brand-line"></div>
       </div>
       <nav class="nav">
-        <a class="nav-item active" href="/" title="首页">首页</a>
-        <a class="nav-item" href="/collection/" title="五术典藏">五术典藏</a>
-        <a class="nav-item" href="/yili/" title="易理明辨">易理明辨</a>
-        <a class="nav-item" href="/xuanji/" title="五术玄机">五术玄机</a>
+        <a class="nav-item active" href="./" title="首页">首页</a>
+        <a class="nav-item" href="collection/" title="五术典藏">五术典藏</a>
+        <a class="nav-item" href="yili/" title="易理明辨">易理明辨</a>
+        <a class="nav-item" href="xuanji/" title="五术玄机">五术玄机</a>
       </nav>
     </aside>
 
     <main class="main">
-      <section id="page-home" class="page active">
+      <section class="page active">
         <div class="home-hero">
           <div class="hero-text">
             <h1 class="hero-title"><span>探五术之理</span><span>寻万法之源</span></h1>
@@ -228,17 +211,17 @@
         </div>
 
         <div class="cards">
-          <a href="/collection/" class="card">
+          <a href="collection/" class="card">
             <div class="card-title">五术典藏</div>
             <div class="card-sub">汇古籍典藏，集百家之学</div>
             <div class="card-desc">收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。</div>
           </a>
-          <a href="/yili/" class="card">
+          <a href="yili/" class="card">
             <div class="card-title">易理明辨</div>
             <div class="card-sub">研经典之义，明传统之理</div>
             <div class="card-desc">通过六十四卦、五行关系、天干地支和典籍进阶，系统学习传统文化知识。</div>
           </a>
-          <a href="/xuanji/" class="card">
+          <a href="xuanji/" class="card">
             <div class="card-title">五术玄机</div>
             <div class="card-sub">探术数之理，览传统之妙</div>
             <div class="card-desc">提供八字排盘、紫微斗数、六爻趋避、六壬明辨等传统术数学习与体验工具。</div>
@@ -253,7 +236,6 @@
   </div>
 
   <script>
-    /* ========== 镂空罗盘（太极 → 八卦 → 十二时辰 → 六十四卦 → 小时 → 分钟 → 秒） ========== */
     (function () {
       const T = { Q:[1,1,1], D:[1,1,0], L:[1,0,1], Z:[1,0,0], X:[0,1,1], N:[0,1,0], G:[0,0,1], K:[0,0,0] };
       const BAGUA = [['Q','乾'],['D','兑'],['L','离'],['Z','震'],['X','巽'],['N','坎'],['G','艮'],['K','坤']];
@@ -385,7 +367,6 @@
       updateGz(); setInterval(updateGz, 1000);
     })();
 
-    /* 大标题：设备没有隶书字体时，用加粗宋体横向拉宽模拟隶书的扁方字形 */
     (function () {
       const names = ['Lishu', 'LiSu', '隶书', 'STLiti', '华文隶书', 'Libian SC'];
       const c = document.createElement('canvas').getContext('2d');
