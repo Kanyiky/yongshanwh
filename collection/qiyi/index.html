@@ -6,7 +6,7 @@
   <title>奇异杂集_民间秘术与古籍杂集_五术典藏_庸善文化</title>
   <meta name="description" content="收录民间秘术、古籍杂集、地方志、谋略等综合传统文化资源。" />
   <link rel="canonical" href="https://yongshanwh.com/collection/qiyi/" />
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
   <div class="app">
@@ -16,29 +16,37 @@
         <div class="brand-line"></div>
       </div>
       <nav class="nav">
-        <a class="nav-item" href="/">首页</a>
-        <a class="nav-item active" href="/collection/">五术典藏</a>
-        <a class="nav-item" href="/yili/">易理明辨</a>
-        <a class="nav-item" href="/xuanji/">五术玄机</a>
+        <a class="nav-item" href="../../">首页</a>
+        <a class="nav-item active" href="../">五术典藏</a>
+        <a class="nav-item" href="../../yili/">易理明辨</a>
+        <a class="nav-item" href="../../xuanji/">五术玄机</a>
       </nav>
     </aside>
+
     <main class="main">
       <div class="page-header">
         <h1>奇异杂集</h1>
         <p class="subtitle">民间秘术 · 古籍杂集 · 地方志 · 谋略</p>
         <p class="intro">本分类收录民间秘术、稀有古籍杂集、地方志及历代谋略等综合传统文化资源，内容丰富多样。</p>
       </div>
+
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="在「奇异杂集」中搜索..." />
       </div>
+
       <div id="resourceCount" style="margin-bottom:24px; color:var(--text-secondary); font-size:14px;"></div>
       <div class="resource-list" id="resourceList"></div>
-      <div style="margin-top:48px;"><a href="/collection/" class="btn">← 返回五术典藏</a></div>
+
+      <div style="margin-top:48px;">
+        <a href="../" class="btn">← 返回五术典藏</a>
+      </div>
     </main>
   </div>
-  <script src="/js/data.js"></script>
+
+  <script src="../../js/data.js"></script>
   <script>
     const currentCategory = "qiyi";
+
     function renderList(list) {
       const container = document.getElementById('resourceList');
       document.getElementById('resourceCount').textContent = `共 ${list.length} 个资源`;
@@ -51,16 +59,25 @@
           <h3>${item.title}</h3>
           <div class="meta">${item.categoryName}</div>
           <div class="desc">${item.desc}</div>
-          <div class="actions"><a href="${item.link}" target="_blank" rel="noopener" class="btn btn-primary">获取资源</a></div>
+          <div class="actions">
+            <a href="${item.link}" target="_blank" rel="noopener" class="btn btn-primary">获取资源</a>
+          </div>
         </div>
       `).join('');
     }
+
     const categoryResources = resources.filter(r => r.category === currentCategory);
     renderList(categoryResources);
+
     document.getElementById('searchInput').addEventListener('input', function(e) {
       const keyword = e.target.value.trim().toLowerCase();
-      if (!keyword) { renderList(categoryResources); return; }
-      renderList(categoryResources.filter(r => r.title.toLowerCase().includes(keyword) || r.desc.toLowerCase().includes(keyword)));
+      if (!keyword) {
+        renderList(categoryResources);
+        return;
+      }
+      renderList(categoryResources.filter(r => 
+        r.title.toLowerCase().includes(keyword) || r.desc.toLowerCase().includes(keyword)
+      ));
     });
   </script>
 </body>
