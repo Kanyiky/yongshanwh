@@ -72,7 +72,6 @@
     }
     .hero-text { padding-left: 8px; padding-bottom: 12vh; position: relative; z-index: 2; }
     .hero-title {
-      /* 如引入了隶书网页字体（@font-face），把它的名称加到下面最前面 */
       font-family: "Lishu", "LiSu", "隶书", "STLiti", "华文隶书", "Libian SC", serif;
       font-size: clamp(42px, 4.4vw, 68px); font-weight: 400; letter-spacing: 6px;
       line-height: 1.3; margin-bottom: 30px; color: var(--text);
@@ -114,6 +113,7 @@
     .card {
       position: relative; padding: 40px 36px 36px; cursor: pointer;
       border-left: 1px solid var(--border); transition: background .35s ease;
+      text-decoration: none; color: inherit; display: block;
     }
     .card:first-child { border-left: none; padding-left: 8px; }
     .card:hover { background: linear-gradient(180deg, rgba(178,138,69,.07), transparent 70%); }
@@ -200,10 +200,10 @@
         <div class="brand-line"></div>
       </div>
       <nav class="nav">
-        <a class="nav-item active" data-page="home" title="首页">首页</a>
-        <a class="nav-item" data-page="diancang" title="五术典藏">五术典藏</a>
-        <a class="nav-item" data-page="yili" title="易理明辨">易理明辨</a>
-        <a class="nav-item" data-page="xuanji" title="五术玄机">五术玄机</a>
+        <a class="nav-item active" href="/" title="首页">首页</a>
+        <a class="nav-item" href="/collection/" title="五术典藏">五术典藏</a>
+        <a class="nav-item" href="/yili/" title="易理明辨">易理明辨</a>
+        <a class="nav-item" href="/xuanji/" title="五术玄机">五术玄机</a>
       </nav>
     </aside>
 
@@ -228,59 +228,25 @@
         </div>
 
         <div class="cards">
-          <div class="card" data-page="diancang">
+          <a href="/collection/" class="card">
             <div class="card-title">五术典藏</div>
             <div class="card-sub">汇古籍典藏，集百家之学</div>
             <div class="card-desc">收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。</div>
-          </div>
-          <div class="card" data-page="yili">
+          </a>
+          <a href="/yili/" class="card">
             <div class="card-title">易理明辨</div>
             <div class="card-sub">研经典之义，明传统之理</div>
             <div class="card-desc">通过六十四卦、五行关系、天干地支和典籍进阶，系统学习传统文化知识。</div>
-          </div>
-          <div class="card" data-page="xuanji">
+          </a>
+          <a href="/xuanji/" class="card">
             <div class="card-title">五术玄机</div>
             <div class="card-sub">探术数之理，览传统之妙</div>
             <div class="card-desc">提供八字排盘、紫微斗数、六爻趋避、六壬明辨等传统术数学习与体验工具。</div>
-          </div>
+          </a>
         </div>
 
         <div class="footer-idea">
           <p>五术通玄明事理 · 万法归一起财门</p>
-        </div>
-      </section>
-
-      <section id="page-diancang" class="page">
-        <div class="page-header">
-          <h1>五术典藏</h1>
-          <p>汇古籍典藏，集百家之学</p>
-        </div>
-        <div class="placeholder-box">
-          五术典藏板块即将完善<br>
-          将包含：山、医、命、相、卜、奇异杂集、创业副业、技能教程、学习资料<br>
-          九大分类与资源列表
-        </div>
-      </section>
-
-      <section id="page-yili" class="page">
-        <div class="page-header">
-          <h1>易理明辨</h1>
-          <p>研经典之义，明传统之理</p>
-        </div>
-        <div class="placeholder-box">
-          易理明辨板块即将完善<br>
-          将包含：六十四卦、五行解析、天干地支、典籍进阶学习系统
-        </div>
-      </section>
-
-      <section id="page-xuanji" class="page">
-        <div class="page-header">
-          <h1>五术玄机</h1>
-          <p>探术数之理，览传统之妙</p>
-        </div>
-        <div class="placeholder-box">
-          五术玄机板块即将完善<br>
-          将包含：八字排盘、紫微斗数、六爻趋避、六壬明辨等传统术数工具
         </div>
       </section>
     </main>
@@ -310,7 +276,6 @@
         : `<line class="yao" x1="${-w/2}" x2="${-w*0.12}" y1="${y}" y2="${y}" stroke-width="${sw}"/>` +
           `<line class="yao" x1="${w*0.12}" x2="${w/2}" y1="${y}" y2="${y}" stroke-width="${sw}"/>`;
 
-      // 由内向外：越靠外越淡，形成层次
       const RINGS = [
         { n: 8,  step: 45,    r: 98,  fs: 15,   op: .9,  txt: i => BAGUA[i][1] },
         { n: 64, step: 5.625, r: 240, fs: 11.5, op: .55, txt: i => NAMES[i] },
@@ -330,7 +295,6 @@
         hxG += rot(i * 5.625, g);
       }
 
-      // 外缘刻度（静止，像表圈）：每 6° 一格，每 30° 一长格
       let ticks = '';
       for (let i = 0; i < 60; i++) {
         const long = i % 5 === 0;
@@ -343,7 +307,6 @@
         `<circle r="398" style="fill:url(#wash);stroke:none"/>` +
         `<g stroke="var(--text)" opacity=".5">${ticks}</g>`;
 
-      // 每一圈：一个旋转组，文字在组内逆向旋转保持横向（只改 transform，不触发文字重排）
       RINGS.forEach((R, k) => {
         let g = '';
         if (k === 0) g += `<g opacity=".9">${bgG}</g>`;
@@ -356,13 +319,11 @@
         s += `<g id="ring${k}">${g}</g>`;
       });
 
-      // 中心：太极（颜色用 style，避免被样式表的 fill:none 覆盖）
       s += `<g><circle r="34" style="fill:var(--bg);stroke:var(--text);stroke-width:.9"/>` +
         `<path d="M0,-34 A34,34 0 0 1 0,34 A17,17 0 0 1 0,0 A17,17 0 0 0 0,-34Z" style="fill:var(--text);stroke:none"/>` +
         `<circle cy="-17" r="4.2" style="fill:var(--text);stroke:none"/><circle cy="17" r="4.2" style="fill:var(--bg);stroke:none"/>` +
         `<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="40s" repeatCount="indefinite"/></g>`;
 
-      // 右侧（三点钟方向）极细指针：圆心 → 秒圈文字内侧，首尾渐隐
       s += `<defs><linearGradient id="ptr-g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="355" y2="0">` +
         `<stop offset="0" style="stop-color:var(--text);stop-opacity:0"/>` +
         `<stop offset=".12" style="stop-color:var(--text);stop-opacity:.9"/>` +
@@ -385,7 +346,6 @@
       svg.addEventListener('mouseleave', () => { hover = false; if (!reduce) svg.unpauseAnimations(); });
       if (reduce) svg.pauseAnimations();
 
-      // 逐帧：八卦/六十四卦匀速慢转；时辰、小时、分、秒按真实时间连续转动（同向，逆时针）
       let a1 = 0, a2 = 0, prev = performance.now();
       function frame(now) {
         const dt = Math.max(0, (now - prev) / 1000); prev = now;
@@ -404,7 +364,6 @@
       frame(performance.now());
       if (reduce) setInterval(() => frame(performance.now()), 1000);
 
-      // 年月日干支（月柱以各“节”的大致日期分界，可能与实际相差约一天）
       function pillars(dt) {
         const yr = dt.getFullYear(), mo = dt.getMonth() + 1, d = dt.getDate(), key = mo * 100 + d;
         const B = [204, 306, 405, 506, 606, 707, 808, 908, 1008, 1107, 1207];
@@ -414,7 +373,7 @@
         const ys = ((Y - 4) % 10 + 10) % 10, yb = ((Y - 4) % 12 + 12) % 12;
         const ms = ((ys % 5) * 2 + 2 + m) % 10, mb = (2 + m) % 12;
         const days = Math.round((Date.UTC(yr, mo - 1, d) - Date.UTC(2000, 0, 1)) / 864e5);
-        const di = ((54 + days) % 60 + 60) % 60; // 2000-01-01 为戊午日
+        const di = ((54 + days) % 60 + 60) % 60;
         return [GAN[ys] + ZHI[yb], GAN[ms] + ZHI[mb], GAN[di % 10] + ZHI[di % 12]];
       }
       const gz = document.getElementById('gz');
@@ -434,26 +393,8 @@
         const d = c.getImageData(0, 0, 300, 150).data; let t = 0; for (let i = 3; i < d.length; i += 4) t += d[i]; return t; };
       const base = ink('serif');
       const fake = () => { if (!names.some(n => ink('"' + n + '", serif') !== base)) document.querySelector('.hero-title').classList.add('fake-li'); };
-      // 先尝试加载 fonts/lishu.* ；加载不到再判断系统字体
       document.fonts.load('40px Lishu', '探五').then(f => { if (!f.length) fake(); }).catch(fake);
     })();
-
-    /* ========== 页面切换 ========== */
-    function switchPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      const target = document.getElementById('page-' + pageId);
-      if (target) target.classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
-      if (navItem) navItem.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function (e) { e.preventDefault(); switchPage(this.dataset.page); });
-    });
-    document.querySelectorAll('.card[data-page]').forEach(card => {
-      card.addEventListener('click', function () { switchPage(this.dataset.page); });
-    });
   </script>
 </body>
 </html>
