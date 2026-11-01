@@ -901,6 +901,14 @@
     padding-left: 0;
   }
 
+  body:has(#compass) .stele-lines {
+    align-items: center;
+  }
+
+  body:has(#compass) .stele-line + .stele-line {
+    margin-left: 0;
+  }
+
   body:has(#compass) .hero-line {
     justify-content: center;
     margin-bottom: 12px;
