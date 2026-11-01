@@ -7,7 +7,9 @@
   <meta name="description" content="交互五行图。点一个五行，看生我、我生、克我、我克，并对照颜色、方位、季节、脏腑和旺相休囚死。" />
   <link rel="canonical" href="https://yongshanwh.com/yili/wuxing/" />
   <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/nav-transition.css" />
   <link rel="stylesheet" href="../../css/modules.css" />
+  <link rel="stylesheet" href="../../css/teach.css" />
 </head>
 <body>
   <div class="app">
@@ -36,23 +38,30 @@
       </details>
       <div class="wuxing-layout">
         <div id="wx-svg"></div>
+        <p class="wx-legend"><span><i></i>相生</span><span><i class="ke-key"></i>相克</span></p>
         <div id="wx-text" class="explain"></div>
       </div>
+      <section class="panel wx-quiz" aria-live="polite">
+        <h2>试一试</h2>
+        <p class="wx-q" id="wx-q"></p>
+        <div class="wx-choices" id="wx-choices"></div>
+        <p class="wx-feedback" id="wx-feedback"></p>
+      </section>
       <section class="panel">
         <h2>旺相休囚死</h2>
-        <div class="tool-form compact-form">
-          <label class="field">季节
-            <select id="season">
-              <option>春</option><option>夏</option><option>秋</option><option>冬</option><option>四季</option>
-            </select>
-          </label>
+        <div class="season-slider">
+          <p class="season-now" id="season-now">春</p>
+          <input class="season-range" id="season" type="range" min="0" max="4" step="1" value="0" aria-label="季节">
+          <div class="season-scale"><span>春</span><span>夏</span><span>秋</span><span>冬</span><span>四季</span></div>
         </div>
         <div id="wang"></div>
+        <details class="fold"><summary>说明</summary><p>当令的为旺，我生的为相，生我的为休，克我的为囚，我克的为死。春指寅卯月，夏巳午月，秋申酉月，冬亥子月。四季指辰戌丑未月，土旺。</p></details>
       </section>
       <a class="back-link" href="../">← 返回易理明辨</a>
     </main>
   </div>
   <script src="../../js/yili/tables.js"></script>
   <script src="../../js/yili/wuxing-view.js"></script>
+  <script src="../../js/nav-transition.js"></script>
 </body>
 </html>

@@ -7,7 +7,9 @@
   <meta name="description" content="六十四卦按文王卦序或京房八宫排列。点开可见卦画、卦辞、彖传、象传、爻辞，以及错卦、综卦、互卦和变卦。" />
   <link rel="canonical" href="https://yongshanwh.com/yili/gua/" />
   <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/nav-transition.css" />
   <link rel="stylesheet" href="../../css/modules.css" />
+  <link rel="stylesheet" href="../../css/teach.css" />
 </head>
 <body>
   <div class="app">
@@ -33,6 +35,15 @@
         <p>经文用维基文库《周易》的公开文本，已改成简体。白话释义另写在下面，和经文分开。没有把握的白话会标成「待补」，不另编句子。</p>
         <p>异文写在卦的末尾。革卦「己日」、损卦初九「已事」没有照抄维基文库的用字，原因也写在那里。</p>
       </details>
+      <section class="teach" id="gua-teach" aria-label="卦象演练">
+        <div class="teach-bar">
+          <button type="button" class="btn" id="gua-prev">上一步</button>
+          <p class="teach-step" id="gua-step">第1步 · 阴阳</p>
+          <button type="button" class="btn" id="gua-next">下一步</button>
+        </div>
+        <div id="gua-stage"></div>
+      </section>
+      <h2 class="block-title">六十四卦全图</h2>
       <div class="switch">
         <button type="button" class="btn active" id="mode-wen">文王卦序</button>
         <button type="button" class="btn" id="mode-gong">八宫</button>
@@ -46,6 +57,8 @@
   <script src="../../js/yili/baihua.js"></script>
   <script src="../../js/yili/gua-logic.js"></script>
   <script src="../../js/draw-gua.js"></script>
+  <script src="../../js/yili/gua-teach.js"></script>
   <script src="../../js/yili/gua-view.js"></script>
+  <script src="../../js/nav-transition.js"></script>
 </body>
 </html>

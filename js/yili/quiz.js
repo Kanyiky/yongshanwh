@@ -88,80 +88,157 @@ var QuizData = [
 (function () {
   var KEY = "yongshanwh-yili-progress";
   var box = document.getElementById("stages");
+  if (!box) return;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var focusId = 1;
+  var qIndex = 0;
+  var picks = [];
+  var flipped = false;
+  var finished = false;
 
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)) || { passed: {}, wrong: [] }; }
     catch (e) { return { passed: {}, wrong: [] }; }
   }
   function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
-
   function unlocked(data, id) {
     if (id === 1) return true;
     return (data.passed[id - 1] || 0) >= 0.8;
   }
+  function stageById(id) {
+    return QuizData.filter(function (item) { return item.id === id; })[0];
+  }
+
+  function resetRound() {
+    qIndex = 0;
+    picks = [];
+    flipped = false;
+    finished = false;
+  }
 
   function render() {
     var data = load();
-    box.innerHTML = QuizData.map(function (stage) {
-      var open = unlocked(data, stage.id);
-      var best = data.passed[stage.id];
-      var links = stage.links.map(function (item) {
-        return '<a href="' + item[1] + '">' + item[0] + "</a>";
-      }).join(" · ");
-      var quote = "";
-      if (stage.quote) {
-        quote = "<p class=\"classic\"><b>乾卦辞</b>" + ZHOUYI[0].guaci + "</p><p class=\"classic\"><b>坤象传</b>" + ZHOUYI[1].xiang + "</p>";
-      }
-      var body = "<p>" + stage.text + "</p><p class=\"note\">阅读：" + links + "</p>" + quote;
-      if (!open) {
-        body += "<p>上一段达到 80% 之后，这一段才打开。</p>";
-      } else {
-        body += stage.questions.map(function (q, i) {
-          var options = q[1].map(function (text, k) {
-            return '<label><input type="radio" name="s' + stage.id + "q" + i + '" value="' + k + '"> ' + text + "</label>";
-          }).join("");
-          return '<div class="quiz-q"><p>' + (i + 1) + ". " + q[0] + "</p>" + options + "</div>";
-        }).join("") + '<button type="button" class="btn" data-stage="' + stage.id + '">交卷</button>';
-      }
-      var mark = ["", "壹", "贰", "叁", "肆"][stage.id];
-      return '<section class="stage-card' + (open ? "" : " stage-locked") + '" id="stage-' + stage.id + '"><div class="stage-no">' + mark + "</div><h2>" + stage.title + "</h2>" +
-        "<p class=\"note\">最好成绩：" + (best ? Math.round(best * 100) + "%" : "还没有") + "</p>" + body +
-        '<div id="result-' + stage.id + '"></div></section>';
+    var stage = stageById(focusId) || QuizData[0];
+    var open = unlocked(data, stage.id);
+    var litUntil = 0;
+    QuizData.forEach(function (item, i) { if (unlocked(data, item.id)) litUntil = i; });
+    var marks = ["", "壹", "贰", "叁", "肆"];
+    var path = QuizData.map(function (item) {
+      var best = data.passed[item.id];
+      var cls = "path-node";
+      if (!unlocked(data, item.id)) cls += " locked";
+      else cls += " lit";
+      if ((best || 0) >= 0.8) cls += " done";
+      if (item.id === stage.id) cls += " current";
+      return '<li class="path-item"><button type="button" class="' + cls + '" data-jump="' + item.id + '">' + marks[item.id] +
+        "</button><small>" + item.title + (best ? " " + Math.round(best * 100) + "%" : "") + "</small></li>";
     }).join("");
+    var fill = (litUntil / (QuizData.length - 1)) * 76;
+    var card = open ? cardHtml(stage, data) : '<p class="locked-note">上一段对到八成，这一段才打开。</p>';
+    var links = stage.links.map(function (item) {
+      return '<a href="' + item[1] + '">' + item[0] + "</a>";
+    }).join(" · ");
+    var quote = "";
+    if (stage.quote && window.ZHOUYI) {
+      quote = '<details class="fold"><summary>经文</summary><p class="classic"><b>乾卦辞</b>' + ZHOUYI[0].guaci +
+        '</p><p class="classic"><b>坤象传</b>' + ZHOUYI[1].xiang + "</p></details>";
+    }
+    box.innerHTML =
+      '<ol class="learn-path"><span class="path-line"></span><span class="path-fill" style="width:' + fill + '%"></span>' + path + "</ol>" +
+      quote + card +
+      '<p class="stage-links">阅读：' + links + "</p>";
 
     var wrong = data.wrong.slice().reverse().slice(0, 30).map(function (item) {
       return "<li>" + item.stage + " · " + item.q + "。你选了「" + item.pick + "」，答案是「" + item.answer + "」。</li>";
     }).join("");
     document.getElementById("notebook").innerHTML = wrong || "<li>还没有错题。</li>";
+
+    var face = box.querySelector(".qcard");
+    if (face && flipped) {
+      if (reduce) face.classList.add("flipped");
+      else requestAnimationFrame(function () { face.classList.add("flipped"); });
+    }
   }
 
-  box.addEventListener("click", function (event) {
-    var btn = event.target.closest("button");
-    if (!btn) return;
-    var id = +btn.getAttribute("data-stage");
-    var stage = QuizData.filter(function (item) { return item.id === id; })[0];
+  function cardHtml(stage) {
+    if (finished) {
+      var data = load();
+      var best = data.passed[stage.id] || 0;
+      var right = picks.filter(function (pick, i) { return pick === stage.questions[i][2]; }).length;
+      return '<div class="qcard-result-wrap"><p class="qcard-result">' + right + " / " + stage.questions.length +
+        "<small>" + (best >= 0.8 ? "这一段通过。" : "还不到八成，可以再来一次。") + "</small></p>" +
+        '<div class="rel-actions" style="justify-content:center"><button type="button" class="btn" data-retry="1">再来一次</button></div></div>';
+    }
+    var q = stage.questions[qIndex];
+    var options = q[1].map(function (text, k) {
+      return '<button type="button" class="choice" data-pick="' + k + '">' + text + "</button>";
+    }).join("");
+    var answer = q[1][q[2]];
+    var picked = picks[qIndex];
+    var verdict = picked === q[2] ? "对" : "答案是" + answer;
+    return '<div class="qcard"><div class="qcard-inner">' +
+      '<div class="qcard-face qcard-front"><p class="qcard-kicker">' + stage.title + " · " + (qIndex + 1) + " / " + stage.questions.length +
+      '</p><p class="qcard-q">' + q[0] + '</p><div class="qcard-opts">' + options + "</div></div>" +
+      '<div class="qcard-face qcard-back"><p class="qcard-result">' + verdict +
+      "<small>" + q[0] + "</small></p></div></div>" +
+      '<div class="qcard-actions"><button type="button" class="btn" data-next="1">' +
+      (qIndex + 1 >= stage.questions.length ? "看成绩" : "下一题") + "</button></div></div>";
+  }
+
+  function finish(stage) {
     var data = load();
     var right = 0;
     var fresh = [];
     stage.questions.forEach(function (q, i) {
-      var picked = box.querySelector('input[name="s' + id + "q" + i + '"]:checked');
-      var index = picked ? +picked.value : -1;
+      var index = typeof picks[i] === "number" ? picks[i] : -1;
       if (index === q[2]) right += 1;
       else fresh.push({ stage: stage.title, q: q[0], pick: index < 0 ? "未选" : q[1][index], answer: q[1][q[2]] });
     });
     var score = right / stage.questions.length;
-    data.passed[id] = Math.max(data.passed[id] || 0, score);
+    data.passed[stage.id] = Math.max(data.passed[stage.id] || 0, score);
     fresh.forEach(function (item) { data.wrong.push(item); });
     save(data);
-    var message = '<p class="score">' + right + " / " + stage.questions.length +
-      (score >= 0.8 ? "，这一段通过。" : "，还不到 80%。可以再看一遍上面的页面。") + "</p>";
+    finished = true;
+    flipped = false;
     render();
-    var slot = document.getElementById("result-" + id);
-    if (slot) slot.innerHTML = message;
+  }
+
+  box.addEventListener("click", function (event) {
+    var jump = event.target.closest("[data-jump]");
+    if (jump) {
+      focusId = +jump.getAttribute("data-jump");
+      resetRound();
+      render();
+      return;
+    }
+    var retry = event.target.closest("[data-retry]");
+    if (retry) {
+      resetRound();
+      render();
+      return;
+    }
+    var next = event.target.closest("[data-next]");
+    if (next) {
+      var stage = stageById(focusId);
+      if (qIndex + 1 >= stage.questions.length) finish(stage);
+      else {
+        qIndex += 1;
+        flipped = false;
+        render();
+      }
+      return;
+    }
+    var pick = event.target.closest("[data-pick]");
+    if (!pick || flipped || finished) return;
+    picks[qIndex] = +pick.getAttribute("data-pick");
+    flipped = true;
+    render();
   });
 
   document.getElementById("clear-progress").addEventListener("click", function () {
     localStorage.removeItem(KEY);
+    focusId = 1;
+    resetRound();
     render();
   });
   render();

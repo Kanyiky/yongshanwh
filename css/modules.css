@@ -965,3 +965,37 @@ label.check {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+@keyframes tile-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .visual-grid > .visual-tile {
+    animation: tile-rise 460ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  .visual-grid > .visual-tile:nth-child(2) { animation-delay: 70ms; }
+  .visual-grid > .visual-tile:nth-child(3) { animation-delay: 140ms; }
+  .visual-grid > .visual-tile:nth-child(4) { animation-delay: 210ms; }
+  .visual-grid > .visual-tile:nth-child(5) { animation-delay: 280ms; }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .visual-tile {
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.35s ease-out;
+  }
+
+  .visual-tile .tile-art svg {
+    transition: transform 0.4s ease-out;
+  }
+
+  .visual-tile:hover {
+    transform: translateY(-3px);
+  }
+
+  .visual-tile:hover .tile-art svg {
+    transform: translateY(-5px);
+  }
+}

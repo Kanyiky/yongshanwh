@@ -7,6 +7,7 @@
   <meta name="description" content="用固定例子核对八字、紫微、六爻、六壬和真太阳时。不过的条目会写出期望和实际。" />
   <link rel="canonical" href="https://yongshanwh.com/xuanji/verify/" />
   <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/nav-transition.css" />
   <link rel="stylesheet" href="../../css/modules.css" />
 </head>
 <body>
@@ -55,5 +56,6 @@
       return '<div class="test-row' + (row.ok ? "" : " bad") + '">' + (row.ok ? "通过" : "失败") + " · " + row.name + (row.detail && !row.ok ? " · " + row.detail : "") + "</div>";
     }).join("");
   </script>
+  <script src="../../js/nav-transition.js"></script>
 </body>
 </html>
