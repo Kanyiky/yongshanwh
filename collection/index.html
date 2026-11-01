@@ -1,125 +1,438 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>五术典藏_古籍典籍与传统文化资源库_庸善文化</title>
+
   <meta name="description" content="庸善文化五术典藏，收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。" />
+
   <link rel="canonical" href="https://yongshanwh.com/collection/" />
   <link rel="stylesheet" href="../css/style.css" />
+
   <style>
-    /* 古朴极简分类样式 */
-    .category-section {
-      margin-bottom: 48px;
-    }
-    .category-title {
-      font-size: 13px;
-      letter-spacing: 4px;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-      opacity: 0.7;
-    }
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .category-grid.second-row {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .category-card {
-      background: transparent;
-      border: none;
-      padding: 18px 10px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .category-card h2 {
-      font-size: 17px;
-      letter-spacing: 6px;
-      font-weight: 400;
-      transition: all 0.3s ease;
-    }
-    .category-card:hover h2 {
-      letter-spacing: 8px;
-      opacity: 0.75;
-    }
-    .category-card::after {
-      content: "";
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      width: 0;
-      height: 1px;
-      background: var(--text);
-      opacity: 0.3;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-    .category-card:hover::after {
-      width: 24px;
+    /* ==============================
+       页面整体
+    ============================== */
+
+    .main {
+      max-width: 1120px;
+      margin: 0 auto;
     }
 
-    /* 资源列表微调 */
-    .resource-section-title {
+    .page-header {
+      margin-bottom: 34px;
+    }
+
+    .page-header h1 {
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: 5px;
+      margin-bottom: 12px;
+    }
+
+    .page-header .subtitle {
       font-size: 13px;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       color: var(--text-secondary);
       margin-bottom: 20px;
-      opacity: 0.7;
     }
-    .resource-card {
-      background: transparent;
-      border-radius: 0;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(73,55,42,0.08);
-      box-shadow: none;
+
+    .page-header .intro {
+      max-width: 700px;
+      font-size: 14px;
+      line-height: 2;
+      color: var(--text-secondary);
     }
-    .resource-card:hover {
-      transform: none;
-      box-shadow: none;
-      background: rgba(73,55,42,0.015);
+
+    /* ==============================
+       搜索框
+    ============================== */
+
+    .search-box {
+      position: relative;
+      margin: 30px 0 46px;
     }
-    .resource-card h3 {
+
+    .search-box input {
+      width: 100%;
+      height: 48px;
+      box-sizing: border-box;
+      padding: 0 18px 0 44px;
+      border: 1px solid rgba(73,55,42,0.15);
+      border-radius: 3px;
+      outline: none;
+      background: rgba(255,255,255,0.35);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color .25s, background .25s;
+    }
+
+    .search-box::before {
+      content: "⌕";
+      position: absolute;
+      left: 17px;
+      top: 8px;
+      font-size: 24px;
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .search-box input:focus {
+      border-color: rgba(73,55,42,0.4);
+      background: rgba(255,255,255,0.7);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-secondary);
+      opacity: .65;
+    }
+
+    /* ==============================
+       分类区域
+    ============================== */
+
+    .category-section {
+      margin-bottom: 58px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
       font-size: 16px;
-      letter-spacing: 1px;
       font-weight: 500;
+      letter-spacing: 3px;
+      color: var(--text);
+      margin: 0;
     }
-    .resource-card .meta {
+
+    .section-heading span {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      opacity: .65;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    /* 分类卡片 */
+
+    .category-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 116px;
+      box-sizing: border-box;
+      padding: 17px 19px;
+      overflow: hidden;
+
+      color: var(--text);
+      text-decoration: none;
+
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(73,55,42,0.13);
+      border-radius: 3px;
+
+      transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .category-card:hover {
+      background: rgba(255,255,255,0.65);
+      border-color: rgba(73,55,42,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(50,35,20,0.055);
+    }
+
+    .category-card:focus-visible {
+      outline: 2px solid var(--text-secondary);
+      outline-offset: 3px;
+    }
+
+    .category-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .category-number {
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      opacity: .65;
+    }
+
+    .category-symbol {
+      font-family: "Noto Serif SC", "Songti SC", serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      opacity: .65;
+    }
+
+    .category-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .category-name {
+      font-family: "Noto Serif SC", "Songti SC", serif;
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      line-height: 1.4;
+    }
+
+    .category-desc {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      opacity: .72;
+    }
+
+    .category-arrow {
+      font-family: Georgia, serif;
+      font-size: 19px;
+      line-height: 1;
+      color: var(--text-secondary);
+      opacity: .55;
+      transition: transform .25s, opacity .25s;
+    }
+
+    .category-card:hover .category-arrow {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+
+    /* ==============================
+       资源列表
+    ============================== */
+
+    .resource-section {
+      margin-top: 10px;
+    }
+
+    .resource-section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 5px;
+      border-bottom: 1px solid rgba(73,55,42,0.15);
+      font-size: 16px;
+      letter-spacing: 3px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .resource-count {
       font-size: 12px;
       letter-spacing: 1px;
+      color: var(--text-secondary);
+      font-weight: 400;
     }
+
+    .resource-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+
+      padding: 23px 10px;
+      border-bottom: 1px solid rgba(73,55,42,0.09);
+
+      background: transparent;
+      transition: background .2s ease;
+    }
+
+    .resource-card:hover {
+      background: rgba(73,55,42,0.025);
+    }
+
+    .resource-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 9px;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: 500;
+      letter-spacing: .5px;
+      color: var(--text);
+    }
+
+    .resource-card .meta {
+      margin-bottom: 8px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+    }
+
     .resource-card .desc {
       font-size: 13px;
-      line-height: 1.7;
-      opacity: 0.75;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      opacity: .85;
     }
+
+    .resource-actions {
+      flex-shrink: 0;
+    }
+
     .btn-primary {
+      display: inline-block;
+      padding: 8px 17px;
+      border: 1px solid rgba(73,55,42,0.25);
+      border-radius: 2px;
+
       background: transparent;
       color: var(--text);
-      border: 1px solid rgba(73,55,42,0.25);
-      font-size: 13px;
-      letter-spacing: 2px;
-      padding: 6px 16px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-decoration: none;
+
+      transition: all .2s ease;
     }
+
     .btn-primary:hover {
       background: var(--text);
       color: var(--bg);
       border-color: var(--text);
     }
+
+    .empty-state {
+      padding: 50px 10px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-secondary);
+      opacity: .75;
+    }
+
+    /* ==============================
+       平板适配
+    ============================== */
+
+    @media (max-width: 900px) {
+      .category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 11px;
+      }
+
+      .category-card {
+        min-height: 108px;
+        padding: 15px;
+      }
+    }
+
+    /* ==============================
+       手机适配
+    ============================== */
+
+    @media (max-width: 600px) {
+      .page-header h1 {
+        font-size: 25px;
+      }
+
+      .page-header .intro {
+        font-size: 13px;
+      }
+
+      .search-box {
+        margin: 25px 0 35px;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .category-card {
+        min-height: 105px;
+        padding: 13px 14px;
+      }
+
+      .category-name {
+        font-size: 18px;
+        letter-spacing: 3px;
+      }
+
+      .category-desc {
+        font-size: 10px;
+      }
+
+      .category-section {
+        margin-bottom: 42px;
+      }
+
+      .resource-card {
+        align-items: flex-start;
+        gap: 10px;
+        padding: 19px 2px;
+      }
+
+      .resource-card h3 {
+        font-size: 14px;
+      }
+
+      .resource-card .desc {
+        font-size: 12px;
+      }
+
+      .resource-actions {
+        padding-top: 2px;
+      }
+
+      .btn-primary {
+        padding: 7px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .category-card {
+        padding: 11px;
+      }
+
+      .category-name {
+        font-size: 16px;
+        letter-spacing: 2px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="app">
+
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-name">庸善文化</div>
         <div class="brand-line"></div>
       </div>
+
       <nav class="nav">
         <a class="nav-item" href="../">首页</a>
         <a class="nav-item active" href="./">五术典藏</a>
@@ -129,87 +442,199 @@
     </aside>
 
     <main class="main">
+
+      <!-- 页面介绍 -->
       <div class="page-header">
         <h1>五术典藏</h1>
         <p class="subtitle">汇古籍典藏，集百家之学</p>
         <p class="intro">
-          天地之间，学问万端。上穷玄理，下及百工，近察己身，远图生计。今分九类，以便采撷，各有所归，各有所用。
+          天地之间，学问万端。上穷玄理，下及百工，近察己身，远图生计。
+          今分九类，以便采撷，各有所归，各有所用。
         </p>
       </div>
 
+      <!-- 搜索 -->
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="搜索资源名称或简介关键词..." />
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="搜索资源名称或简介关键词..."
+          aria-label="搜索资源"
+        />
       </div>
 
       <!-- 分类 -->
-      <div class="category-section">
-        <div class="category-title">资源分类</div>
-        <div class="category-grid" id="categoryRow1"></div>
-        <div class="category-grid second-row" id="categoryRow2"></div>
-      </div>
+      <section class="category-section">
+
+        <div class="section-heading">
+          <h2>资源分类</h2>
+          <span>COLLECTION · 09</span>
+        </div>
+
+        <div class="category-grid" id="categoryGrid"></div>
+
+      </section>
 
       <!-- 全部资源 -->
-      <div class="resource-section-title">全部资源</div>
-      <div class="resource-list" id="resourceList"></div>
+      <section class="resource-section">
+
+        <div class="resource-section-title">
+          <span>全部资源</span>
+          <span class="resource-count" id="resourceCount"></span>
+        </div>
+
+        <div class="resource-list" id="resourceList"></div>
+
+      </section>
+
     </main>
   </div>
 
+  <!-- 数据文件 -->
   <script src="../js/data.js"></script>
+
   <script>
-    function renderCategories() {
-      const row1 = document.getElementById('categoryRow1');
-      const row2 = document.getElementById('categoryRow2');
-      
-      const firstRow = ["shan", "yi", "ming", "xiang", "bu"];
-      const secondRow = ["qiyi", "chuangye", "jiaocheng", "xuexi"];
+    // 分类辅助说明
+    const categoryDescriptions = {
+      shan: "修身养性 · 传统修习",
+      yi: "中医典籍 · 养生医理",
+      ming: "生辰命理 · 五行术数",
+      xiang: "人相手相 · 堪舆地理",
+      bu: "卦象占筮 · 趋吉避凶",
+      qiyi: "奇闻异录 · 百家博览",
+      chuangye: "轻资创业 · 副业经营",
+      jiaocheng: "实用技能 · AI教程",
+      xuexi: "考试资料 · 学习提升"
+    };
 
-      row1.innerHTML = firstRow.map(key => {
-        const cat = categories.find(c => c.key === key);
-        return `<a href="${cat.key}/" class="category-card"><h2>${cat.name}</h2></a>`;
-      }).join('');
+    // 分类顺序
+    const categoryOrder = [
+      "shan",
+      "yi",
+      "ming",
+      "xiang",
+      "bu",
+      "qiyi",
+      "chuangye",
+      "jiaocheng",
+      "xuexi"
+    ];
 
-      row2.innerHTML = secondRow.map(key => {
-        const cat = categories.find(c => c.key === key);
-        return `<a href="${cat.key}/" class="category-card"><h2>${cat.name}</h2></a>`;
-      }).join('');
+    // 防止数据没有加载
+    if (
+      typeof categories === "undefined" ||
+      typeof resources === "undefined"
+    ) {
+      document.getElementById("resourceList").innerHTML =
+        '<div class="empty-state">资源数据加载失败，请检查 data.js 文件路径。</div>';
+      throw new Error("资源数据未正确加载，请检查 data.js");
     }
 
+    // 渲染分类
+    function renderCategories() {
+      const container = document.getElementById("categoryGrid");
+
+      const sortedCategories = categoryOrder
+        .map(key => categories.find(cat => cat.key === key))
+        .filter(Boolean);
+
+      container.innerHTML = sortedCategories.map((cat, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        const description =
+          categoryDescriptions[cat.key] || "典藏资源 · 分类浏览";
+
+        return `
+          <a href="${cat.key}/" class="category-card">
+            <div class="category-top">
+              <span class="category-number">${number}</span>
+              <span class="category-symbol">典藏</span>
+            </div>
+
+            <div class="category-bottom">
+              <div>
+                <div class="category-name">${cat.name}</div>
+                <span class="category-desc">${description}</span>
+              </div>
+
+              <span class="category-arrow">→</span>
+            </div>
+          </a>
+        `;
+      }).join("");
+
+      if (sortedCategories.length === 0) {
+        container.innerHTML =
+          '<div class="empty-state">暂时没有分类数据</div>';
+      }
+    }
+
+    // 渲染资源
     function renderResources(list) {
-      const container = document.getElementById('resourceList');
+      const container = document.getElementById("resourceList");
+      const count = document.getElementById("resourceCount");
+
+      count.textContent = `共 ${list.length} 项`;
+
       if (list.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-aux); padding:40px 0; opacity:0.6;">暂无匹配的资源</p>';
+        container.innerHTML =
+          '<div class="empty-state">没有找到匹配的资源</div>';
         return;
       }
+
       container.innerHTML = list.map(item => `
         <div class="resource-card">
+
           <div class="resource-info">
             <h3>${item.title}</h3>
             <div class="meta">${item.categoryName}</div>
             <div class="desc">${item.desc}</div>
           </div>
+
           <div class="resource-actions">
-            <a href="${item.link}" target="_blank" rel="noopener" class="btn btn-primary">获取资源</a>
+            <a
+              href="${item.link}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+            >获取资源</a>
           </div>
+
         </div>
-      `).join('');
+      `).join("");
     }
 
-    document.getElementById('searchInput').addEventListener('input', function(e) {
-      const keyword = e.target.value.trim().toLowerCase();
-      if (!keyword) {
-        renderResources(resources);
-        return;
-      }
-      const filtered = resources.filter(r => 
-        r.title.toLowerCase().includes(keyword) || 
-        r.desc.toLowerCase().includes(keyword) ||
-        r.categoryName.includes(keyword)
-      );
-      renderResources(filtered);
-    });
+    // 搜索功能
+    document.getElementById("searchInput")
+      .addEventListener("input", function(event) {
 
+        const keyword = event.target.value
+          .trim()
+          .toLowerCase();
+
+        if (!keyword) {
+          renderResources(resources);
+          return;
+        }
+
+        const filtered = resources.filter(item => {
+          const title = String(item.title || "").toLowerCase();
+          const desc = String(item.desc || "").toLowerCase();
+          const category = String(item.categoryName || "").toLowerCase();
+
+          return (
+            title.includes(keyword) ||
+            desc.includes(keyword) ||
+            category.includes(keyword)
+          );
+        });
+
+        renderResources(filtered);
+      });
+
+    // 初始化
     renderCategories();
     renderResources(resources);
   </script>
+
 </body>
 </html>
