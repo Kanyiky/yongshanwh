@@ -27,25 +27,27 @@
       <header class="page-header">
         <h1>五行解析</h1>
         <p class="subtitle">生克 · 对应 · 旺相休囚死</p>
-        <p class="intro">实线顺着生，虚线是克。点一个字，相关的线会加重。</p>
       </header>
+      <details class="fold">
+        <summary>说明</summary>
+        <p>实线顺着生，虚线是克。点一个字，相关的线会加重。</p>
+        <p class="classic">生和克同时看，叫制化。只生不克会过，只克不生会绝。例如木克土，火是木所生，又能生土，火就把木的克泄出去，土也不至于被克尽。水克火时，土能克水，又能被火所生，同样是一边制约、一边接住。</p>
+        <p>这里只说明这个关系，不据此推断人事吉凶。</p>
+      </details>
       <div class="wuxing-layout">
         <div id="wx-svg"></div>
         <div id="wx-text" class="explain"></div>
       </div>
       <section class="panel">
         <h2>旺相休囚死</h2>
-        <label class="field">季节
-          <select id="season">
-            <option>春</option><option>夏</option><option>秋</option><option>冬</option><option>四季</option>
-          </select>
-        </label>
+        <div class="tool-form compact-form">
+          <label class="field">季节
+            <select id="season">
+              <option>春</option><option>夏</option><option>秋</option><option>冬</option><option>四季</option>
+            </select>
+          </label>
+        </div>
         <div id="wang"></div>
-      </section>
-      <section class="panel">
-        <h2>制化</h2>
-        <p class="classic">生和克同时看，叫制化。只生不克会过，只克不生会绝。例如木克土，火是木所生，又能生土，火就把木的克泄出去，土也不至于被克尽。水克火时，土能克水，又能被火所生，同样是一边制约、一边接住。</p>
-        <p class="note">这里只说明这个关系，不据此推断人事吉凶。</p>
       </section>
       <a class="back-link" href="../">← 返回易理明辨</a>
     </main>

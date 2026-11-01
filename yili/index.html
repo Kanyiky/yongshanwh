@@ -27,17 +27,101 @@
       <header class="page-header">
         <h1>易理明辨</h1>
         <p class="subtitle">探易理之本，明五术之源</p>
-        <p class="intro">知其理，明其源。这一栏只讲原理：卦怎么来、五行怎么生克、干支怎么配。不在这里排八字，也不把工具再做一遍。</p>
       </header>
-      <div class="module-grid">
-        <a class="module-card" href="gua/"><span class="no">壹</span><h2>六十四卦</h2><p>文王卦序和八宫可以切换。点开一卦，看卦画、经文，以及算出来的错综互变。</p></a>
-        <a class="module-card" href="wuxing/"><span class="no">贰</span><h2>五行解析</h2><p>点金木水火土，看谁生它、它生谁、谁克它、它克谁，并对照季节旺衰。</p></a>
-        <a class="module-card" href="ganzhi/"><span class="no">叁</span><h2>天干地支</h2><p>十干十二支的阴阳五行、合冲刑害，六十甲子纳音，以及按立春查年柱。</p></a>
-        <a class="module-card" href="dianji/"><span class="no">肆</span><h2>典籍进阶</h2><p>从入门到综合，读本站已有的内容，做能核对的题目。进度只留在这台浏览器。</p></a>
+      <details class="fold">
+        <summary>说明</summary>
+        <p>知其理，明其源。这一栏只讲原理：卦怎么来、五行怎么生克、干支怎么配。不在这里排八字，也不把工具再做一遍。</p>
+      </details>
+      <div class="visual-grid">
+        <a class="visual-tile" href="gua/">
+          <span class="tile-art" aria-hidden="true">
+            <svg viewBox="0 0 200 160">
+              <circle cx="100" cy="80" r="68" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+              <g stroke="currentColor" stroke-width="4">
+                <line x1="64" x2="136" y1="42" y2="42"/>
+                <line x1="64" x2="92" y1="58" y2="58"/>
+                <line x1="108" x2="136" y1="58" y2="58"/>
+                <line x1="64" x2="136" y1="74" y2="74"/>
+                <line x1="64" x2="92" y1="90" y2="90"/>
+                <line x1="108" x2="136" y1="90" y2="90"/>
+                <line x1="64" x2="136" y1="106" y2="106"/>
+                <line x1="64" x2="136" y1="122" y2="122"/>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-title">六十四卦</span>
+          <span class="tile-line">卦画 · 经文 · 错综互变</span>
+        </a>
+        <a class="visual-tile" href="wuxing/">
+          <span class="tile-art" aria-hidden="true">
+            <svg viewBox="0 0 200 160">
+              <polygon points="100,24 150,58 132,124 68,124 50,58" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <g stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3" opacity="0.8">
+                <line x1="100" y1="24" x2="132" y2="124"/>
+                <line x1="132" y1="124" x2="50" y2="58"/>
+                <line x1="50" y1="58" x2="150" y2="58"/>
+                <line x1="150" y1="58" x2="68" y2="124"/>
+                <line x1="68" y1="124" x2="100" y2="24"/>
+              </g>
+              <g fill="currentColor" font-size="16" text-anchor="middle" dominant-baseline="central">
+                <text x="100" y="24">火</text>
+                <text x="156" y="60">土</text>
+                <text x="136" y="132">金</text>
+                <text x="64" y="132">水</text>
+                <text x="42" y="60">木</text>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-title">五行解析</span>
+          <span class="tile-line">生克 · 对应 · 旺相休囚死</span>
+        </a>
+        <a class="visual-tile" href="ganzhi/">
+          <span class="tile-art" aria-hidden="true">
+            <svg viewBox="0 0 200 160">
+              <circle cx="100" cy="80" r="28" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+              <circle cx="100" cy="80" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
+              <g fill="currentColor" font-size="14" text-anchor="middle" dominant-baseline="central">
+                <text x="100" y="22">子</text>
+                <text x="129" y="30">丑</text>
+                <text x="151" y="51">寅</text>
+                <text x="158" y="80">卯</text>
+                <text x="151" y="109">辰</text>
+                <text x="129" y="130">巳</text>
+                <text x="100" y="138">午</text>
+                <text x="71" y="130">未</text>
+                <text x="49" y="109">申</text>
+                <text x="42" y="80">酉</text>
+                <text x="49" y="51">戌</text>
+                <text x="71" y="30">亥</text>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-title">天干地支</span>
+          <span class="tile-line">十干 · 十二支 · 六十甲子</span>
+        </a>
+        <a class="visual-tile" href="dianji/">
+          <span class="tile-art" aria-hidden="true">
+            <svg viewBox="0 0 200 160">
+              <g fill="none" stroke="currentColor" stroke-width="1.2">
+                <rect x="28" y="78" width="30" height="52"/>
+                <rect x="66" y="58" width="30" height="72"/>
+                <rect x="104" y="40" width="30" height="90"/>
+                <rect x="142" y="22" width="30" height="108"/>
+              </g>
+              <g fill="currentColor" font-size="14" text-anchor="middle">
+                <text x="43" y="110">壹</text>
+                <text x="81" y="102">贰</text>
+                <text x="119" y="94">叁</text>
+                <text x="157" y="86" fill="var(--accent)">肆</text>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-title">典籍进阶</span>
+          <span class="tile-line">入门 · 基础 · 进阶 · 深入</span>
+        </a>
       </div>
       <a class="back-link" href="../">← 返回首页</a>
     </main>
   </div>
-  
 </body>
 </html>

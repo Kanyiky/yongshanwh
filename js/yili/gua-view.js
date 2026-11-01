@@ -6,19 +6,27 @@
 
   function cell(gua) {
     return '<button type="button" class="hex-btn" data-n="' + gua.n + '">' +
-      drawGua(gua.lines, { width: 36, stroke: 2, gap: 3 }) +
+      drawGua(gua.lines, { width: 46, stroke: 2.5, gap: 3.5 }) +
       "<span>" + gua.name + "</span><small>" + gua.n + "</small></button>";
+  }
+
+  function highlight(n) {
+    document.querySelectorAll(".hex-btn").forEach(function (btn) {
+      btn.classList.toggle("on", String(n) === btn.getAttribute("data-n"));
+    });
   }
 
   function renderBoard() {
     if (mode === "wen") {
       board.innerHTML = '<div class="hex-grid">' + ZHOUYI.map(cell).join("") + "</div>";
-      return;
+    } else {
+      board.innerHTML = '<div class="palace-board">' + GuaLogic.PALACES.map(function (palace) {
+        var cards = palace.names.map(function (name) { return cell(GuaLogic.byName(name)); }).join("");
+        return '<section class="palace-col"><h3>' + palace.name + "宫 · " + palace.element + "</h3><div class=\"hex-grid\">" + cards + "</div></section>";
+      }).join("") + "</div>";
     }
-    board.innerHTML = '<div class="palace-board">' + GuaLogic.PALACES.map(function (palace) {
-      var cards = palace.names.map(function (name) { return cell(GuaLogic.byName(name)); }).join("");
-      return '<section class="palace-col"><h3>' + palace.name + "宫 · " + palace.element + "</h3><div class=\"hex-grid\">" + cards + "</div></section>";
-    }).join("") + "</div>";
+    var n = parseInt(location.hash.slice(1), 10);
+    if (n >= 1 && n <= 64) highlight(n);
   }
 
   function renderDetail(n) {
@@ -39,8 +47,9 @@
     var zong = GuaLogic.byLines(GuaLogic.zong(gua.lines));
     var zongNote = zong.n === gua.n ? "综卦即本卦" : "综卦 " + zong.name;
     detail.hidden = false;
+    highlight(n);
     detail.innerHTML =
-      '<div class="detail-head">' + drawGua(gua.lines, { width: 72, stroke: 3, gap: 6 }) +
+      '<div class="detail-head">' + drawGua(gua.lines, { width: 96, stroke: 4, gap: 7 }) +
       "<div><h2>" + gua.name + "</h2><p class=\"meta-line\">文王卦序 " + gua.n +
       " · 下" + gua.lower + "（" + GuaLogic.trigramName(lowerBits) + "）上" + gua.upper +
       "（" + GuaLogic.trigramName(upperBits) + "）</p></div></div>" +
@@ -48,13 +57,14 @@
       '<p class="classic"><b>彖传</b>' + gua.tuan + "</p>" +
       '<p class="classic"><b>象传</b>' + gua.xiang + "</p>" +
       yaos + variants +
-      '<p class="plain"><b>白话释义</b>' + (bai || "待补") + "</p>" +
       '<div class="rel-list">' +
       '<a href="#' + GuaLogic.byLines(GuaLogic.cuo(gua.lines)).n + '">错卦 ' + GuaLogic.byLines(GuaLogic.cuo(gua.lines)).name + "</a>" +
       '<a href="#' + zong.n + '">' + zongNote + "</a>" +
       '<a href="#' + GuaLogic.byLines(GuaLogic.hu(gua.lines)).n + '">互卦 ' + GuaLogic.byLines(GuaLogic.hu(gua.lines)).name + "</a>" +
       changes + "</div>" +
-      '<p class="note">错卦是阴阳对调，综卦是上下颠倒，互卦取二三四爻为下卦、三四五爻为上卦。变卦每次只改一爻。这些都按爻象计算，不另编卦名。</p>';
+      '<details class="fold"><summary>白话与算法</summary>' +
+      '<p class="plain"><b>白话释义</b>' + (bai || "待补") + "</p>" +
+      "<p>错卦是阴阳对调，综卦是上下颠倒，互卦取二三四爻为下卦、三四五爻为上卦。变卦每次只改一爻。这些都按爻象计算，不另编卦名。</p></details>";
     detail.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 

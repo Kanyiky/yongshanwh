@@ -27,17 +27,21 @@
       <header class="page-header">
         <h1>天干地支</h1>
         <p class="subtitle">十干 · 十二支 · 六十甲子</p>
-        <p class="intro">点一个字，看它的属性和跟谁有关系。年柱在立春交换，不是正月初一。</p>
       </header>
-      <div id="picker">
+      <details class="fold">
+        <summary>说明</summary>
+        <p>点一个字，看它的属性和跟谁有关系。年柱在立春交换，不是正月初一。</p>
+      </details>
+      <div class="gz-wheel" id="picker">
         <div class="stem-row" id="stems"></div>
         <div class="stem-row" id="branches"></div>
+        <div class="gz-hub">干支</div>
       </div>
       <div id="gz-detail" class="panel explain"></div>
-      <section class="panel">
-        <h2>六十甲子</h2>
+      <details class="fold">
+        <summary>六十甲子</summary>
         <div class="jiazi" id="jiazi"></div>
-      </section>
+      </details>
       <section class="panel">
         <h2>由日期看年柱</h2>
         <form id="year-form" class="tool-form">

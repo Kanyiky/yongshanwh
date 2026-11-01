@@ -49,13 +49,15 @@
           return "<div><b>" + row.order + " " + row.branch + "</b><div>" + row.general + " · " + row.kin + " · " + row.element + "</div></div>";
         }).join("");
       out.innerHTML =
+        '<h2 class="block-title">' + (result.method || "未能定课") + "</h2>" +
+        '<div class="ke-board"><section><h3 class="block-title">三传</h3><div class="chuan">' + chuan + "</div></section>" +
+        '<section><h3 class="block-title">四课</h3><div class="ke-grid">' + lessons + "</div></section></div>" +
+        '<h3 class="block-title">天地盘</h3><div class="sky-grid">' + sky + "</div>" +
+        '<details class="fold"><summary>说明</summary>' +
         "<p>" + ec.getYear() + "年 " + ec.getMonth() + "月 " + ec.getDay() + "日 " + ec.getTime() + "时。占时取" + hour + "（" + h + "时）。</p>" +
         "<p>月将 " + jiang.jiang + "，自中气「" + jiang.name + "」" + jiang.solar.toYmdHms() + " 换将。贵人用" + (result.noble.day ? "昼贵" : "夜贵") + result.noble.noble + "，加在地盘" + result.noble.seat + "，天将" + (result.noble.forward ? "顺" : "逆") + "布。</p>" +
-        "<h3 class=\"block-title\">" + (result.method || "未能定课") + "</h3>" +
-        (result.note ? "<p class=\"note\">" + result.note + "</p>" : "") +
-        '<div class="chuan">' + chuan + "</div>" +
-        "<h3 class=\"block-title\">四课</h3><div class=\"ke-grid\">" + lessons + "</div>" +
-        "<h3 class=\"block-title\">天地盘</h3><p class=\"note\">上为天盘，中为地盘，下为天将。</p><div class=\"sky-grid\">" + sky + "</div>";
+        (result.note ? "<p>" + result.note + "</p>" : "") +
+        "<p>天地盘上为天盘，中为地盘，下为天将。</p></details>";
     } catch (error) {
       out.innerHTML = "<p class=\"result-miss\">排不出来：" + error.message + "</p>";
     }

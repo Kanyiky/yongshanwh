@@ -27,24 +27,33 @@
       <header class="page-header">
         <h1>六爻趋避</h1>
         <p class="subtitle">本卦 · 变卦 · 纳甲</p>
-        <p class="intro">卦只由六次结果决定。日期用来取日干，从而排六神，并写出当天的月日干支。</p>
       </header>
       <p class="disclaimer">结果属传统文化解释体系，非科学预测。</p>
+      <details class="fold">
+        <summary>说明</summary>
+        <p>卦只由六次结果决定。日期用来取日干，从而排六神，并写出当天的月日干支。</p>
+        <p>从初爻填到上爻。少阳、少阴不动；老阳、老阴要变。</p>
+        <p>背为阳，字为阴。三背老阳，二背一字少阳，二字一背少阴，三字老阴。每次用随机数，是演示，不是仪式。</p>
+      </details>
       <form class="tool-form" id="day-form">
         <label class="field">日期<input id="day" type="date" required></label>
         <label class="field">钟点<input id="day-hour" type="number" min="0" max="23" value="12"></label>
       </form>
-      <h2 class="block-title">手填</h2>
-      <p class="note">从初爻填到上爻。少阳、少阴不动；老阳、老阴要变。</p>
-      <div class="tool-form" id="picks"></div>
-      <button class="btn" type="button" id="manual">按手填起卦</button>
-      <h2 class="block-title">铜钱</h2>
-      <p class="note">背为阳，字为阴。三背老阳，二背一字少阳，二字一背少阴，三字老阴。每次用随机数，是演示，不是仪式。</p>
-      <p>
-        <button class="btn" type="button" id="toss">掷一爻</button>
-        <button class="btn" type="button" id="reset-toss">重来</button>
-      </p>
-      <div id="toss-list"></div>
+      <div class="cast-board">
+        <section>
+          <h2 class="block-title">手填</h2>
+          <div class="tool-form" id="picks"></div>
+          <button class="btn" type="button" id="manual">按手填起卦</button>
+        </section>
+        <section>
+          <h2 class="block-title">铜钱</h2>
+          <p>
+            <button class="btn" type="button" id="toss">掷一爻</button>
+            <button class="btn" type="button" id="reset-toss">重来</button>
+          </p>
+          <div id="toss-list"></div>
+        </section>
+      </div>
       <div id="ly-out"></div>
       <a class="back-link" href="../">← 返回五术玄机</a>
     </main>

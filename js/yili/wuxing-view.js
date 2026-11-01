@@ -45,16 +45,18 @@
       "<h3>" + el + "</h3>" +
       "<p>" + bornBy + "生" + el + "，" + el + "生" + births + "。</p>" +
       "<p>" + controlledBy + "克" + el + "，" + el + "克" + controls + "。</p>" +
-      "<p>色 " + info.color + "，方 " + info.direction + "，时 " + info.season + "。脏腑 " + info.organ +
-      "，体 " + info.body + "。德 " + info.virtue + "，音 " + info.tone + "。天干 " + info.stem + "，地支 " + info.branch + "。</p>";
+      '<details class="fold"><summary>对应</summary><p>色 ' + info.color + "，方 " + info.direction + "，时 " + info.season + "。脏腑 " + info.organ +
+      "，体 " + info.body + "。德 " + info.virtue + "，音 " + info.tone + "。天干 " + info.stem + "，地支 " + info.branch + "。</p></details>";
   }
 
   function renderWang() {
     var season = document.getElementById("season").value;
     var map = T.WANG[season];
-    document.getElementById("wang").innerHTML = "<table class=\"data-table\"><tr><th>五行</th><th>状态</th></tr>" +
-      T.ELEMENTS.map(function (el) { return "<tr><td>" + el + "</td><td>" + map[el] + "</td></tr>"; }).join("") +
-      "</table><p class=\"note\">当令的为旺，我生的为相，生我的为休，克我的为囚，我克的为死。春指寅卯月，夏巳午月，秋申酉月，冬亥子月。四季指辰戌丑未月，土旺。</p>";
+    document.getElementById("wang").innerHTML = '<div class="wang-row">' +
+      T.ELEMENTS.map(function (el) {
+        return '<div class="wang-cell' + (map[el] === "旺" ? " hot" : "") + '"><b>' + el + "</b><span>" + map[el] + "</span></div>";
+      }).join("") +
+      '</div><details class="fold"><summary>说明</summary><p>当令的为旺，我生的为相，生我的为休，克我的为囚，我克的为死。春指寅卯月，夏巳午月，秋申酉月，冬亥子月。四季指辰戌丑未月，土旺。</p></details>';
   }
 
   document.getElementById("wx-svg").addEventListener("click", function (event) {

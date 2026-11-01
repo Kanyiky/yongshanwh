@@ -27,13 +27,14 @@
       return "<tr><td>" + row.label + (row.role ? "·" + row.role : "") + "</td><td>" + (row.yang ? "—" : "- -") + "</td><td>" + row.type + (row.moving ? " · 动" : "") + "</td><td>" + row.najia + "</td><td>" + row.liuqin + "</td><td>" + row.liushen + "</td></tr>";
     }).join("");
     document.getElementById("ly-out").innerHTML =
+      '<div class="split gua-hero"><div><div>' + drawGua(cast.ben.lines, { width: 120, stroke: 6, gap: 10 }) + '</div><p class="gua-name">本卦 ' + cast.ben.name + " · " + cast.palace + "宫" + cast.palaceElement + "</p></div><div><div>" +
+      drawGua(cast.bian.lines, { width: 120, stroke: 6, gap: 10 }) + '</div><p class="gua-name">变卦 ' + cast.bian.name + (cast.same ? "（没有动爻，变卦与本卦相同）" : "") + "</p></div></div>" +
+      '<div class="chart-scroll"><table class="data-table"><tr><th>爻</th><th>画</th><th>阴阳</th><th>纳甲</th><th>六亲</th><th>六神</th></tr>' + rows + "</table></div>" +
+      '<details class="fold"><summary>说明</summary>' +
       "<p>" + how + "</p>" +
       "<p>月 " + info.month + " · 日 " + info.day + "。六神从日干" + info.stem + "起。卦本身只由下面六次决定，日期不参与成卦。</p>" +
-      '<div class="split"><div>' + drawGua(cast.ben.lines, { width: 64, stroke: 3, gap: 6 }) + "<p>本卦 " + cast.ben.name + " · " + cast.palace + "宫" + cast.palaceElement + "</p></div><div>" +
-      drawGua(cast.bian.lines, { width: 64, stroke: 3, gap: 6 }) + "<p>变卦 " + cast.bian.name + (cast.same ? "（没有动爻，变卦与本卦相同）" : "") + "</p></div></div>" +
       "<p>动爻：" + (cast.moving.length ? cast.moving.join("、") : "无") + "。老阳变阴，老阴变阳。</p>" +
-      '<table class="data-table"><tr><th>爻</th><th>画</th><th>阴阳</th><th>纳甲</th><th>六亲</th><th>六神</th></tr>' + rows + "</table>" +
-      "<p class=\"note\">世应、纳甲用京房八宫。六亲以卦宫五行为我：同我兄弟，我生子孙，生我父母，克我官鬼，我克妻财。</p>";
+      "<p>世应、纳甲用京房八宫。六亲以卦宫五行为我：同我兄弟，我生子孙，生我父母，克我官鬼，我克妻财。</p></details>";
   }
 
   document.getElementById("manual").addEventListener("click", function () {

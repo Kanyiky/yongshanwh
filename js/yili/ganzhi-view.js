@@ -12,6 +12,18 @@
     return '<button type="button" class="stem-btn" data-kind="branch" data-name="' + s.name + '"><span>' + s.name + '</span><small>' + s.element + "</small></button>";
   }).join("");
 
+  function placeRing(box, radius) {
+    var buttons = box.querySelectorAll(".stem-btn");
+    var count = buttons.length;
+    buttons.forEach(function (btn, i) {
+      var ang = (i / count) * Math.PI * 2 - Math.PI / 2;
+      btn.style.left = (50 + Math.cos(ang) * radius) + "%";
+      btn.style.top = (50 + Math.sin(ang) * radius) + "%";
+    });
+  }
+  placeRing(stemBox, 26);
+  placeRing(branchBox, 40);
+
   function mark(kind, names) {
     document.querySelectorAll('.stem-btn[data-kind="' + kind + '"]').forEach(function (btn) {
       btn.classList.toggle("on", names.indexOf(btn.getAttribute("data-name")) >= 0);
@@ -90,9 +102,10 @@
     var nayin = "";
     T.jiazi().forEach(function (item) { if (item.name === year) nayin = item.nayin; });
     document.getElementById("year-out").innerHTML =
-      "<p>年柱 <b>" + year + "</b> · " + nayin + "</p>" +
+      '<p class="year-hero">年柱 <b>' + year + "</b> · " + nayin + "</p>" +
+      '<details class="fold"><summary>说明</summary>' +
       "<p>这一年的立春是 " + lc.toYmdHms() + "。所选日期" + (before ? "还在立春之前，所以年柱仍是上一年。" : "已过立春，年柱用这一年。") + "</p>" +
-      "<p>年柱在立春交换，不是农历正月初一。比较用的是当天中午 12 点；立春若在下午，这一天的上午仍属上一年。</p>";
+      "<p>年柱在立春交换，不是农历正月初一。比较用的是当天中午 12 点；立春若在下午，这一天的上午仍属上一年。</p></details>";
   });
 
   showStem("甲");

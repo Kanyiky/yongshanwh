@@ -21,13 +21,25 @@
 
   function num(id) { return parseInt(document.getElementById(id).value, 10); }
 
-  function tally(chars) {
+  function countElements(chars) {
     var bag = { "木": 0, "火": 0, "土": 0, "金": 0, "水": 0 };
     chars.forEach(function (ch) {
       var el = GAN_W[ch] || ZHI_W[ch];
       if (el) bag[el] += 1;
     });
+    return bag;
+  }
+
+  function tally(chars) {
+    var bag = countElements(chars);
     return ["木", "火", "土", "金", "水"].map(function (el) { return el + bag[el]; }).join("  ");
+  }
+
+  function meter(chars) {
+    var bag = countElements(chars);
+    return '<div class="wx-meter">' + ["木", "火", "土", "金", "水"].map(function (el) {
+      return "<div><b>" + bag[el] + "</b><span>" + el + "</span></div>";
+    }).join("") + "</div>";
   }
 
   function render() {
@@ -74,13 +86,17 @@
       var dayun = yun.getDaYun().filter(function (dy) { return dy.getGanZhi(); }).map(function (dy) {
         return "<li>" + dy.getGanZhi() + " · " + dy.getStartYear() + "–" + dy.getEndYear() + " · " + dy.getStartAge() + "–" + dy.getEndAge() + "岁</li>";
       }).join("");
-      out.innerHTML = "<p class=\"note\">" + (note || "按所填钟点直接起四柱。") + "</p>" + table +
+      var surfaceChars = [ec.getYearGan(), ec.getYearZhi(), ec.getMonthGan(), ec.getMonthZhi(), ec.getDayGan(), ec.getDayZhi(), ec.getTimeGan(), ec.getTimeZhi()];
+      out.innerHTML = '<div class="hero-chart">' + table + "</div>" +
+        meter(surfaceChars) +
+        "<h3 class=\"block-title\">大运</h3><ol class=\"dayun-list\">" + dayun + "</ol>" +
+        '<form id="flow-form" class="tool-form"><label class="field">流年<input id="flow-year" type="number" value="' + (year + 10) + '"></label><button class="btn" type="submit">看这一年</button></form><div id="flow-out"></div>' +
+        '<details class="fold"><summary>说明</summary>' +
+        "<p>" + (note || "按所填钟点直接起四柱。") + "</p>" +
         "<p>四柱八个字：" + surface + "</p><p>地支藏干另计：" + hidden + "</p>" +
         "<p>月柱所在的节：" + jie.getName() + " " + jie.getSolar().toYmdHms() + "。年柱、月柱都按节气，不按农历初一。</p>" +
         "<p>起运：" + yun.getStartYear() + "年" + yun.getStartMonth() + "月" + yun.getStartDay() + "天，交运公历 " + yun.getStartSolar().toYmd() + "。" +
-        (document.getElementById("sect").checked ? " 23 点到 24 点仍算当天。" : " 23 点后日柱进一日。") + "</p>" +
-        "<h3 class=\"block-title\">大运</h3><ol>" + dayun + "</ol>" +
-        '<form id="flow-form" class="tool-form"><label class="field">流年<input id="flow-year" type="number" value="' + (year + 10) + '"></label><button class="btn" type="submit">看这一年</button></form><div id="flow-out"></div>';
+        (document.getElementById("sect").checked ? " 23 点到 24 点仍算当天。" : " 23 点后日柱进一日。") + "</p></details>";
       document.getElementById("flow-form").addEventListener("submit", function (event) {
         event.preventDefault();
         var want = parseInt(document.getElementById("flow-year").value, 10);
