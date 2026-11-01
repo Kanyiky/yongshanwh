@@ -33,4 +33,18 @@
     sync();
     document.body.offsetWidth;
   }, true);
+
+  var bar = document.querySelector(".sidebar");
+  var narrow = window.matchMedia("(max-width: 768px)");
+  function onScroll() {
+    if (!bar) return;
+    if (!narrow.matches || box.checked) {
+      bar.classList.remove("is-condensed");
+      return;
+    }
+    bar.classList.toggle("is-condensed", window.scrollY > 24);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  onScroll();
 })();

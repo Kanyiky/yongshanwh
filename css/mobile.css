@@ -10,7 +10,9 @@
 @media (max-width: 768px) {
   :root {
     --seal: #9c3b2a;
-    --bar-h: calc(56px + env(safe-area-inset-top, 0px));
+    --float-top: calc(8px + env(safe-area-inset-top, 0px));
+    --float-h: 52px;
+    --bar-h: calc(var(--float-top) + var(--float-h) + 14px);
   }
 
   html,
@@ -33,25 +35,40 @@
     max-width: 100%;
   }
 
-  /* 顶栏：字标 + 菜单。侧栏不再占一整列。 */
+  /* 浮在页面上的顶栏：宣纸半透明，滚动时仍停在上面。 */
   .sidebar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: var(--bar-h);
-    padding: env(safe-area-inset-top, 0px) 8px 0 20px;
+    top: var(--float-top);
+    left: 12px;
+    right: 12px;
+    width: auto;
+    height: var(--float-h);
+    padding: 0 6px 0 18px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     border-right: none;
-    border-bottom: 1px solid rgba(73, 55, 42, 0.2);
-    background: #f6f0e5;
+    border-bottom: 1px solid rgba(73, 55, 42, 0.28);
+    border-radius: 2px;
+    background: rgba(246, 240, 229, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 28px rgba(73, 55, 42, 0.06);
     overflow: visible;
     z-index: 200;
+  }
+
+  .sidebar.is-condensed {
+    --float-h: 44px;
+    height: 44px;
+    background: rgba(246, 240, 229, 0.86);
+  }
+
+  .sidebar.is-condensed .brand-name {
+    font-size: 18px;
+    letter-spacing: 0.2em;
   }
 
   .brand {
@@ -150,7 +167,7 @@
   /* 全屏宣纸菜单。四个栏目大字，中间一枚朱红印。 */
   .sidebar .nav {
     position: fixed;
-    top: var(--bar-h);
+    top: calc(var(--float-top) + var(--float-h));
     left: 0;
     right: 0;
     bottom: 0;
@@ -973,6 +990,10 @@
 }
 
 @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .sidebar {
+    transition: height 0.22s ease, background-color 0.22s ease;
+  }
+
   .sidebar .nav {
     transition: opacity 0.32s ease, visibility 0.32s ease;
   }
