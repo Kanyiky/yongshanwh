@@ -74,6 +74,7 @@
     }
     .back-link:hover { opacity: 1; }
   </style>
+  <link rel="stylesheet" href="../../css/mobile.css" />
 </head>
 <body>
   <div class="app">
@@ -82,6 +83,8 @@
         <div class="brand-name">庸善文化</div>
         <div class="brand-line"></div>
       </div>
+      <input class="nav-toggle" id="nav-toggle" type="checkbox" aria-label="菜单">
+      <label class="menu-btn" for="nav-toggle"><span></span><span></span><span class="sr">菜单</span></label>
       <nav class="nav">
         <a class="nav-item" href="../../">首页</a>
         <a class="nav-item active" href="../">五术典藏</a>
@@ -149,5 +152,6 @@
     });
   </script>
   <script src="../../js/nav-transition.js"></script>
+  <script src="../../js/mobile-nav.js"></script>
 </body>
 </html>
