@@ -4,9 +4,114 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>五术典藏_古籍典籍与传统文化资源库_庸善文化</title>
-  <meta name="description" content="庸善文化五术典藏，收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。汇古籍典藏，集百家之学。" />
+  <meta name="description" content="庸善文化五术典藏，收录山、医、命、相、卜等传统文化典籍，以及技能教程、学习资料和创业副业资源。" />
   <link rel="canonical" href="https://yongshanwh.com/collection/" />
   <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* 古朴极简分类样式 */
+    .category-section {
+      margin-bottom: 48px;
+    }
+    .category-title {
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .category-grid.second-row {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .category-card {
+      background: transparent;
+      border: none;
+      padding: 18px 10px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .category-card h2 {
+      font-size: 17px;
+      letter-spacing: 6px;
+      font-weight: 400;
+      transition: all 0.3s ease;
+    }
+    .category-card:hover h2 {
+      letter-spacing: 8px;
+      opacity: 0.75;
+    }
+    .category-card::after {
+      content: "";
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background: var(--text);
+      opacity: 0.3;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    .category-card:hover::after {
+      width: 24px;
+    }
+
+    /* 资源列表微调 */
+    .resource-section-title {
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+    .resource-card {
+      background: transparent;
+      border-radius: 0;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(73,55,42,0.08);
+      box-shadow: none;
+    }
+    .resource-card:hover {
+      transform: none;
+      box-shadow: none;
+      background: rgba(73,55,42,0.015);
+    }
+    .resource-card h3 {
+      font-size: 16px;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    .resource-card .meta {
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    .resource-card .desc {
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: 0.75;
+    }
+    .btn-primary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(73,55,42,0.25);
+      font-size: 13px;
+      letter-spacing: 2px;
+      padding: 6px 16px;
+    }
+    .btn-primary:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+  </style>
 </head>
 <body>
   <div class="app">
@@ -36,7 +141,7 @@
         <input type="text" id="searchInput" placeholder="搜索资源名称或简介关键词..." />
       </div>
 
-      <!-- 分类区域 5+4 -->
+      <!-- 分类 -->
       <div class="category-section">
         <div class="category-title">资源分类</div>
         <div class="category-grid" id="categoryRow1"></div>
@@ -45,77 +150,36 @@
 
       <!-- 全部资源 -->
       <div class="resource-section-title">全部资源</div>
-      <div id="resourceCount" style="margin-bottom:16px; color:var(--text-secondary); font-size:13px;"></div>
       <div class="resource-list" id="resourceList"></div>
     </main>
   </div>
 
   <script src="../js/data.js"></script>
   <script>
-    // 更新分类简介
-    const categoryIntros = {
-      shan: "山者，入山修道之术也。炼丹养气，吐纳导引，辟谷养形，符箓通灵，筋骨以强。所求者，修身养性，返本还元，性命双全，以尽天年。",
-      yi: "医者，意也，仁术也。察阴阳，辨五行，明脏腑经络。望闻问切以审其症，方药针砭以疗其疾。上医治未病，其要在调和气血，扶正祛邪。然疾病当求良医，此记不可代诊。",
-      ming: "命者，禀于天，成于时也。以生辰年月日时，推五行之生克，察禀赋之厚薄，观运途之起伏。知命者，知进退，识盈虚，不怨天，不尤人。",
-      xiang: "相者，察形观势之学也，分人相、地相二端。人相观面貌骨骼，相由心生，德厚则相随而转。地相察山川形势，宅墓之向背，贵在藏风聚气，天人相应。",
-      bu: "卜者，决疑之术也。事有未决，心有所惑，则揲蓍起卦，观象玩辞，以占吉凶悔吝。卦非前定，贵在审时度势，趋吉避凶，知几而动。",
-      qiyi: "杂集者，采百家之遗，拾九流之余也。凡奇文异籍，不入正门者，皆可纳焉。古今并蓄，新旧兼收，志怪搜神，博物通考，与今人新知并陈一架。不拘一格，以广见闻，所谓开卷有益，多识为先。",
-      xuexi: "学者，觉也，效也。自蒙童入学，以至登科应试，皆有章程可循。小学初高，循序而进；考研应公，职称资格，各有门径。积跬步以至千里，聚细流以成江海，勤学为本，法门为用。",
-      jiaocheng: "技艺者，立身之具也。弦歌可以养性，木作可以成器，电工通其理，手语达其意，烹调存其味，编程见其巧。百工各有所长，不必成系，但取其实用，日习一技，日增一能，所谓艺不压身，有备无患。",
-      chuangye: "商者，通有无，权轻重也。察时势之变，观风口之起，辨可为与不可为。择业有道，先审己之力，再度市之势，继以章程步骤，逐一落实。然风险与机会并存，当量力而行，稳扎稳打，勿轻信暴富之言。"
-    };
-
-    // 覆盖 data.js 里的 desc
-    categories.forEach(cat => {
-      if (categoryIntros[cat.key]) {
-        cat.desc = categoryIntros[cat.key];
-      }
-    });
-
-    function getCategoryCount(key) {
-      return resources.filter(r => r.category === key).length;
-    }
-
     function renderCategories() {
       const row1 = document.getElementById('categoryRow1');
       const row2 = document.getElementById('categoryRow2');
       
-      // 第一行：山 医 命 相 卜
       const firstRow = ["shan", "yi", "ming", "xiang", "bu"];
-      // 第二行：奇异杂集 创业副业 技能教程 学习资料
       const secondRow = ["qiyi", "chuangye", "jiaocheng", "xuexi"];
 
       row1.innerHTML = firstRow.map(key => {
         const cat = categories.find(c => c.key === key);
-        return `
-          <a href="${cat.key}/" class="category-card" title="${cat.desc}">
-            <h2>${cat.name}</h2>
-            <div class="count">${getCategoryCount(cat.key)} 个资源</div>
-          </a>
-        `;
+        return `<a href="${cat.key}/" class="category-card"><h2>${cat.name}</h2></a>`;
       }).join('');
 
       row2.innerHTML = secondRow.map(key => {
         const cat = categories.find(c => c.key === key);
-        return `
-          <a href="${cat.key}/" class="category-card" title="${cat.desc}">
-            <h2>${cat.name}</h2>
-            <div class="count">${getCategoryCount(cat.key)} 个资源</div>
-          </a>
-        `;
+        return `<a href="${cat.key}/" class="category-card"><h2>${cat.name}</h2></a>`;
       }).join('');
     }
 
     function renderResources(list) {
       const container = document.getElementById('resourceList');
-      const countEl = document.getElementById('resourceCount');
-      countEl.textContent = `共 ${list.length} 个资源`;
-
       if (list.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-aux); padding:30px 0;">暂无匹配的资源</p>';
+        container.innerHTML = '<p style="color:var(--text-aux); padding:40px 0; opacity:0.6;">暂无匹配的资源</p>';
         return;
       }
-
       container.innerHTML = list.map(item => `
         <div class="resource-card">
           <div class="resource-info">
@@ -130,7 +194,6 @@
       `).join('');
     }
 
-    // 搜索
     document.getElementById('searchInput').addEventListener('input', function(e) {
       const keyword = e.target.value.trim().toLowerCase();
       if (!keyword) {
@@ -145,7 +208,6 @@
       renderResources(filtered);
     });
 
-    // 初始化
     renderCategories();
     renderResources(resources);
   </script>
