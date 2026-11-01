@@ -7,7 +7,9 @@
   <meta name="description" content="十天干、十二地支的阴阳五行、方位、藏干和合冲刑害，六十甲子纳音，以及按立春查找年柱。" />
   <link rel="canonical" href="https://yongshanwh.com/yili/ganzhi/" />
   <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/nav-transition.css" />
   <link rel="stylesheet" href="../../css/modules.css" />
+  <link rel="stylesheet" href="../../css/teach.css" />
 </head>
 <body>
   <div class="app">
@@ -30,13 +32,15 @@
       </header>
       <details class="fold">
         <summary>说明</summary>
-        <p>点一个字，看它的属性和跟谁有关系。年柱在立春交换，不是正月初一。</p>
+        <p>拨动圆轮，十干与十二支一步一对，转出六十甲子。点一个地支，看五行、生肖、方位和月份。年柱在立春交换，不是正月初一。</p>
       </details>
-      <div class="gz-wheel" id="picker">
-        <div class="stem-row" id="stems"></div>
-        <div class="stem-row" id="branches"></div>
-        <div class="gz-hub">干支</div>
+      <div class="gz-wheel" id="gz-wheel"></div>
+      <div class="teach-bar">
+        <button type="button" class="btn" id="gz-prev">上一对</button>
+        <p class="teach-step">六十甲子</p>
+        <button type="button" class="btn" id="gz-next">下一对</button>
       </div>
+      <div class="pair-build" id="pair-build" aria-label="已配出的甲子"></div>
       <div id="gz-detail" class="panel explain"></div>
       <details class="fold">
         <summary>六十甲子</summary>
@@ -56,5 +60,6 @@
   <script src="../../vendor/lunar-javascript/lunar.js"></script>
   <script src="../../js/yili/tables.js"></script>
   <script src="../../js/yili/ganzhi-view.js"></script>
+  <script src="../../js/nav-transition.js"></script>
 </body>
 </html>
