@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>六爻趋避_装卦与纳甲_五术玄机_庸善文化</title>
+  <meta name="description" content="手填六次爻象，或用三枚铜钱从初爻掷到上爻。输出本卦、变卦、动爻、世应、纳甲、六亲、六神。" />
+  <link rel="canonical" href="https://yongshanwh.com/xuanji/liuyao/" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/modules.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">庸善文化</div>
+        <div class="brand-line"></div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item" href="../../">首页</a>
+        <a class="nav-item" href="../../collection/">五术典藏</a>
+        <a class="nav-item" href="../../yili/">易理明辨</a>
+        <a class="nav-item active" href="../../xuanji/">五术玄机</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <header class="page-header">
+        <h1>六爻趋避</h1>
+        <p class="subtitle">本卦 · 变卦 · 纳甲</p>
+        <p class="intro">卦只由六次结果决定。日期用来取日干，从而排六神，并写出当天的月日干支。</p>
+      </header>
+      <p class="disclaimer">结果属传统文化解释体系，非科学预测。</p>
+      <form class="tool-form" id="day-form">
+        <label class="field">日期<input id="day" type="date" required></label>
+        <label class="field">钟点<input id="day-hour" type="number" min="0" max="23" value="12"></label>
+      </form>
+      <h2 class="block-title">手填</h2>
+      <p class="note">从初爻填到上爻。少阳、少阴不动；老阳、老阴要变。</p>
+      <div class="tool-form" id="picks"></div>
+      <button class="btn" type="button" id="manual">按手填起卦</button>
+      <h2 class="block-title">铜钱</h2>
+      <p class="note">背为阳，字为阴。三背老阳，二背一字少阳，二字一背少阴，三字老阴。每次用随机数，是演示，不是仪式。</p>
+      <p>
+        <button class="btn" type="button" id="toss">掷一爻</button>
+        <button class="btn" type="button" id="reset-toss">重来</button>
+      </p>
+      <div id="toss-list"></div>
+      <div id="ly-out"></div>
+      <a class="back-link" href="../">← 返回五术玄机</a>
+    </main>
+  </div>
+  <script src="../../vendor/lunar-javascript/lunar.js"></script>
+  <script src="../../js/yili/zhouyi-text.js"></script>
+  <script src="../../js/yili/gua-logic.js"></script>
+  <script src="../../js/draw-gua.js"></script>
+  <script src="../../js/xuanji/liuyao.js"></script>
+  <script src="../../js/xuanji/liuyao-view.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>紫微斗数_十二宫排盘_五术玄机_庸善文化</title>
+  <meta name="description" content="按出生年月日时排紫微斗数十二宫，列出主星、辅星、四化、大限和流年。排盘用开源库 iztro。" />
+  <link rel="canonical" href="https://yongshanwh.com/xuanji/ziwei/" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/modules.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">庸善文化</div>
+        <div class="brand-line"></div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item" href="../../">首页</a>
+        <a class="nav-item" href="../../collection/">五术典藏</a>
+        <a class="nav-item" href="../../yili/">易理明辨</a>
+        <a class="nav-item active" href="../../xuanji/">五术玄机</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <header class="page-header">
+        <h1>紫微斗数</h1>
+        <p class="subtitle">十二宫 · 四化 · 大限</p>
+        <p class="intro">星盘由 iztro 计算。宫名下面的一句，只说明这一宫传统上主管什么。</p>
+      </header>
+      <p class="disclaimer">结果属传统文化解释体系，非科学预测。</p>
+      <form id="zw-form" class="tool-form">
+        <label class="field">公历<input id="date" type="date" required></label>
+        <label class="field">时辰<select id="shi"><option value="0">早子</option><option value="1">丑</option><option value="2">寅</option><option value="3">卯</option><option value="4">辰</option><option value="5">巳</option><option value="6">午</option><option value="7">未</option><option value="8">申</option><option value="9">酉</option><option value="10">戌</option><option value="11">亥</option><option value="12">晚子</option></select></label>
+        <label class="field">性别<select id="gender"><option>女</option><option>男</option></select></label>
+        <button class="btn" type="submit">排盘</button>
+        <button class="btn" type="button" id="sample-1">用例：2000-08-16 寅时 女</button>
+        <button class="btn" type="button" id="sample-2">用例：1984-02-15 午时 男</button>
+      </form>
+      <form id="flow-form" class="tool-form">
+        <label class="field">流年日期<input id="flow-date" type="date"></label>
+        <label class="field">流年时辰<select id="flow-shi"><option value="0">早子</option><option value="1">丑</option><option value="2">寅</option><option value="3">卯</option><option value="4">辰</option><option value="5">巳</option><option value="6">午</option><option value="7">未</option><option value="8">申</option><option value="9">酉</option><option value="10">戌</option><option value="11">亥</option><option value="12">晚子</option></select></label>
+        <button class="btn" type="submit">看流年</button>
+      </form>
+      <div id="zw-out"></div>
+      <a class="back-link" href="../">← 返回五术玄机</a>
+    </main>
+  </div>
+  <script src="../../vendor/iztro/iztro.min.js"></script>
+  <script src="../../js/xuanji/ziwei-view.js"></script>
+</body>
+</html>
