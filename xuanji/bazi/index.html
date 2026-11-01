@@ -27,9 +27,13 @@
       <header class="page-header">
         <h1>八字排盘</h1>
         <p class="subtitle">四柱 · 大运 · 流年</p>
-        <p class="intro">年柱、月柱按节气。23 点后默认把日柱算进下一天，可以改回当天。</p>
       </header>
       <p class="disclaimer">结果属传统文化解释体系，非科学预测。</p>
+      <details class="fold">
+        <summary>说明</summary>
+        <p>年柱、月柱按节气。23 点后默认把日柱算进下一天，可以改回当天。</p>
+        <p>真太阳时 = 北京时间 +（当地东经 − 120）× 4 分钟 + 均时差。均时差是天文近似，交界前后一两分钟可能差一个时辰。不勾选时，就用你填的钟点。</p>
+      </details>
       <form id="bazi-form" class="tool-form">
         <label class="field">历法<select id="cal"><option value="solar">公历</option><option value="lunar">农历</option></select></label>
         <label class="field">年<input id="y" type="number" required></label>
@@ -46,7 +50,6 @@
         <button class="btn" type="button" id="sample-1">用例：2005-12-23 08:37 男</button>
         <button class="btn" type="button" id="sample-2">用例：1981-01-29 23:37 女</button>
       </form>
-      <p class="note">真太阳时 = 北京时间 +（当地东经 − 120）× 4 分钟 + 均时差。均时差是天文近似，交界前后一两分钟可能差一个时辰。不勾选时，就用你填的钟点。</p>
       <div id="bazi-out"></div>
       <a class="back-link" href="../">← 返回五术玄机</a>
     </main>

@@ -123,7 +123,8 @@ var QuizData = [
           return '<div class="quiz-q"><p>' + (i + 1) + ". " + q[0] + "</p>" + options + "</div>";
         }).join("") + '<button type="button" class="btn" data-stage="' + stage.id + '">交卷</button>';
       }
-      return '<section class="panel" id="stage-' + stage.id + '"><h2>' + stage.title + "</h2>" +
+      var mark = ["", "壹", "贰", "叁", "肆"][stage.id];
+      return '<section class="stage-card' + (open ? "" : " stage-locked") + '" id="stage-' + stage.id + '"><div class="stage-no">' + mark + "</div><h2>" + stage.title + "</h2>" +
         "<p class=\"note\">最好成绩：" + (best ? Math.round(best * 100) + "%" : "还没有") + "</p>" + body +
         '<div id="result-' + stage.id + '"></div></section>';
     }).join("");

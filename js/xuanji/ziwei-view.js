@@ -30,12 +30,11 @@
     var bad = palace.minorStars.filter(function (star) { return star.type === "tough"; });
     var range = palace.decadal ? palace.decadal.range[0] + "–" + palace.decadal.range[1] + "岁" : "";
     var body = palace.isBodyPalace ? " · 身宫" : "";
-    return '<article class="palace-cell" style="grid-column:' + ((BRANCH_CELL[palace.earthlyBranch] - 1) % 4 + 1) + ';grid-row:' + Math.ceil(BRANCH_CELL[palace.earthlyBranch] / 4) + '">' +
+    return '<article class="palace-cell" title="' + (MEANING[palace.name] || "") + '" style="grid-column:' + ((BRANCH_CELL[palace.earthlyBranch] - 1) % 4 + 1) + ';grid-row:' + Math.ceil(BRANCH_CELL[palace.earthlyBranch] / 4) + '">' +
       "<b>" + palace.name + body + "</b> " + palace.heavenlyStem + palace.earthlyBranch +
       '<div class="star">' + major + "</div>" +
       (minor ? '<div class="muted">' + minor + "</div>" : "") +
-      '<div class="muted">大限 ' + range + (palace.decadal ? " · " + palace.decadal.heavenlyStem + palace.decadal.earthlyBranch : "") + "</div>" +
-      "<div>" + (MEANING[palace.name] || "") + "</div></article>";
+      '<div class="muted">大限 ' + range + (palace.decadal ? " · " + palace.decadal.heavenlyStem + palace.decadal.earthlyBranch : "") + "</div></article>";
   }
 
   function mutagen(chart) {
@@ -50,8 +49,12 @@
 
   function render(chart, flow) {
     var center = '<div class="palace-cell center-cell"><div>' + chart.fiveElementsClass + "</div><div>命主 " + chart.soul + " · 身主 " + chart.body + "</div><div>命宫在" + chart.earthlyBranchOfSoulPalace + " · 身宫在" + chart.earthlyBranchOfBodyPalace + "</div><div>四化 " + mutagen(chart) + "</div>" + (flow || "") + "</div>";
-    out.innerHTML = "<p class=\"note\">" + chart.solarDate + " · 农历" + chart.lunarDate + " · " + chart.time + " " + chart.timeRange + " · " + chart.chineseDate + "</p>" +
-      '<div class="chart-scroll"><div class="palace-grid">' + chart.palaces.map(cell).join("") + center + "</div></div>";
+    var gloss = Object.keys(MEANING).map(function (name) {
+      return "<p><b>" + name + "</b>　" + MEANING[name] + "</p>";
+    }).join("");
+    out.innerHTML = '<p class="meta-line">' + chart.solarDate + " · 农历" + chart.lunarDate + " · " + chart.time + " " + chart.timeRange + " · " + chart.chineseDate + "</p>" +
+      '<div class="chart-scroll hero-chart"><div class="palace-grid">' + chart.palaces.map(cell).join("") + center + "</div></div>" +
+      '<details class="fold"><summary>宫位说明</summary>' + gloss + "</details>";
   }
 
   function timeIndex() { return parseInt(document.getElementById("shi").value, 10); }
