@@ -4,9 +4,89 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>山_气功丹道与武术资源_五术典藏_庸善文化</title>
-  <meta name="description" content="收录气功、丹道、武术、符咒等山家相关传统典籍与教程。" />
+  <meta name="description" content="山者，入山修道之术也。炼丹养气，吐纳导引，辟谷养形，符箓通灵，筋骨以强。" />
   <link rel="canonical" href="https://yongshanwh.com/collection/shan/" />
   <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .category-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 110px;
+      height: 110px;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    .category-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .resource-card {
+      background: transparent;
+      border-radius: 0;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(73,55,42,0.08);
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .resource-card:hover {
+      transform: none;
+      box-shadow: none;
+      background: rgba(73,55,42,0.015);
+    }
+    .resource-info { flex: 1; min-width: 0; }
+    .resource-card h3 {
+      font-size: 16px;
+      letter-spacing: 1px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .resource-card .meta {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .resource-card .desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      opacity: 0.75;
+    }
+    .resource-actions { flex-shrink: 0; }
+    .btn-primary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(73,55,42,0.25);
+      font-size: 13px;
+      letter-spacing: 2px;
+      padding: 6px 16px;
+    }
+    .btn-primary:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.25s;
+    }
+    .back-link:hover { opacity: 1; }
+  </style>
 </head>
 <body>
   <div class="app">
@@ -24,22 +104,22 @@
     </aside>
 
     <main class="main">
-      <div class="page-header">
+      <div class="page-header" style="position:relative;">
+        <div class="category-icon">
+          <img src="../../images/shan.png" alt="山" />
+        </div>
         <h1>山</h1>
         <p class="subtitle">气功 · 丹道 · 武术 · 符咒</p>
-        <p class="intro">本分类收录气功, 丹道, 传统武术及符咒相关典籍与入门教程，帮助爱好者系统了解山家传统修炼与武学内容。</p>
+        <p class="intro">山者，入山修道之术也。炼丹养气，吐纳导引，辟谷养形，符箓通灵，筋骨以强。所求者，修身养性，返本还元，性命双全，以尽天年。</p>
       </div>
 
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="在「山」分类中搜索..." />
       </div>
 
-      <div id="resourceCount" style="margin-bottom:24px; color:var(--text-secondary); font-size:14px;"></div>
       <div class="resource-list" id="resourceList"></div>
 
-      <div style="margin-top:48px;">
-        <a href="../" class="btn">← 返回五术典藏</a>
-      </div>
+      <a href="../" class="back-link">← 返回五术典藏</a>
     </main>
   </div>
 
@@ -49,17 +129,18 @@
 
     function renderList(list) {
       const container = document.getElementById('resourceList');
-      document.getElementById('resourceCount').textContent = `共 ${list.length} 个资源`;
       if (list.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-aux); padding:40px 0;">暂无匹配的资源</p>';
+        container.innerHTML = '<p style="color:var(--text-aux); padding:40px 0; opacity:0.6;">暂无匹配的资源</p>';
         return;
       }
       container.innerHTML = list.map(item => `
         <div class="resource-card">
-          <h3>${item.title}</h3>
-          <div class="meta">${item.categoryName}</div>
-          <div class="desc">${item.desc}</div>
-          <div class="actions">
+          <div class="resource-info">
+            <h3>${item.title}</h3>
+            <div class="meta">${item.categoryName}</div>
+            <div class="desc">${item.desc}</div>
+          </div>
+          <div class="resource-actions">
             <a href="${item.link}" target="_blank" rel="noopener" class="btn btn-primary">获取资源</a>
           </div>
         </div>
