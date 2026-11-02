@@ -4,178 +4,85 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>庸善文化 · 探五術之理，溯萬法之源</title>
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/style.css" />
   <style>
-    @font-face {
-      font-family: "AoyagiReisho";
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url("fonts/AoyagiReisho-slogan.woff2") format("woff2");
-    }
     :root {
-      --bg: #F6F0E5; --card: #F6F0E5; --sub-bg: #F6F0E5;
-      --text: #49372A; --text-secondary: #49372A; --text-aux: #49372A;
-      --accent: #49372A; --accent-dark: #49372A; --gold: #49372A; --border: rgba(73,55,42,.22);
+      --text: #49372A;
+      --bg: #F6F0E5;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { font-size: 17px; }
-    body {
-      font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
-      background-color: var(--bg); color: var(--text);
-      line-height: 1.75; overflow-x: hidden;
+    body:has(#compass) .main {
+      width: min(1240px, calc(100% - 48px));
+      max-width: none;
+      padding-top: calc(var(--bar-h) + 8px);
+      padding-bottom: 40px;
     }
-     body::before {
-      content: ""; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0;
-    }
-    .app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
-
-    .sidebar {
-      width: 240px; background: var(--card); border-right: 1px solid var(--border);
-      padding: 48px 22px; position: fixed; top: 0; left: 0; height: 100vh;
-      display: flex; flex-direction: column; z-index: 100;
-    }
-    .brand { text-align: center; margin-bottom: 52px; }
-    .brand-name {
-      font-family: "LiSu", "STLiti", "华文隶书", "KaiTi", serif;
-      font-size: 36px; color: var(--text); letter-spacing: 6px; line-height: 1.2;
-    }
-    .brand-line { width: 56px; height: 1px; background: var(--gold); margin: 18px auto 0; opacity: .8; }
-    .nav { display: flex; flex-direction: column; gap: 10px; }
-    .nav-item {
-      position: relative; display: flex; align-items: center; justify-content: center;
-      padding: 15px 18px; border-radius: 8px; color: var(--text-secondary);
-      text-decoration: none; font-size: 18px; letter-spacing: 6px; text-indent: 6px;
-      transition: all .25s ease; cursor: pointer; border: 1px solid transparent;
-    }
-    .nav-item::before {
-      content: ""; position: absolute; left: 12px; top: 50%; width: 5px; height: 5px;
-      border-radius: 50%; background: var(--gold); opacity: 0; transform: translateY(-50%);
-      transition: opacity .25s;
-    }
-    .nav-item:hover { background: var(--sub-bg); color: var(--text); }
-    .nav-item:hover::before { opacity: .5; }
-    .nav-item.active {
-      background: var(--sub-bg); color: var(--accent); border-color: var(--border); font-weight: 600;
-    }
-    .nav-item.active::before { opacity: 1; background: var(--accent); }
-
-    .main { margin-left: 240px; flex: 1; padding: 40px 40px 80px; max-width: 1440px; }
-
     .home-hero {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      align-items: center; min-height: 700px; margin-bottom: 72px;
+      display: grid;
+      grid-template-columns: minmax(300px, 0.86fr) minmax(440px, 1.14fr);
+      gap: 36px 48px;
+      align-items: center;
+      min-height: calc(100dvh - var(--bar-h) - 120px);
+      margin-bottom: 28px;
     }
-    .hero-text { padding-left: 8px; padding-bottom: 12vh; position: relative; z-index: 2; }
+    .hero-text { padding: 0 0 4vh; position: relative; z-index: 2; }
     .hero-title {
       position: relative;
-      font-family: "AoyagiReisho", "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
-      font-size: clamp(42px, 4.4vw, 68px); font-weight: 400; letter-spacing: 0.12em;
-      line-height: 1.35; margin-bottom: 30px; color: var(--text);
+      font-family: "AoyagiReisho", "FZFangSong", "Songti SC", serif;
+      font-size: clamp(46px, 4.6vw, 76px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      line-height: 1.35;
+      margin-bottom: 28px;
+      color: var(--text);
     }
-    .hero-title.fake-li {
-      font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "SimSun", "STSong", serif;
-      font-weight: 900; -webkit-text-stroke: 1.8px var(--text);
-    }
-    .hero-title.fake-li span { transform: scaleX(1.2); transform-origin: left center; }
     .hero-title span { display: block; white-space: nowrap; }
     .hero-title span + span { padding-left: 1em; }
-    .hero-title span + span::first-letter { color: var(--accent); }
-    .hero-line { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
-    .hero-line::before { content: ""; width: 10px; height: 10px; background: var(--accent); transform: rotate(45deg); }
-    .hero-line::after { content: ""; width: 96px; height: 1.5px; background: linear-gradient(90deg, var(--gold), transparent); }
+    .hero-line { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
+    .hero-line::after { content: ""; width: 72px; height: 1px; background: var(--text); opacity: .45; }
     .hero-subtitle {
-      font-family: "STKaiti", "Kaiti SC", "KaiTi", "楷体", "DFKai-SB", "Noto Serif SC", serif;
-      font-size: 22px; color: var(--text-secondary); letter-spacing: 5px; line-height: 2.2;
+      font-family: "FZFangSong", "Songti SC", "SimSun", "Noto Serif SC", serif;
+      font-size: 18px;
+      color: var(--text-secondary);
+      letter-spacing: 0.22em;
+      line-height: 2.15;
     }
     .hero-subtitle span { display: block; }
     .hero-subtitle span + span { padding-left: 1.2em; }
 
-    .visual-wrap { width: 100%; max-width: 700px; justify-self: center; margin-top: 12px; transform: translateX(4%); }
+    .visual-wrap { width: 100%; max-width: 640px; justify-self: center; }
     .visual-device { width: 100%; aspect-ratio: 1; position: relative; }
-    .device-bg {
-      position: absolute; inset: 4%; border-radius: 50%;
-      background: radial-gradient(circle, rgba(178,138,69,.10) 0%, transparent 70%);
-    }
     .compass { position: relative; width: 100%; height: 100%; display: block; overflow: visible; }
     .compass line, .compass circle, .compass path { fill: none; }
-    .compass .ln { stroke: var(--border); stroke-width: 1; }
-    .compass .gd { stroke: var(--gold); stroke-width: 1.2; }
-    .compass .yao { stroke: var(--text); stroke-linecap: butt; }
-    .compass text { text-anchor: middle; dominant-baseline: central; font-family: inherit; }
-
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--gold); }
-    .card {
-      position: relative; padding: 40px 36px 36px; cursor: pointer;
-      border-left: 1px solid var(--border); transition: background .35s ease;
-      text-decoration: none; color: inherit; display: block;
-    }
-    .card:first-child { border-left: none; padding-left: 8px; }
-    .card:hover { background: linear-gradient(180deg, rgba(178,138,69,.07), transparent 70%); }
-    .card-title {
+    .compass .ln, .compass .gd, .compass .yao { stroke: #49372A; stroke-linecap: butt; }
+    .compass .ln { stroke-width: 1; }
+    .compass .gd { stroke-width: 1.2; }
+    .compass text {
+      text-anchor: middle;
+      dominant-baseline: central;
       font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
-      font-size: 28px; font-weight: 900; letter-spacing: 8px; margin-bottom: 14px;
-      transition: color .3s ease;
+      text-rendering: geometricPrecision;
     }
-    .card:hover .card-title { color: var(--accent); }
-    .card-sub { font-size: 15px; color: var(--gold); letter-spacing: 2px; margin-bottom: 18px; }
-    .card-sub::after {
-      content: ""; display: block; width: 28px; height: 1px; background: var(--gold);
-      margin-top: 18px; transition: width .35s ease;
-    }
-    .card:hover .card-sub::after { width: 64px; }
-    .card-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.95; }
-    .footer-idea { margin-top: 100px; text-align: center; padding-top: 40px; border-top: 1px solid var(--border); }
-    .footer-idea p { font-size: 18px; letter-spacing: 5px; color: var(--text-secondary); }
-
-    @media (max-width: 1280px) {
-      .home-hero { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 1100px) {
-      .home-hero { grid-template-columns: 1fr; gap: 24px; }
-      .visual-wrap { width: min(100%, 640px); transform: none; }
-      .hero-text { padding-bottom: 0; }
-      .cards { grid-template-columns: 1fr; }
-      .card, .card:first-child { border-left: none; padding: 32px 4px; border-top: 1px solid var(--border); }
-      .card:first-child { border-top: none; }
-    }
-    @media (max-width: 768px) {
-      .sidebar { width: 100%; height: auto; position: relative; padding: 24px 16px; border-right: none; border-bottom: 1px solid var(--border); }
-      .main { margin-left: 0; padding: 32px 20px 60px; }
-      .brand { margin-bottom: 22px; }
-      .brand-name { font-size: 30px; }
-      .nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-      .nav-item { padding: 11px 4px; font-size: 15px; letter-spacing: 2px; text-indent: 2px; }
-      .nav-item::before { display: none; }
-      .hero-title { font-size: 46px; letter-spacing: 4px; }
-      .hero-subtitle { font-size: 19px; letter-spacing: 3px; }
-    }
-    @media (max-width: 420px) { .nav { grid-template-columns: repeat(2, 1fr); } }
-
-    body::before, .device-bg { display: none; }
-    .sidebar { background: transparent; }
-    .nav-item { opacity: .55; background: transparent !important; border-color: transparent !important; }
-    .nav-item:hover { opacity: 1; }
-    .nav-item::before { display: none; }
-    .nav-item.active { opacity: 1; font-weight: 700; box-shadow: inset 2px 0 0 var(--text); border-radius: 0; }
-    .brand-line { opacity: .5; }
-    .hero-line::before { display: none; }
-    .hero-line::after { width: 64px; height: 1px; background: var(--text); opacity: .5; }
-    .hero-title span + span::first-letter { color: inherit; }
-    .hero-subtitle, .card-desc, .card-sub, .footer-idea p { opacity: .72; }
-    .cards { border-top: 1px solid var(--text); }
-    .card:hover { background: none; }
-    .card:hover .card-title { color: var(--text); text-decoration: underline; text-underline-offset: 10px; text-decoration-thickness: 1px; }
-    .card-sub::after { display: none; }
-    .compass text { text-rendering: geometricPrecision; }
     .gz {
-      display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 34px;
-      font-size: 22px; font-weight: 400; letter-spacing: 12px; text-indent: 12px;
-      font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif; opacity: .85;
+      display: flex; justify-content: center; align-items: center; gap: 28px; margin-bottom: 12px;
+      font-size: 18px; font-weight: 400; letter-spacing: 0.42em; text-indent: 0.42em;
+      font-family: "FZFangSong", "Songti SC", "Noto Serif SC", serif;
+      color: var(--text);
+      opacity: .8;
     }
     .gz i { display: block; width: 1px; height: 14px; background: var(--text); opacity: .35; }
-    @media (max-width: 768px) { .gz { font-size: 18px; gap: 16px; letter-spacing: 6px; text-indent: 6px; } }
+    .footer-idea { margin-top: 12px; text-align: center; padding-top: 28px; border-top: 1px solid rgba(73, 55, 42, 0.18); }
+    .footer-idea p { font-size: 16px; letter-spacing: 0.32em; color: var(--text-secondary); }
+
+    @media (max-width: 980px) {
+      .home-hero { grid-template-columns: 1fr; min-height: 0; gap: 12px; }
+      .hero-text { padding-bottom: 0; text-align: center; }
+      .hero-title span { width: max-content; max-width: 100%; margin-inline: auto; }
+      .hero-title span + span, .hero-subtitle span + span { padding-left: 0; }
+      .hero-line { justify-content: center; }
+      .visual-wrap { max-width: 560px; }
+    }
+
   </style>
   <link rel="stylesheet" href="css/nav-transition.css" />
   <link rel="stylesheet" href="css/mobile.css" />

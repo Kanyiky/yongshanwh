@@ -1,0 +1,26 @@
+/* 方正仿宋：正文、导航、栏目标题、卡片。青柳隷书只用于首页对联。芫荽只用于传统字装饰短句。 */
+
+@font-face {
+  font-family: "FZFangSong";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/FZFangSong-Z02S.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "AoyagiReisho";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/AoyagiReisho-slogan.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Iansui";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Iansui-label.woff2") format("woff2");
+  unicode-range: U+4E4B, U+4E94, U+63A2, U+7406, U+8853;
+}
