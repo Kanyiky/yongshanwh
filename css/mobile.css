@@ -207,7 +207,7 @@
   }
 
   .sidebar .nav::after {
-    content: "探五术之理";
+    content: "探五術之理";
     position: absolute;
     left: 16px;
     top: 50%;
@@ -899,14 +899,6 @@
 
   body:has(#compass) .hero-title span + span {
     padding-left: 0;
-  }
-
-  body:has(#compass) .stele-lines {
-    align-items: center;
-  }
-
-  body:has(#compass) .stele-line + .stele-line {
-    margin-left: 0;
   }
 
   body:has(#compass) .hero-line {
