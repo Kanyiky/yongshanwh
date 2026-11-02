@@ -861,9 +861,15 @@
   }
 
   /* 首页：罗盘仍是原来的画法和转动，只把画布放大、居中。 */
+  /* 桌面把主栏收成 calc(100% - 48px) 再居中。手机上只把 margin-left 清成 0，
+     margin-right 仍是 auto，48px 空隙全落在右边，罗盘和页脚就偏左。 */
   body:has(#compass) .main {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
     min-height: 100vh;
     min-height: 100dvh;
     padding: calc(var(--bar-h) + 12px) 16px 20px;
