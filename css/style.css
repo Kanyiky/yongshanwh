@@ -1,113 +1,187 @@
+/* 庸善文化。宣纸为底，墨色为文，朱红只作印。顶栏浮在页面上。 */
+
 :root {
   --bg: #F6F0E5;
+  --paper: #F6F0E5;
   --card: #FBF7EF;
   --text: #49372A;
   --text-secondary: #8B755E;
   --text-aux: #B09A7D;
   --accent: #B85B32;
+  --seal: #9C3B2A;
   --gold: #B28A45;
   --border: #E5D3B9;
-  --sidebar-width: 240px;
+  --hairline: rgba(73, 55, 42, 0.18);
+  --font: "FZFangSong", "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
+  --float-top: 16px;
+  --float-h: 64px;
+  --bar-h: calc(var(--float-top) + var(--float-h) + 28px);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --content: 1120px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html {
+  font-size: 17px;
+  scroll-padding-top: var(--bar-h);
+}
+
 body {
-  font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
+  font-family: var(--font);
+  font-weight: 400;
+  font-synthesis: none;
   background-color: var(--bg);
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.85;
   overflow-x: hidden;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-synthesis: none;
+}
+
 .app {
-  display: flex;
+  display: block;
   min-height: 100vh;
 }
 
-/* 侧边栏：宽度、间距、字号、选中时左侧竖线与首页相同 */
+/* 浮在宣纸上的顶栏。桌面横排栏目，手机由 mobile.css 收成印章菜单。 */
 .sidebar {
-  width: var(--sidebar-width);
-  background: transparent;
-  border-right: 1px solid rgba(73, 55, 42, 0.22);
-  padding: 48px 22px;
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
+  top: var(--float-top);
+  left: 20px;
+  right: 20px;
+  width: auto;
+  height: var(--float-h);
+  padding: 0 22px 0 28px;
   display: flex;
-  flex-direction: column;
-  z-index: 100;
-  line-height: 1.75;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border: 1px solid var(--hairline);
+  border-radius: 0;
+  background: transparent;
+  isolation: isolate;
+  z-index: 200;
+  line-height: 1.4;
+}
+
+/* 模糊放在伪元素上。放在栏本身会把全屏菜单的 fixed 定位困在栏高里。 */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(246, 240, 229, 0.9);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  pointer-events: none;
 }
 
 .brand {
-  text-align: center;
-  margin-bottom: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  text-align: left;
+  min-width: 0;
 }
 
 .brand-name {
-  font-family: "LiSu", "STLiti", "华文隶书", "KaiTi", serif;
-  font-size: 36px;
-  letter-spacing: 6px;
-  line-height: 1.2;
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  line-height: 1;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .brand-line {
-  width: 56px;
-  height: 1px;
-  background: var(--text);
-  margin: 18px auto 0;
-  opacity: 0.5;
+  display: none;
+}
+
+.brand::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: var(--seal);
+  transform: rotate(45deg);
+}
+
+.nav-toggle,
+.menu-btn {
+  display: none;
 }
 
 .nav {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  position: relative;
 }
 
 .nav-item {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 15px 18px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  color: var(--text);
-  text-decoration: none;
-  font-size: 18px;
-  letter-spacing: 6px;
-  text-indent: 6px;
-  opacity: 0.55;
-  transition: all 0.25s ease;
-}
-
-.nav-item:hover {
-  opacity: 1;
-}
-
-.nav-item.active {
-  opacity: 1;
-  font-weight: 700;
-  color: var(--text);
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 0;
   border-radius: 0;
-  box-shadow: inset 2px 0 0 var(--text);
+  background: transparent;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 1;
+  transition: color 0.22s var(--ease);
 }
 
-/* 主内容 */
+.nav-item:hover,
+.nav-item.active {
+  font-weight: 400;
+  color: var(--text);
+  box-shadow: none;
+}
+
+.nav-item:focus-visible {
+  outline: 1px solid rgba(73, 55, 42, 0.7);
+  outline-offset: 3px;
+}
+
 .main {
-  margin-left: var(--sidebar-width);
-  flex: 1;
-  padding: 40px 48px 80px;
-  max-width: 1100px;
+  width: min(var(--content), calc(100% - 64px));
+  margin: 0 auto;
+  padding: var(--bar-h) 0 var(--space-9);
   position: relative;
 }
 
 .page-header {
-  margin-bottom: 32px;
+  margin-bottom: var(--space-7);
   position: relative;
 }
 
@@ -119,156 +193,142 @@ body {
 }
 
 .page-header h1 {
-  font-size: 28px;
-  letter-spacing: 4px;
-  margin-bottom: 8px;
-  font-weight: 500;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  line-height: 1.15;
+  margin-bottom: 14px;
 }
 
 .page-header .subtitle {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-secondary);
-  letter-spacing: 1px;
-  margin-bottom: 12px;
+  letter-spacing: 0.28em;
+  margin-bottom: 18px;
 }
 
 .page-header .intro {
-  font-size: 14px;
+  max-width: 38em;
+  font-size: 16px;
   color: var(--text-secondary);
-  line-height: 1.9;
-  max-width: 600px;
+  line-height: 1.95;
 }
 
-/* 分类背景图：铺在主内容区右侧，滚到下面时还在。
-   不接收点击，避免挡住「获取资源」。 */
 .category-icon {
   position: fixed;
   z-index: -1;
   top: 0;
   bottom: 0;
-  left: var(--sidebar-width);
-  width: min(1100px, calc(100vw - var(--sidebar-width)));
+  left: 0;
+  right: 0;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 8px;
+  padding-right: max(24px, calc((100vw - var(--content)) / 2));
   pointer-events: none;
-  /* 乘色叠在宣纸上，再压低透明度，字始终能读 */
-  opacity: 0.2;
+  opacity: 0.16;
   mix-blend-mode: multiply;
 }
 
 .category-icon img {
-  width: min(36vw, 70%);
-  max-width: 620px;
+  width: min(34vw, 520px);
   height: auto;
-  max-height: 72vh;
+  max-height: 68vh;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
-  /* 靠左的一边淡出去，少压到正文 */
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 46%);
-  mask-image: linear-gradient(90deg, transparent, #000 46%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 48%);
+  mask-image: linear-gradient(90deg, transparent, #000 48%);
 }
 
-/* 搜索 */
 .search-box {
-  margin-bottom: 28px;
-  max-width: 320px;
+  margin-bottom: var(--space-7);
+  max-width: none;
   position: relative;
   z-index: 1;
 }
 
 .search-box input {
   width: 100%;
-  padding: 9px 14px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #fff;
-  font-size: 14px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 0;
+  background: rgba(251, 247, 239, 0.55);
+  font-size: 16px;
   color: var(--text);
   outline: none;
 }
 
 .search-box input:focus {
-  border-color: var(--gold);
+  border-color: rgba(73, 55, 42, 0.55);
+  background: rgba(251, 247, 239, 0.9);
 }
 
-/* 分类区域 - 无边框、无数量 */
 .category-section {
-  margin-bottom: 40px;
+  margin-bottom: var(--space-8);
 }
 
-.category-title {
-  font-size: 14px;
-  letter-spacing: 3px;
+.category-title,
+.resource-section-title {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
   color: var(--text-secondary);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.category-grid.second-row {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .category-card {
   background: transparent;
-  border: none;
-  border-radius: 6px;
-  padding: 14px 8px;
-  text-align: center;
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: 8px 4px;
+  text-align: left;
   text-decoration: none;
   color: var(--text);
-  transition: all 0.25s ease;
+  transition: background 0.22s var(--ease);
 }
 
 .category-card:hover {
-  background: rgba(73,55,42,0.04);
+  background: rgba(73, 55, 42, 0.04);
 }
 
 .category-card h2 {
-  font-size: 16px;
-  letter-spacing: 3px;
-  font-weight: 500;
-}
-
-/* 资源列表 */
-.resource-section-title {
-  font-size: 14px;
-  letter-spacing: 3px;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
 }
 
 .resource-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
   position: relative;
   z-index: 1;
 }
 
 .resource-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px 20px;
+  background: transparent;
+  border-radius: 0;
+  padding: 22px 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 20px;
-  transition: all 0.25s ease;
-  box-shadow: 0 0 0 1px var(--border);
+  gap: 24px;
+  border-bottom: 1px solid rgba(73, 55, 42, 0.12);
+  box-shadow: none;
 }
 
 .resource-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(73,55,42,0.06), 0 0 0 1px #D4C0A0;
+  transform: none;
+  background: rgba(73, 55, 42, 0.03);
+  box-shadow: none;
 }
 
 .resource-info {
@@ -277,22 +337,24 @@ body {
 }
 
 .resource-card h3 {
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  margin-bottom: 3px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  line-height: 1.5;
 }
 
 .resource-card .meta {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--gold);
-  margin-bottom: 5px;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
 }
 
 .resource-card .desc {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-secondary);
-  line-height: 1.65;
+  line-height: 1.8;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -304,102 +366,50 @@ body {
 }
 
 .btn {
-  display: inline-block;
-  padding: 7px 16px;
-  border-radius: 5px;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 0;
+  font-size: 15px;
+  letter-spacing: 0.14em;
   text-decoration: none;
-  border: 1px solid var(--border);
-  background: #fff;
+  border: 1px solid rgba(73, 55, 42, 0.35);
+  background: transparent;
   color: var(--text);
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(73, 55, 42, 0.4);
 }
 
-.btn-primary:hover {
-  background: #92501F;
-  border-color: #92501F;
+.btn-primary:hover,
+.btn:hover {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
 }
 
-/* 响应式 */
 @media (max-width: 900px) {
-  .category-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .category-grid.second-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .app {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    flex: none;
-    padding: 24px 16px;
-    border-right: none;
-    border-bottom: 1px solid rgba(73, 55, 42, 0.22);
-  }
-  .brand {
-    margin-bottom: 22px;
-  }
-  .brand-name {
-    font-size: 30px;
-  }
   .main {
-    margin-left: 0;
-    padding: 24px 16px 60px;
+    width: min(var(--content), calc(100% - 32px));
   }
-  .nav {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-  }
-  .nav-item {
-    padding: 11px 4px;
-    font-size: 15px;
-    letter-spacing: 2px;
-    text-indent: 2px;
-  }
-  .category-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .category-grid.second-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .resource-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .resource-actions {
-    align-self: flex-end;
-  }
-  .category-icon {
-    left: 0;
-    width: 100%;
-    padding-right: 4px;
-    opacity: 0.12;
-  }
-  .category-icon img {
-    width: min(34vw, 150px);
-    max-height: 24vh;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-}
 
-@media (max-width: 420px) {
-  .nav {
-    grid-template-columns: repeat(2, 1fr);
+  .nav-item {
+    padding: 8px 10px;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+  }
+
+  .brand-name {
+    font-size: 18px;
+    letter-spacing: 0.22em;
+    text-indent: 0.22em;
   }
 }

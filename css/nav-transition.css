@@ -1,4 +1,4 @@
-/* 侧栏换页：竖线滑动，正文淡入。支持跨页 View Transition，不支持时用脚本淡出再跳转。 */
+/* 顶栏换页：短线下划线横向滑到当前栏目，正文淡入。支持跨页 View Transition，不支持时用脚本淡出再跳转。 */
 
 @view-transition {
   navigation: auto;
@@ -14,12 +14,13 @@
   position: relative;
 }
 
+/* 顶栏里的短线，跟着当前栏目横向滑过去。手机全屏菜单里不用这条线。 */
 .nav-rail {
   position: absolute;
   left: 0;
   top: 0;
-  width: 2px;
-  height: 0;
+  width: 0;
+  height: 1px;
   background: var(--text);
   pointer-events: none;
   z-index: 2;
@@ -86,7 +87,7 @@ body:not(:has(#compass)) main.main {
 
 @media (prefers-reduced-motion: no-preference) {
   html.nav-fallback .nav-rail {
-    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), height 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), width 380ms cubic-bezier(0.22, 1, 0.36, 1), height 380ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   html.nav-page.nav-enter main.main {

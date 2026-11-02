@@ -28,8 +28,17 @@
   function place(index) {
     var item = items[index];
     if (!item) return;
-    rail.style.height = item.offsetHeight + "px";
-    rail.style.transform = "translate(" + item.offsetLeft + "px, " + item.offsetTop + "px)";
+    var narrow = window.matchMedia("(max-width: 768px)").matches;
+    var width = item.offsetWidth;
+    if (narrow || !width) {
+      rail.style.width = "0px";
+      rail.style.height = "0px";
+      return;
+    }
+    var inset = Math.min(16, Math.round(width * 0.16));
+    rail.style.height = "1px";
+    rail.style.width = Math.max(18, width - inset * 2) + "px";
+    rail.style.transform = "translate(" + (item.offsetLeft + inset) + "px, " + (item.offsetTop + item.offsetHeight - 1) + "px)";
   }
 
   var here = activeIndex();
@@ -58,6 +67,15 @@
     rail.getBoundingClientRect();
     rail.style.transition = "";
   });
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      rail.style.transition = "none";
+      place(activeIndex());
+      rail.getBoundingClientRect();
+      rail.style.transition = "";
+    });
+  }
 
   window.addEventListener("pageshow", function () {
     document.documentElement.classList.remove("nav-leave");
