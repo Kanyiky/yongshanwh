@@ -1,0 +1,1019 @@
+/* 手机与小平板（<=768px）。桌面样式不在这里改。 */
+
+@media (min-width: 769px) {
+  .nav-toggle,
+  .menu-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --seal: #9c3b2a;
+    --float-top: calc(8px + env(safe-area-inset-top, 0px));
+    --float-h: 52px;
+    --bar-h: calc(var(--float-top) + var(--float-h) + 14px);
+  }
+
+  html,
+  body {
+    max-width: 100%;
+  }
+
+  html {
+    scroll-padding-top: var(--bar-h);
+  }
+
+  html:has(#nav-toggle:checked),
+  html:has(#nav-toggle:checked) body {
+    overflow: hidden;
+  }
+
+  .app {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* 浮在页面上的顶栏：宣纸半透明，滚动时仍停在上面。 */
+  .sidebar {
+    position: fixed;
+    top: var(--float-top);
+    left: 12px;
+    right: 12px;
+    width: auto;
+    height: var(--float-h);
+    padding: 0 6px 0 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-right: none;
+    border-bottom: 1px solid rgba(73, 55, 42, 0.28);
+    border-radius: 2px;
+    background: rgba(246, 240, 229, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 28px rgba(73, 55, 42, 0.06);
+    overflow: visible;
+    z-index: 200;
+  }
+
+  .sidebar.is-condensed {
+    --float-h: 44px;
+    height: 44px;
+    background: rgba(246, 240, 229, 0.86);
+  }
+
+  .sidebar.is-condensed .brand-name {
+    font-size: 18px;
+    letter-spacing: 0.2em;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    text-align: left;
+  }
+
+  .brand-line {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 22px;
+    letter-spacing: 0.28em;
+    line-height: 1;
+  }
+
+  .brand::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: none;
+    background: var(--seal);
+    transform: rotate(45deg);
+  }
+
+  .nav-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .menu-btn {
+    position: relative;
+    z-index: 5;
+    display: inline-flex;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .menu-btn span:nth-child(1),
+  .menu-btn span:nth-child(2) {
+    position: absolute;
+    left: 11px;
+    width: 22px;
+    height: 1px;
+    background: var(--text);
+    transform-origin: center;
+  }
+
+  .menu-btn span:nth-child(1) { top: 17px; }
+  .menu-btn span:nth-child(2) { top: 26px; }
+
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  #nav-toggle:focus-visible ~ .menu-btn {
+    outline: 1px solid rgba(73, 55, 42, 0.7);
+    outline-offset: 2px;
+  }
+
+  #nav-toggle:checked ~ .menu-btn span:nth-child(1) {
+    top: 21px;
+    transform: rotate(40deg);
+  }
+
+  #nav-toggle:checked ~ .menu-btn span:nth-child(2) {
+    top: 21px;
+    transform: rotate(-40deg);
+  }
+
+  /* 全屏宣纸菜单。四个栏目大字，中间一枚朱红印。 */
+  .sidebar .nav {
+    position: fixed;
+    top: calc(var(--float-top) + var(--float-h));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 28px 28px 48px;
+    background:
+      radial-gradient(ellipse at 50% 42%, rgba(73, 55, 42, 0.045), transparent 58%),
+      #f6f0e5;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .sidebar .nav::before {
+    content: "庸";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 36px;
+    border: 1px solid var(--seal);
+    border-radius: 50%;
+    color: var(--seal);
+    font-size: 20px;
+    letter-spacing: 0;
+    text-indent: 0;
+    line-height: 1;
+  }
+
+  .sidebar .nav::after {
+    content: "探五術之理";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    color: rgba(73, 55, 42, 0.42);
+    font-size: 14px;
+    letter-spacing: 0.42em;
+  }
+
+  .sidebar .nav-rail {
+    display: none;
+  }
+
+  #nav-toggle:checked ~ .nav {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .sidebar .nav-item,
+  .sidebar .nav-item.active {
+    width: min(100%, 280px);
+    min-height: 56px;
+    margin: 0;
+    padding: 14px 8px;
+    border: 0;
+    border-bottom: 1px solid rgba(73, 55, 42, 0.14);
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none;
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    text-align: center;
+    text-decoration: none;
+    line-height: 1.3;
+    opacity: 0.72;
+  }
+
+  .sidebar .nav-item:last-of-type {
+    border-bottom: none;
+  }
+
+  .sidebar .nav-item::before {
+    display: none;
+  }
+
+  .sidebar .nav-item.active {
+    color: var(--seal);
+    font-weight: 500;
+    opacity: 1;
+  }
+
+  .sidebar .nav-item:focus-visible {
+    outline: 1px solid rgba(73, 55, 42, 0.55);
+    outline-offset: 4px;
+  }
+
+  .main {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-left: 0;
+    padding: calc(var(--bar-h) + 28px) 20px 64px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 栏目标题竖排，像书脊。 */
+  .page-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 18px;
+    row-gap: 18px;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+
+  .page-header h1 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    writing-mode: vertical-rl;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    line-height: 1;
+  }
+
+  .page-header .subtitle {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+  }
+
+  .page-header .intro {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: none;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .page-header > .category-icon {
+    position: fixed;
+    top: auto;
+    bottom: 8vh;
+    left: auto;
+    right: 0;
+    width: min(42vw, 200px);
+    height: auto;
+    padding: 0;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  .category-icon img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 28vh;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 42%);
+    mask-image: linear-gradient(90deg, transparent, #000 42%);
+  }
+
+  .disclaimer,
+  .note,
+  .footnote,
+  details.fold,
+  .tile-line,
+  .back-link,
+  .meta-line,
+  .test-row {
+    font-size: 14px;
+  }
+
+  .disclaimer {
+    letter-spacing: 0.04em;
+    line-height: 1.75;
+  }
+
+  details.fold summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 32px;
+  }
+
+  /* 落地页：手机单列，平板两列。 */
+  .visual-grid,
+  .visual-grid.five {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .visual-grid.five .visual-tile,
+  .visual-grid.five .visual-tile:nth-child(4),
+  .visual-grid.five .visual-tile:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .visual-tile {
+    min-height: 0;
+    padding: 22px 14px 18px;
+    background: rgba(251, 247, 239, 0.5);
+    border: 1px solid rgba(73, 55, 42, 0.14);
+  }
+
+  .tile-art {
+    min-height: 120px;
+  }
+
+  .tile-art svg {
+    width: min(150px, 70%);
+  }
+
+  .tile-title {
+    font-size: 20px;
+    letter-spacing: 0.18em;
+  }
+
+  .tile-line {
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+  }
+
+  .search-box {
+    max-width: none;
+    margin-bottom: 28px;
+  }
+
+  .search-box input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .category-section {
+    margin-bottom: 36px;
+  }
+
+  .section-heading h2,
+  .resource-section-title,
+  .block-title,
+  .panel h2 {
+    font-size: 16px;
+  }
+
+  .section-heading span,
+  .category-number,
+  .resource-count,
+  .resource-card .meta,
+  .category-desc {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    opacity: 0.8;
+  }
+
+  .category-grid,
+  .category-grid.second-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .category-card {
+    min-height: 124px;
+    padding: 16px 14px;
+  }
+
+  .category-name {
+    font-size: 20px;
+    letter-spacing: 0.16em;
+  }
+
+  .category-desc {
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+
+  .resource-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 18px 0;
+  }
+
+  .resource-card h3 {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .resource-card .desc {
+    font-size: 14px;
+    line-height: 1.75;
+    -webkit-line-clamp: 3;
+  }
+
+  .resource-actions {
+    align-self: flex-start;
+  }
+
+  .btn,
+  .btn-primary {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tool-form,
+  .form-grid,
+  .row-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 4px 0 8px;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid rgba(73, 55, 42, 0.14);
+    border-bottom: 1px solid rgba(73, 55, 42, 0.14);
+    border-radius: 0;
+  }
+
+  .compact-form {
+    width: 100%;
+  }
+
+  label.field {
+    width: 100%;
+    gap: 6px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+
+  label.field input,
+  label.field select,
+  .tool-form input,
+  .tool-form select,
+  .search-box input {
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+
+  label.field input[type="number"] {
+    width: 100%;
+  }
+
+  label.check {
+    min-height: 44px;
+    padding: 8px 0;
+    font-size: 16px;
+  }
+
+  label.check input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tool-form .btn,
+  .row-actions .btn {
+    width: 100%;
+  }
+
+  .switch {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .switch .btn,
+  .teach-bar .btn,
+  .rel-actions .btn,
+  .change-row .btn,
+  .cast-board p .btn {
+    width: auto;
+    flex: 1;
+  }
+
+  .teach-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .teach-bar .btn {
+    grid-row: 2;
+  }
+
+  .teach-step {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: auto;
+    font-size: 16px;
+  }
+
+  .cast-board p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 8px;
+  }
+
+  .yao-row {
+    min-height: 44px;
+  }
+
+  .yao-row em,
+  .choice small,
+  .mini-gua small,
+  .hex-btn small,
+  .stem-btn small {
+    font-size: 14px;
+  }
+
+  .season-range {
+    height: 44px;
+    background: transparent;
+  }
+
+  .season-range::-webkit-slider-runnable-track {
+    height: 1px;
+    background: rgba(73, 55, 42, 0.45);
+  }
+
+  .season-range::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+    margin-top: -13px;
+  }
+
+  .season-range::-moz-range-track {
+    height: 1px;
+    background: rgba(73, 55, 42, 0.45);
+  }
+
+  .season-range::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  .hex-btn,
+  .stem-btn {
+    min-height: 44px;
+    padding: 8px 2px;
+  }
+
+  .gz-wheel {
+    width: min(100%, 520px);
+  }
+
+  .gz-wheel .stem-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .gz-wheel .stem-btn span {
+    font-size: 18px;
+  }
+
+  .pair-build,
+  .chip-row,
+  .rel-list,
+  .hero-chart,
+  .chart-scroll,
+  .meta-line,
+  .classic,
+  .plain,
+  .test-row {
+    max-width: 100%;
+  }
+
+  .meta-line,
+  .classic,
+  .plain,
+  .test-row,
+  .result-miss {
+    overflow-wrap: anywhere;
+  }
+
+  .detail-head {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .detail-head h2 {
+    font-size: 36px;
+    letter-spacing: 0.18em;
+  }
+
+  .classic b,
+  .plain b {
+    display: block;
+    min-width: 0;
+    margin-bottom: 4px;
+  }
+
+  /* 四柱表缩进屏宽，不再横着拖整页。 */
+  .chart-scroll:has(.pillar-table) {
+    overflow: visible;
+  }
+
+  .pillar-table {
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .pillar-table th,
+  .pillar-table td {
+    padding: 8px 2px;
+    font-size: 14px;
+    letter-spacing: 0;
+    word-break: break-word;
+  }
+
+  .pillar-table th:first-child {
+    width: 1.8em;
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.15;
+    letter-spacing: 0.12em;
+    writing-mode: vertical-rl;
+    white-space: nowrap;
+  }
+
+  .pillar-table .gz {
+    padding: 12px 1px;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    white-space: normal;
+  }
+
+  .wx-meter,
+  .wang-row {
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .wx-meter div,
+  .wang-cell {
+    padding: 8px 2px;
+  }
+
+  .wx-meter b,
+  .wang-cell b {
+    font-size: 18px;
+  }
+
+  .wx-meter span,
+  .wang-cell span {
+    font-size: 14px;
+  }
+
+  .dayun-list {
+    grid-template-columns: 1fr;
+  }
+
+  .dayun-list li {
+    font-size: 15px;
+  }
+
+  /* 十二宫按屏宽排，不设 560px 的最小宽度。 */
+  .chart-scroll:has(.palace-grid) {
+    overflow: visible;
+  }
+
+  .palace-grid {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .palace-cell {
+    min-height: 0;
+    padding: 6px 4px;
+    font-size: 14px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .palace-cell b,
+  .palace-cell .star,
+  .palace-cell .muted {
+    font-size: 14px;
+  }
+
+  .center-cell {
+    letter-spacing: 0;
+  }
+
+  /* 六爻六列表格：只在表格自己的框里横滑。 */
+  .chart-scroll:has(.data-table) {
+    overflow-x: auto;
+    max-width: 100%;
+    border-top: 1px solid rgba(73, 55, 42, 0.16);
+    border-bottom: 1px solid rgba(73, 55, 42, 0.16);
+    background:
+      linear-gradient(270deg, rgba(246, 240, 229, 0.96), rgba(246, 240, 229, 0)) right center / 28px 100% no-repeat;
+  }
+
+  .chart-scroll .data-table {
+    min-width: 34em;
+    font-size: 14px;
+  }
+
+  .chart-scroll .data-table th,
+  .chart-scroll .data-table td {
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+
+  .sky-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .ke-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .sky-grid > div,
+  .ke-grid > div,
+  .chuan > div {
+    min-height: 0;
+    padding: 8px 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .jiazi {
+    gap: 8px 12px;
+  }
+
+  .split.gua-hero,
+  .gua-hero {
+    padding: 16px 10px;
+  }
+
+  .coin {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  #test-sum {
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    overflow-wrap: anywhere;
+  }
+
+  /* 首页：罗盘仍是原来的画法和转动，只把画布放大、居中。 */
+  body:has(#compass) .main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: calc(var(--bar-h) + 12px) 16px 20px;
+  }
+
+  body:has(#compass) .home-hero {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    min-height: 0;
+    margin: 0;
+  }
+
+  body:has(#compass) .hero-text {
+    width: 100%;
+    padding: 10px 0 0;
+    text-align: center;
+  }
+
+  body:has(#compass) .hero-title {
+    margin-bottom: 12px;
+    font-size: clamp(30px, 8.4vw, 44px);
+    letter-spacing: 0.14em;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  body:has(#compass) .hero-title span {
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* 没有隶书时，桌面会把整行拉宽。手机上拉宽会把字推出屏幕，这里只留字重。 */
+  body:has(#compass) .hero-title.fake-li span {
+    transform: none;
+  }
+
+  body:has(#compass) .hero-title span + span {
+    padding-left: 0;
+  }
+
+  body:has(#compass) .hero-line {
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  body:has(#compass) .hero-subtitle {
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    line-height: 1.85;
+    text-align: center;
+  }
+
+  body:has(#compass) .hero-subtitle span + span {
+    padding-left: 0;
+  }
+
+  body:has(#compass) .visual-wrap {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    width: min(100%, 640px);
+    max-width: 100%;
+    margin: 8px auto 0;
+    transform: none;
+  }
+
+  body:has(#compass) .gz {
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+  }
+
+  body:has(#compass) .visual-device {
+    width: min(100%, calc(100dvh - 300px));
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  body:has(#compass) .footer-idea {
+    margin-top: 12px;
+    padding-top: 14px;
+  }
+
+  body:has(#compass) .footer-idea p {
+    font-size: 14px;
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 560px) {
+  .visual-grid,
+  .visual-grid.five {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .visual-tile {
+    padding: 26px 16px 20px;
+  }
+
+  .tile-art {
+    min-height: 148px;
+  }
+
+  .tile-art svg {
+    width: min(180px, 52%);
+  }
+}
+
+@media (max-width: 420px) {
+  .chuan {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar .nav::after {
+    display: none;
+  }
+
+  .sidebar .nav-item,
+  .sidebar .nav-item.active {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .sidebar {
+    transition: height 0.22s ease, background-color 0.22s ease;
+  }
+
+  .sidebar .nav {
+    transition: opacity 0.32s ease, visibility 0.32s ease;
+  }
+
+  .menu-btn span:nth-child(1),
+  .menu-btn span:nth-child(2) {
+    transition: transform 0.25s ease, top 0.25s ease;
+  }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .sidebar .nav,
+  .menu-btn span {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  html.menu-instant .sidebar .nav,
+  html.menu-instant .menu-btn span {
+    transition: none !important;
+  }
+}
