@@ -1950,6 +1950,158 @@ desc: "该资源是一套覆盖全国各行政区域的珍稀地方文献合集�
 category: "qiyi",
 categoryName: "奇异杂集",
 link: "https://pan.quark.cn/s/f4b7cef1a222"
+},
+{
+id: 245,
+title: "心理学与读心术音频",
+desc: "围绕心理学知识和读心术相关主题整理的音频资料，主要涉及心理认知、行为观察及人与人之间的交流等内容，适合对心理学和人际交往知识感兴趣的读者收听。",
+category: "shan",
+categoryName: "山",
+link: "https://pan.quark.cn/s/6833240d3854"
+},
+{
+id: 246,
+title: "《开元占经》",
+desc: "辑录了战国至唐代各家天文学与占星术文献，内容涵盖天体观测、日月行星运行、星官分野、云气风雨占验等。其特殊价值在于完整保存了《石氏星经》的恒星表（世界最早的恒星观测记录之一），并首次系统引入翻译了印度的《九执历》和阿拉伯数字“零”的符号，是研究古代天文学史和中外交流的重要典籍。",
+category: "bu",
+categoryName: "卜",
+link: "https://pan.quark.cn/s/e06af8f46a2e"
+},
+{
+id: 247,
+title: "《食疗本草》",
+desc: "唐代食疗专著，由孟诜（唐代医药学家、药王孙思邈的弟子）原撰，后经张鼎增补，成书于八世纪，共三卷（原书已佚，现存辑佚本，敦煌残卷存世）。这是世界上现存最早的食疗专著之一，收录食物类本草227种（一说二百余种），分述各种食物的性味、功效、主治、禁忌及食疗应用，如用海藻治瘿瘤、鲤鱼治水肿等，奠定了中国饮食疗法的基本体系，兼具食物学和营养学价值。",
+category: "shan",
+categoryName: "山",
+link: "https://pan.quark.cn/s/a4a93235bbad"
+},
+{
+id: 248,
+title: "《图解灵棋经》",
+desc: "汉代流传下来的一部占卜典籍，旧题东方朔撰（实为后人托名），以十二枚灵棋（刻有上、中、下字的棋子）掷成卦象来占卜吉凶，共125卦，每卦有象辞、判词及晋代颜幼明、何承天等人的注解，是中国古代易占之外影响最大的杂占经典之一。“图解”版则是现代出版的普及读物，用图表、图示对原文进行白话解读和卦象解析，方便现代读者理解这部古代占筮文献。",
+category: "bu",
+categoryName: "卜",
+link: "https://pan.quark.cn/s/eb5ed152cc34"
+},
+{
+id: 249,
+title: "《肘后备急方》",
+desc: "书名意为“放在肘后（随手可取）的应急药方”，专收常见急症、急病的简便验方和灸法，处方用药廉价易得，方便贫苦人家使用。其学术价值极高——书中最早记载了天花、恙虫病，以及“用青蒿绞汁治疟疾”，这一记载直接启发了屠呦呦发现青蒿素并获得诺贝尔奖，是中医药史上的经典名著。",
+category: "yi",
+categoryName: "医",
+link: "https://pan.quark.cn/s/ad8a221b6f6b"
+},
+{
+id: 250,
+title: "《风水绝版书》110部",
+desc: "奇门、八宅等术数内容属于传统民俗文化范畴，学习时建议以了解传统文化、辩证看待的心态对待。",
+category: "xiang",
+categoryName: "相",
+link: "https://pan.quark.cn/s/78912ace6d0d"
+},
+{
+id: 251,
+title: "《奇门穿八宅》107集",
+desc: "即用奇门盘“穿透”到八宅格局中，把奇门符号系统与八宅方位结合同断，号称能提高断事与布局的准确度。",
+category: "xiang",
+categoryName: "相",
+link: "https://pan.quark.cn/s/9e35aa10ec7e"
+},
+{
+id: 252,
+title: "《民间实用风水绝技》",
+desc: "这套资料围绕民间风水相关知识展开，属于传统堪舆文化方向的学习资料，适合对民间风水理论、环境布局及传统风水技法感兴趣的读者查阅。",
+category: "xiang",
+categoryName: "相",
+link: "https://pan.quark.cn/s/42a4068d1583"
+},
+{
+id: 253,
+title: "《祝由术全套》",
+desc: "内容涉及古代祝祷、符咒及传统仪式等。对民间信仰、传统术法和古代文化感兴趣的读者，可以通过相关资料了解其历史背景与文化现象。",
+category: "qiyi",
+categoryName: "奇异杂集",
+link: "https://pan.quark.cn/s/7b8c8abbef44"
+},
+{
+id: 254,
+title: "钟吕传道集",
+desc: "在中国道教典籍中，有一些著作专门讨论内丹修炼理论，《钟吕传道集》便是其中具有代表性的一部。它以钟离权与吕洞宾的传道问答为主要叙述形式，围绕传统内丹思想展开论述，是了解道家丹道文化的一部重要文献。",
+category: "shan",
+categoryName: "山",
+link: "https://pan.quark.cn/s/e5e335907fde"
+},
+{
+id: 255,
+title: "室内设计全套视频教程",
+desc: "以室内设计为主题的视频学习资料，属于室内设计专业知识与技能教程方向，适合对空间设计、室内装修及相关专业知识感兴趣的读者查阅学习。",
+category: "jiaocheng",
+categoryName: "技能教程",
+link: "https://pan.quark.cn/s/902e1f562244"
+},
+{
+id: 256,
+title: "《四柱八字—乾坤四步法》视频课程",
+desc: "这套视频课程以四柱八字为主题，围绕传统命理知识及相关分析方法展开，属于八字命理学习方向的资料，适合对四柱八字理论感兴趣的读者了解。",
+category: "ming",
+categoryName: "命",
+link: "https://pan.quark.cn/s/22f4b0e4c742"
+},
+{
+id: 257,
+title: "《资治通鉴成事之道》",
+desc: "围绕《资治通鉴》及历史事件中的处事智慧展开的相关学习资料，主要从历史人物、政治事件和历史经验等角度认识古代社会的发展与人物决策。",
+category: "qiyi",
+categoryName: "奇异杂集",
+link: "https://pan.quark.cn/s/1180dd5c1e2d"
+},
+{
+id: 258,
+title: "中国妖怪故事",
+desc: "以中国传统妖怪文化和民间志怪故事为主题的资料，涉及中国民间传说、奇闻异事及传统神怪文化，可以作为了解中国古代志怪文学和民俗文化的参考。",
+category: "shan",
+categoryName: "山",
+link: "https://pan.quark.cn/s/6c47b0868400"
+},
+{
+id: 259,
+title: "玄学入门古籍26部",
+desc: "从周易、八字到奇门六壬，26部经典古籍一次整理",
+category: "bu",
+categoryName: "卜",
+link: "https://pan.quark.cn/s/0a529ad91ec8"
+},
+{
+id: 260,
+title: "Linux操作系统零基础入门学习",
+desc: "围绕Linux操作系统整理的零基础学习资料，适合了解Linux系统的基本知识、操作方式及相关技术内容，对计算机基础学习和系统管理知识感兴趣的读者可以参考。",
+category: "xuexi",
+categoryName: "学习资料",
+link: "https://pan.quark.cn/s/3434316f6381"
+},
+{
+id: 261,
+title: "绝版书籍｜处世奇术系列",
+desc: "一套以处世智慧和人际交往相关内容为主题的书籍合集，围绕传统处世知识展开，适合对传统文化、社会交往和处世之道感兴趣的读者查阅。",
+category: "qiyi",
+categoryName: "奇异杂集",
+link: "https://pan.quark.cn/s/c907d0ba5eb8"
+},
+{
+id: 262,
+title: "烤生蚝技术配方",
+desc: "围绕烤生蚝制作与经营需求整理的技术配方资料，主题涉及夜市烧烤和小吃经营，适合对烧烤制作、摆摊创业感兴趣的读者了解。",
+category: "jiaocheng",
+categoryName: "技能教程",
+link: "https://pan.quark.cn/s/ad3a18562133"
+},
+{
+id: 263,
+title: "高手必备的经济学思维",
+desc: "由12册资料组成的经济学思维类书籍合集，围绕经济学知识和思维方式展开，适合希望了解经济学基础知识、拓展商业认知的读者阅读。",
+category: "xuexi",
+categoryName: "学习资料",
+link: "https://pan.quark.cn/s/aba096c6f079"
 }
 ];
 
