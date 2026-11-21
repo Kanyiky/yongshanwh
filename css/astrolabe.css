@@ -12,6 +12,7 @@ body:has(#compass) {
 #compass .ink { fill: #463529; }
 #compass .paper { fill: #F5F0E6; }
 #compass .bronze { fill: #A98B62; }
+#compass .seal { fill: #A64B36; }
 
 #compass text {
   font-family: "FZFangSong", "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;

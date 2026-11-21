@@ -163,6 +163,13 @@
     zhi += upright(z * 30, 176, text(ZHI[z], 22, INK, ' data-zhi="' + ZHI[z] + '" data-index="' + z + '"'), "ccw");
   }
   zhi += '<circle r="198" fill="none" stroke="' + BRONZE + '" stroke-width="0.8"/>';
+  /* 原罗盘只有一根指针，固定指东，地支环转到当前时辰底下。
+     这里指针跟着地支环，并按同一公式 hour/2 格指向该时辰。 */
+  zhi += '<g id="time-hand" data-layer="hand">' +
+    '<line y1="-78" y2="-164" stroke="' + BRONZE + '" stroke-width="3" stroke-linecap="round"/>' +
+    '<line y1="-78" y2="-160" stroke="' + INK + '" stroke-width="1" stroke-linecap="round"/>' +
+    '<polygon class="seal" points="0,-176 -5.2,-160 5.2,-160"/>' +
+    "</g>";
   parts.push('<g id="ring-zhi" class="spin-ccw dur-180" data-layer="zhi">' + zhi + "</g>");
 
   /* 八卦外围装饰环，240 秒顺时针。卦名本身不转。 */
@@ -198,4 +205,18 @@
 
   svg.setAttribute("viewBox", "-500 -500 1000 1000");
   svg.innerHTML = parts.join("");
+
+  var hand = document.getElementById("time-hand");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function pointHand() {
+    var now = new Date();
+    var hour = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600 + now.getMilliseconds() / 3600000;
+    var index = hour / 2;
+    hand.setAttribute("transform", "rotate(" + (index * 30) + ")");
+    hand.setAttribute("data-hour", hour.toFixed(4));
+    hand.setAttribute("data-shichen", ZHI[Math.floor(index) % 12]);
+  }
+  pointHand();
+  if (reduceMotion) setInterval(pointHand, 1000);
+  else requestAnimationFrame(function frame() { pointHand(); requestAnimationFrame(frame); });
 })();
