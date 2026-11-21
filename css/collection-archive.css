@@ -477,14 +477,14 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .archive-page .main {
     width: 100%;
   }
 
   .archive-head {
     display: block;
-    margin-bottom: 28px;
+    margin-bottom: 12px;
   }
 
   .archive-head h1,
@@ -500,21 +500,66 @@
     position: relative;
     top: auto;
     display: block;
-    width: min(220px, 72%);
-    margin: 16px 0 0 auto;
+    width: min(150px, 42%);
+    margin: 6px 0 0 auto;
   }
 
   .search-desk {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
   }
 
   .archive-page .category-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
   .archive-page .category-card {
-    min-height: 188px;
+    min-height: 96px;
+    padding: 8px 8px 6px;
+  }
+
+  .archive-page .category-number {
+    font-size: 11px;
+  }
+
+  .archive-page .category-seal {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .archive-page .category-body {
+    margin-top: 4px;
+    padding-bottom: 12px;
+    gap: 2px;
+  }
+
+  .archive-page .category-copy {
+    max-width: 70%;
+  }
+
+  .archive-page .category-name {
+    font-size: 18px;
+    letter-spacing: 0.04em;
+  }
+
+  .archive-page .category-desc {
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.35;
+    letter-spacing: 0;
+  }
+
+  .archive-page .category-art {
+    width: 36%;
+    max-width: 58px;
+  }
+
+  .archive-page .category-arrow {
+    width: 14px;
+    height: 14px;
+    right: 6px;
+    bottom: 6px;
   }
 
   .archive-page .resource-card {
