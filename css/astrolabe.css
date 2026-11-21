@@ -1,0 +1,95 @@
+/* 只作用于首页星盘。 */
+
+body:has(#compass) {
+  background: #F5F0E6;
+}
+
+.astrolabe,
+.compass.astrolabe {
+  overflow: hidden;
+}
+
+#compass .ink { fill: #463529; }
+#compass .paper { fill: #F5F0E6; }
+#compass .bronze { fill: #A98B62; }
+
+#compass text {
+  font-family: "FZFangSong", "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+#compass .sheng {
+  stroke: #A98B62;
+  stroke-width: 1.1;
+}
+
+#compass .ke {
+  stroke: #8F7B65;
+  stroke-width: 0.9;
+  stroke-dasharray: 3 3;
+}
+
+#compass .spin-cw,
+#compass .spin-ccw {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+#compass .dur-120,
+#compass .dur-120 .spin-ccw {
+  animation-duration: 120s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#compass .dur-180,
+#compass .dur-180 .spin-cw {
+  animation-duration: 180s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#compass .dur-240,
+#compass .dur-240 .spin-ccw {
+  animation-duration: 240s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#compass .spin-cw {
+  animation-name: astrolabe-cw;
+}
+
+#compass .spin-ccw {
+  animation-name: astrolabe-ccw;
+}
+
+@keyframes astrolabe-cw {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes astrolabe-ccw {
+  to { transform: rotate(-360deg); }
+}
+
+@media (max-width: 768px) {
+  body:has(#compass) .visual-device {
+    width: min(100%, 520px);
+    max-width: 100%;
+    margin-inline: auto;
+    overflow: hidden;
+  }
+
+  body:has(#compass) .visual-wrap {
+    width: min(100%, 520px);
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #compass .spin-cw,
+  #compass .spin-ccw {
+    animation: none;
+  }
+}
